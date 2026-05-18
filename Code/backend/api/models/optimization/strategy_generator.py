@@ -1,63 +1,111 @@
-COMPOUNDS = ["SOFT","MEDIUM","HARD"]
+COMPOUNDS = ["SOFT", "MEDIUM", "HARD"]
+
+MIN_STINT = {
+    "SOFT": 10,
+    "MEDIUM": 15,
+    "HARD": 20
+}
+
+MAX_STINT = {
+    "SOFT": 20,
+    "MEDIUM": 30,
+    "HARD": 40
+}
+
 
 def generate_strategies(total_laps):
+
     strategies = []
-    
-    #1 stop strategies:
-    
+
+    # 1-stop
+
     for compound1 in COMPOUNDS:
+
         for compound2 in COMPOUNDS:
-            
-            #the rule is to have 2 different tyre sets: 
-            
+
             if compound1 == compound2:
                 continue
-            
-            for stint1_laps in range(8, total_laps-8):
-                
-                stint2_laps = total_laps - stint1_laps
-                
+
+            for stint1_laps in range(
+                MIN_STINT[compound1],
+                MAX_STINT[compound1] + 1
+            ):
+
+                stint2_laps = (
+                    total_laps
+                    - stint1_laps
+                )
+
+                if not (
+                    MIN_STINT[compound2]
+                    <= stint2_laps
+                    <= MAX_STINT[compound2]
+                ):
+                    continue
+
                 strategy = [
-                    (compound1,stint1_laps),
-                    (compound2,stint2_laps)
+                    (compound1, stint1_laps),
+                    (compound2, stint2_laps)
                 ]
-                
+
                 strategies.append(strategy)
-    
-    #2 stop strategy: 
-    
+
+    # 2-stop
+
     for compound1 in COMPOUNDS:
+
         for compound2 in COMPOUNDS:
+
             for compound3 in COMPOUNDS:
-                
+
                 used_compounds = {
                     compound1,
                     compound2,
-                    compound3,
+                    compound3
                 }
-            
-            if len(used_compounds) < 2:
-                continue
-            
-            for stint1 in range(8, total_laps-16):
-                for stint2 in range(8, total_laps-8):
-                    stint3 = (total_laps - stint1 -stint2)
-                    
-                    strategy = [
+
+                if len(used_compounds) < 2:
+                    continue
+
+                for stint1 in range(
+                    MIN_STINT[compound1],
+                    MAX_STINT[compound1] + 1
+                ):
+
+                    for stint2 in range(
+                        MIN_STINT[compound2],
+                        MAX_STINT[compound2] + 1
+                    ):
+
+                        stint3 = (
+                            total_laps
+                            - stint1
+                            - stint2
+                        )
+
+                        if not (
+                            MIN_STINT[compound3]
+                            <= stint3
+                            <= MAX_STINT[compound3]
+                        ):
+                            continue
+
+                        strategy = [
                             (compound1, stint1),
                             (compound2, stint2),
                             (compound3, stint3)
-                    ]
-                    
-                    strategies.append(strategy)
-    
+                        ]
+
+                        strategies.append(strategy)
+
     return strategies
+
 
 if __name__ == "__main__":
 
     strategies = generate_strategies(57)
 
-    print(f"Generated {len(strategies)} strategies")
+    print(f"\nGenerated {len(strategies)} strategies\n")
 
-    for s in strategies[:10]:
+    for s in strategies[:20]:
         print(s)

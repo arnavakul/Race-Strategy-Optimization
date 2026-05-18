@@ -21,4 +21,4 @@ with open(MODEL_PATH, "rb") as f:
 
 
 def get_pitstop_time(track):
-    return PITSTOP_MODEL.get(track, 22.0)
+    return PITSTOP_MODEL.get(track, 24.0)
