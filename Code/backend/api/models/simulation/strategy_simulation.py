@@ -1,11 +1,10 @@
-strategy = [
-    ("SOFT", 12),
-    ("MEDIUM", 20),
-    ("HARD", 25)
-]
+from models.simulation.stint_simulator import (
+    simulate_stint
+)
 
-from stint_simulator import simulate_stint
-from pitstop_model import get_pitstop_time
+from models.simulation.pitstop_model import (
+    get_pitstop_time
+)
 
 
 def simulate_strategy(track, strategy):
@@ -16,17 +15,33 @@ def simulate_strategy(track, strategy):
 
     for i, (compound, laps) in enumerate(strategy):
 
+        # simulate stint
+
         stint_result = simulate_stint(
             track=track,
             compound=compound,
             total_laps=laps
         )
 
+        # add stint race time
+
         total_race_time += stint_result["total_time"]
 
-        all_laps.extend(stint_result["laps"])
+        # store lap-by-lap data
 
-        is_final_stint = i == len(strategy) - 1
+        all_laps.extend(
+            stint_result["laps"]
+        )
+
+        # check if current stint
+        # is NOT the final stint
+
+        is_final_stint = (
+            i == len(strategy) - 1
+        )
+
+        # add pitstop time
+        # after every stint except final
 
         if not is_final_stint:
 
@@ -39,16 +54,27 @@ def simulate_strategy(track, strategy):
     return {
         "strategy": strategy,
         "total_time": total_race_time,
-        "pit_stops": pit_count,
+        "pitstops": pit_count,
         "laps": all_laps
     }
+
+
 if __name__ == "__main__":
+
+    strategy = [
+        ("SOFT", 12),
+        ("MEDIUM", 20),
+        ("HARD", 25)
+    ]
 
     result = simulate_strategy(
         track="bahrain_2022",
         strategy=strategy
     )
 
+    print("\nSTRATEGY SIMULATION\n")
+
+    print("Strategy:", result["strategy"])
     print("Total Race Time:", result["total_time"])
-    print("Pit Stops:", result["pit_stops"])
+    print("Pit Stops:", result["pitstops"])
     print("Total Laps:", len(result["laps"]))

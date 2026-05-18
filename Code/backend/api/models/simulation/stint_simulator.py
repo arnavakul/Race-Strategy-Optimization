@@ -1,5 +1,10 @@
-from lap_time_engine import compute_lap_time
-from fuel_state import FuelState
+from models.simulation.lap_time_engine import (
+    compute_lap_time
+)
+
+from models.simulation.fuel_state import (
+    FuelState
+)
 
 
 def simulate_stint(

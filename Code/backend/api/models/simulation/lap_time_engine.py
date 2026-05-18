@@ -1,7 +1,7 @@
 import os
 import pickle
 import random
-from fuel_state import FuelState
+from models.simulation.fuel_state import FuelState
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
@@ -46,12 +46,6 @@ def get_degradation(track,compound, tyre_age):
     
     return deg
 
-print(get_degradation(
-    "bahrain_2022",
-    "MEDIUM",
-    10
-))
-
 def compute_lap_time(
         track, 
         compound,
@@ -82,16 +76,16 @@ def main():
     )
 
     fuel_correction = fuel.getFuelCorrection()
-    if __name__ == "__main__":
-        
-        result = compute_lap_time(
-            track="bahrain_2022",
-            compound="MEDIUM",
-            tyre_age=12,
-            fuel_correction=fuel_correction
-        )
 
-        # print(result)
+    result = compute_lap_time(
+        track="bahrain_2022",
+        compound="MEDIUM",
+        tyre_age=12,
+        fuel_correction=fuel_correction
+    )
+
+    print(result)
 
 
-main()
+if __name__ == "__main__":
+    main()

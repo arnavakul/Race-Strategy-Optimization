@@ -353,8 +353,6 @@ with open(model_path, "wb") as f:
 
 print("\nAll models saved successfully")
 
-print("\n========== MODEL SUMMARY ==========")
-
 for track_name in models:
 
     for compound in models[track_name]:
