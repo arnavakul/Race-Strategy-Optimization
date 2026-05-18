@@ -45,33 +45,36 @@ def simulate_stint(
 
         fuel.burnFuel()
 
-    return results
+    return {
+    "total_time": cumulative_time,
+    "laps": results
+}
 
-
-result = simulate_stint(
-    track="bahrain_2022",
-    compound="MEDIUM",
-    total_laps=15
-)
-
-print("Stint Simulation:")
-
-previous_lap_time = None
-
-for lap in result:
-
-    if previous_lap_time is None:
-        delta = 0
-    else:
-        delta = lap["lap_time"] - previous_lap_time
-
-    print(
-        f"Lap {lap['lap']:>2} | "
-        f"Tyre Age: {lap['tyre_age']:>2} | "
-        f"Fuel: {lap['fuel_load']:.2f} kg | "
-        f"Lap Time: {lap['lap_time']:.3f} | "
-        f"Delta: {delta:+.3f} | "
-        f"Cumulative: {lap['cumulative_time']:.3f}"
+if __name__ == "__main__":
+    result = simulate_stint(
+        track="bahrain_2022",
+        compound="MEDIUM",
+        total_laps=15
     )
+    print("Stint Simulation:")
+    previous_lap_time = None
 
-    previous_lap_time = lap["lap_time"]
+    for lap in result["laps"]:
+
+        if previous_lap_time is None:
+            delta = 0
+        else:
+            delta = lap["lap_time"] - previous_lap_time
+
+        print(
+            f"Lap {lap['lap']:>2} | "
+            f"Tyre Age: {lap['tyre_age']:>2} | "
+            f"Fuel: {lap['fuel_load']:.2f} kg | "
+            f"Lap Time: {lap['lap_time']:.3f} | "
+            f"Delta: {delta:+.3f} | "
+            f"Cumulative: {lap['cumulative_time']:.3f}"
+        )
+
+        previous_lap_time = lap["lap_time"]
+
+    # print(f"\nTotal Stint Time: {result['total_time']:.3f}")

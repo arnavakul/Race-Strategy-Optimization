@@ -82,15 +82,16 @@ def main():
     )
 
     fuel_correction = fuel.getFuelCorrection()
+    if __name__ == "__main__":
+        
+        result = compute_lap_time(
+            track="bahrain_2022",
+            compound="MEDIUM",
+            tyre_age=12,
+            fuel_correction=fuel_correction
+        )
 
-    result = compute_lap_time(
-        track="bahrain_2022",
-        compound="MEDIUM",
-        tyre_age=12,
-        fuel_correction=fuel_correction
-    )
-
-    print(result)
+        # print(result)
 
 
 main()
