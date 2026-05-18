@@ -2,9 +2,9 @@ import os
 import pickle
 import random
 
-from models.simulation.fuel_state import FuelState
+from api.models.simulation.fuel_state import FuelState
 
-from models.simulation.track_model import (
+from api.models.simulation.track_model import (
     get_track_parameters
 )
 

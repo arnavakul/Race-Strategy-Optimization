@@ -1,27 +1,29 @@
-from models.simulation.lap_time_engine import (
+from typing import List, Dict, Any
+
+from api.models.simulation.lap_time_engine import (
     compute_lap_time
 )
 
-from models.simulation.fuel_state import (
+from api.models.simulation.fuel_state import (
     FuelState
 )
 
-from models.simulation.track_model import (
+from api.models.simulation.track_model import (
     get_track_parameters
 )
-
-
-# Stint simulator
+# =========================
+# STINT SIMULATOR
+# =========================
 
 def simulate_stint(
-    track,
-    compound,
-    total_laps
-):
+    track: str,
+    compound: str,
+    total_laps: int
+) -> Dict[str, Any]:
 
-    results = []
+    results: List[Dict[str, Any]] = []
 
-    cumulative_time = 0
+    cumulative_time: float = 0.0
 
     fuel = FuelState(
         starting_fuel=100,
@@ -31,36 +33,33 @@ def simulate_stint(
 
     track_data = get_track_parameters(track)
 
-    warmup_map = (
-        track_data["warmup_penalty"]
-    )
+    warmup_map = track_data["warmup_penalty"]
 
     for lap in range(total_laps):
 
-        tyre_age = lap + 1
-        current_lap = lap + 1
+        current_lap: int = lap + 1
+        tyre_age: int = current_lap
 
-        warmup_penalty = 0
+        warmup_penalty: float = 0.0
 
         if tyre_age <= 2:
-
-            warmup_penalty = (
+            warmup_penalty = float(
                 warmup_map[compound]
             )
 
-        fuel_correction = (
+        fuel_correction: float = (
             fuel.getFuelCorrection()
         )
 
-        lap_data = compute_lap_time(
+        lap_data: Dict[str, Any] = compute_lap_time(
             track=track,
             compound=compound,
             tyre_age=tyre_age,
             fuel_correction=fuel_correction
         )
 
-        corrected_lap_time = (
-            lap_data["lap_time"]
+        corrected_lap_time: float = (
+            float(lap_data["lap_time"])
             + warmup_penalty
         )
 
@@ -76,7 +75,9 @@ def simulate_stint(
 
             "warmup_penalty": warmup_penalty,
 
-            "fuel_load": fuel.current_fuel,
+            "fuel_load": float(
+                fuel.current_fuel
+            ),
 
             "fuel_correction": fuel_correction,
 
@@ -86,12 +87,16 @@ def simulate_stint(
         fuel.burnFuel()
 
     return {
+
         "total_time": cumulative_time,
+
         "laps": results
     }
 
 
-# Testing
+# =========================
+# TESTING
+# =========================
 
 if __name__ == "__main__":
 
@@ -108,7 +113,7 @@ if __name__ == "__main__":
     for lap in result["laps"]:
 
         if previous_lap_time is None:
-            delta = 0
+            delta = 0.0
 
         else:
             delta = (

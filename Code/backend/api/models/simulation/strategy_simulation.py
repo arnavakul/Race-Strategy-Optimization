@@ -1,8 +1,8 @@
-from models.simulation.stint_simulator import (
+from api.models.simulation.stint_simulator import (
     simulate_stint
 )
 
-from models.simulation.pitstop_model import (
+from api.models.simulation.pitstop_model import (
     get_pitstop_time
 )
 

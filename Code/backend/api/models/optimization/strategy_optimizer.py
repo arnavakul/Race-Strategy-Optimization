@@ -1,8 +1,8 @@
-from models.optimization.strategy_generator import (
+from api.models.optimization.strategy_generator import (
     generate_strategies
 )
 
-from models.simulation.strategy_simulation import (
+from api.models.simulation.strategy_simulation import (
     simulate_strategy
 )
 
