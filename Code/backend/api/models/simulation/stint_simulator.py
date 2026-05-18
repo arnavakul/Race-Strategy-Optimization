@@ -6,6 +6,10 @@ from models.simulation.fuel_state import (
     FuelState
 )
 
+from models.simulation.track_model import (
+    get_track_parameters
+)
+
 
 # Stint simulator
 
@@ -25,22 +29,20 @@ def simulate_stint(
         fuel_effect_per_kg=0.035
     )
 
+    track_data = get_track_parameters(track)
+
+    warmup_map = (
+        track_data["warmup_penalty"]
+    )
+
     for lap in range(total_laps):
 
         tyre_age = lap + 1
         current_lap = lap + 1
 
-        # Warmup penalty
-
         warmup_penalty = 0
 
         if tyre_age <= 2:
-
-            warmup_map = {
-                "SOFT": 0.6,
-                "MEDIUM": 1.0,
-                "HARD": 1.5
-            }
 
             warmup_penalty = (
                 warmup_map[compound]

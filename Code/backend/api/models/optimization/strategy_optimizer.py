@@ -82,7 +82,7 @@ def strategy_optimizer(track, total_laps):
 if __name__ == "__main__":
 
     best = strategy_optimizer(
-        track="bahrain_2022",
+        track="monza_2022",
         total_laps=57
     )
 

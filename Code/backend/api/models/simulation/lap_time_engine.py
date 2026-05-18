@@ -4,6 +4,10 @@ import random
 
 from models.simulation.fuel_state import FuelState
 
+from models.simulation.track_model import (
+    get_track_parameters
+)
+
 
 # Paths
 
@@ -52,11 +56,15 @@ def get_degradation(
     tyre_age
 ):
 
-    compound_deg = {
-        "SOFT": 0.10,
-        "MEDIUM": 0.07,
-        "HARD": 0.03
-    }
+    track_data = get_track_parameters(track)
+
+    compound_deg = (
+        track_data["compound_deg"]
+    )
+
+    cliff_age = (
+        track_data["cliff_age"]
+    )
 
     safe_age = max(1, tyre_age)
 
@@ -64,14 +72,6 @@ def get_degradation(
         safe_age
         * compound_deg[compound]
     )
-
-    # Tyre cliff
-
-    cliff_age = {
-        "SOFT": 15,
-        "MEDIUM": 22,
-        "HARD": 30
-    }
 
     cliff_multiplier = {
         "SOFT": 0.40,
@@ -87,8 +87,6 @@ def get_degradation(
         ) * cliff_multiplier[compound]
 
         base_deg += cliff_penalty
-
-    # Random variation
 
     noise = random.uniform(0, 0.01)
 
@@ -106,6 +104,12 @@ def compute_lap_time(
     fuel_correction
 ):
 
+    track_data = get_track_parameters(track)
+
+    compound_pace_delta = (
+        track_data["compound_pace_delta"]
+    )
+
     base_pace = get_base_pace(track)
 
     degradation = get_degradation(
@@ -113,14 +117,6 @@ def compute_lap_time(
         compound,
         tyre_age
     )
-
-    # Compound pace offsets
-
-    compound_pace_delta = {
-        "SOFT": 0.0,
-        "MEDIUM": 0.8,
-        "HARD": 1.8
-    }   
 
     compound_offset = (
         compound_pace_delta[compound]
