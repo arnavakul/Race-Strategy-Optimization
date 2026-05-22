@@ -3,6 +3,39 @@ import os
 
 
 track_characteristics = {
+    
+    "bahrain_2024": {
+
+        "compound_pace_delta": {
+            "SOFT": 0.0,
+            "MEDIUM": 0.6,
+            "HARD": 1.5
+        },
+
+        "compound_deg": {
+            "SOFT": -0.04,
+            "MEDIUM": -0.03,
+            "HARD": -0.02
+        },
+
+        "cliff_age": {
+            "SOFT": 15,
+            "MEDIUM": 22,
+            "HARD": 30
+        },
+
+        "warmup_penalty": {
+            "SOFT": 0.6,
+            "MEDIUM": 1.0,
+            "HARD": 1.5
+        },
+
+        "cliff_multiplier": {
+            "SOFT": 0.10,
+            "MEDIUM": 0.08,
+            "HARD": 0.05
+        }
+    },
 
     "bahrain_2022": {
 
@@ -28,6 +61,11 @@ track_characteristics = {
             "SOFT": 0.6,
             "MEDIUM": 1.0,
             "HARD": 1.5
+        },
+        "cliff_multiplier": {
+            "SOFT": 0.10,
+            "MEDIUM": 0.08,
+            "HARD": 0.05
         }
     },
 
@@ -55,7 +93,14 @@ track_characteristics = {
             "SOFT": 0.3,
             "MEDIUM": 0.6,
             "HARD": 1.0
+        },
+        
+        "cliff_multiplier": {
+            "SOFT": 0.10,
+            "MEDIUM": 0.08,
+            "HARD": 0.05
         }
+        
     }
 }
 

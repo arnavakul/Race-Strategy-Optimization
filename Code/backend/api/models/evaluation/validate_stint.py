@@ -81,7 +81,22 @@ def validate_stint(
 
         for lap in simulated["laps"]
     ]
+    
+    print("\n Real VS Simulated Laps")
+    
+    for i in range(len(actual_laps)):
+            
+        delta = (
+            predicted_laps[i] - actual_laps[i]
+        )
 
+        print(
+            f"Lap {i+1:>2} | "
+            f"Real: {actual_laps[i]:.3f} | "
+            f"Sim: {predicted_laps[i]:.3f} | "
+            f"Delta: {delta:+.3f}"
+        )
+    
     results: Dict[str, Any] = {
 
         "track": track,

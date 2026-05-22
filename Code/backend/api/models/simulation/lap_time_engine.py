@@ -36,6 +36,7 @@ deg_model_path = os.path.join(
 
 with open(base_pace_path, "rb") as f:
     track_base_pace = pickle.load(f)
+    print(track_base_pace["bahrain_2024"])
 
 with open(deg_model_path, "rb") as f:
     degradation_models = pickle.load(f)
@@ -45,7 +46,7 @@ with open(deg_model_path, "rb") as f:
 
 def get_base_pace(track):
 
-    return track_base_pace[track]
+    return track_base_pace[track] +4.5
 
 
 # Tyre degradation
@@ -58,39 +59,51 @@ def get_degradation(
 
     track_data = get_track_parameters(track)
 
-    compound_deg = (
-        track_data["compound_deg"]
+    deg = (
+        track_data["compound_deg"][compound]
     )
 
     cliff_age = (
-        track_data["cliff_age"]
+        track_data["cliff_age"][compound]
     )
 
-    safe_age = max(1, tyre_age)
-
-    base_deg = (
-        safe_age
-        * compound_deg[compound]
+    cliff_multiplier = (
+        track_data["cliff_multiplier"][compound]
     )
 
-    cliff_multiplier = {
-        "SOFT": 0.40,
-        "MEDIUM": 0.25,
-        "HARD": 0.15
-    }
+    if tyre_age <= 3:
 
-    if safe_age > cliff_age[compound]:
+        degradation = -0.05 * tyre_age
 
-        cliff_penalty = (
-            safe_age
-            - cliff_age[compound]
-        ) * cliff_multiplier[compound]
+    elif tyre_age <= 10:
 
-        base_deg += cliff_penalty
+        degradation = (
+            (tyre_age - 3)
+            * abs(deg)
+            * 0.3
+        )
 
-    noise = random.uniform(0, 0.01)
+    elif tyre_age <= cliff_age:
 
-    degradation = base_deg + noise
+        degradation = (
+            0.10
+            + (tyre_age - 10)
+            * abs(deg)
+            * 0.25
+        )
+
+    else:
+
+        degradation = (
+            2.1
+            + (cliff_age - 10)
+            * abs(deg)
+            * 0.8
+        )
+
+        degradation += (
+            tyre_age - cliff_age
+        ) * cliff_multiplier
 
     return degradation
 
@@ -127,6 +140,32 @@ def compute_lap_time(
         + compound_offset
         + degradation
         - fuel_correction
+    )
+    
+    print("\nLAP TIME DEBUG\n")
+
+    print(
+        f"Track: {track}"
+    )
+
+    print(
+        f"Base Pace: {base_pace:.3f}"
+    )
+
+    print(
+        f"Compound Offset: {compound_offset:.3f}"
+    )
+
+    print(
+        f"Degradation: {degradation:.3f}"
+    )
+
+    print(
+        f"Fuel Correction: {fuel_correction:.3f}"
+    )
+
+    print(
+        f"Final Lap Time: {lap_time:.3f}"
     )
 
     return {

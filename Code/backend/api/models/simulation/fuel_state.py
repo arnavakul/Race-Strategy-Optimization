@@ -20,7 +20,7 @@ if __name__ == "__main__":
     fuel = FuelState(
         starting_fuel=100,
         fuel_burn_per_lap=1.8,
-        fuel_effect_per_kg=0.035
+        fuel_effect_per_kg=0.028
     )
     for lap in range(5):
 

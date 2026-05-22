@@ -28,7 +28,7 @@ def simulate_stint(
     fuel = FuelState(
         starting_fuel=100,
         fuel_burn_per_lap=1.8,
-        fuel_effect_per_kg=0.035
+        fuel_effect_per_kg=0.028
     )
 
     track_data = get_track_parameters(track)
