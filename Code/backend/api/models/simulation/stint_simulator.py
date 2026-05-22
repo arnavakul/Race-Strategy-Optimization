@@ -11,9 +11,7 @@ from api.models.simulation.fuel_state import (
 from api.models.simulation.track_model import (
     get_track_parameters
 )
-# =========================
-# STINT SIMULATOR
-# =========================
+#Stint Sim
 
 def simulate_stint(
     track: str,
@@ -98,42 +96,42 @@ def simulate_stint(
 # TESTING
 # =========================
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    result = simulate_stint(
-        track="bahrain_2022",
-        compound="MEDIUM",
-        total_laps=15
-    )
+#     result = simulate_stint(
+#         track="bahrain_2022",
+#         compound="MEDIUM",
+#         total_laps=15
+#     )
 
-    print("\nSTINT SIMULATION\n")
+#     print("\nSTINT SIMULATION\n")
 
-    previous_lap_time = None
+#     previous_lap_time = None
 
-    for lap in result["laps"]:
+#     for lap in result["laps"]:
 
-        if previous_lap_time is None:
-            delta = 0.0
+#         if previous_lap_time is None:
+#             delta = 0.0
 
-        else:
-            delta = (
-                lap["lap_time"]
-                - previous_lap_time
-            )
+#         else:
+#             delta = (
+#                 lap["lap_time"]
+#                 - previous_lap_time
+#             )
 
-        print(
-            f"Lap {lap['lap']:>2} | "
-            f"Tyre Age: {lap['tyre_age']:>2} | "
-            f"Fuel: {lap['fuel_load']:.2f} kg | "
-            f"Lap Time: {lap['lap_time']:.3f} | "
-            f"Warmup: {lap['warmup_penalty']:.2f} | "
-            f"Delta: {delta:+.3f} | "
-            f"Cumulative: {lap['cumulative_time']:.3f}"
-        )
+#         print(
+#             f"Lap {lap['lap']:>2} | "
+#             f"Tyre Age: {lap['tyre_age']:>2} | "
+#             f"Fuel: {lap['fuel_load']:.2f} kg | "
+#             f"Lap Time: {lap['lap_time']:.3f} | "
+#             f"Warmup: {lap['warmup_penalty']:.2f} | "
+#             f"Delta: {delta:+.3f} | "
+#             f"Cumulative: {lap['cumulative_time']:.3f}"
+#         )
 
-        previous_lap_time = lap["lap_time"]
+#         previous_lap_time = lap["lap_time"]
 
-    print(
-        f"\nTotal Stint Time: "
-        f"{result['total_time']:.3f}"
-    )
+#     print(
+#         f"\nTotal Stint Time: "
+#         f"{result['total_time']:.3f}"
+#     )
