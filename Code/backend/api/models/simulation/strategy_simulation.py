@@ -70,8 +70,7 @@ if __name__ == "__main__":
     result = simulate_strategy(
         track="bahrain_2022",
         strategy=strategy
-    )
-
+    
     print("\nSTRATEGY SIMULATION\n")
 
     print("Strategy:", result["strategy"])
