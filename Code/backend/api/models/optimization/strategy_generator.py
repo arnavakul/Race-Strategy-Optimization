@@ -1,3 +1,7 @@
+from api.models.simulation.race_constraints import(
+    validate_strategy
+)
+
 COMPOUNDS = ["SOFT", "MEDIUM", "HARD"]
 
 MIN_STINT = {
@@ -47,8 +51,10 @@ def generate_strategies(total_laps):
                     (compound1, stint1_laps),
                     (compound2, stint2_laps)
                 ]
-
-                strategies.append(strategy)
+                
+                if validate_strategy(strategy,total_laps):
+                    
+                    strategies.append(strategy)
 
     # 2-stop
 
@@ -95,8 +101,9 @@ def generate_strategies(total_laps):
                             (compound2, stint2),
                             (compound3, stint3)
                         ]
-
-                        strategies.append(strategy)
+                        
+                        if validate_strategy(strategy,total_laps):
+                            strategies.append(strategy)
 
     return strategies
 
