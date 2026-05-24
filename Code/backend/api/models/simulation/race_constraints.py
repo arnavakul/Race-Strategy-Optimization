@@ -13,6 +13,17 @@ ALL_COMPOUNDS = (
     VALID_DRY_COMPOUNDS + VALID_WET_COMPOUNDS
 )
 
+WEATHER_ALLOWED_COMPOUNDS = {
+    "DRY": VALID_DRY_COMPOUNDS,
+    "MIXED": (
+        VALID_DRY_COMPOUNDS +
+        ["INTERMEDIATE"]
+    ),
+    "WET": VALID_WET_COMPOUNDS        
+
+}
+
+
 def is_wet_race(strategy):
     for compound, _ in strategy:
         if compound in VALID_WET_COMPOUNDS:
@@ -47,6 +58,20 @@ def validate_compound_rules(strategy):
     if len(dry_used) <2: 
         return False
     return True 
+
+def validate_weather_strategy(strategy, weather_state): #checks for the current compounds. meaning if the weather is dry check if all the tyres are dry or not[ferrari will be sad]
+    allowed_compounds = (
+        WEATHER_ALLOWED_COMPOUNDS[
+            weather_state
+        ]
+    )
+    
+    for compound, laps in strategy:
+        
+        if compound not in allowed_compounds:
+            return False
+    return True
+    
 
 def validate_strategy(strategy, race_laps):
     if not validate_total_laps(strategy,race_laps):

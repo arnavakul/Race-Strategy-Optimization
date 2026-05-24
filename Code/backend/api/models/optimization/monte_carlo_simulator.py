@@ -2,6 +2,10 @@ from api.models.simulation.strategy_simulation import (
     simulate_strategy
 )
 
+from api.models.simulation.weather_model import(
+    generate_weather_state
+)
+
 import random
 import statistics
 
@@ -24,8 +28,23 @@ def run_monte_carlo(
         random.seed(seed)
 
     safety_car_count = 0
+    
+    dry_count = 0
+
+    mixed_count = 0
+
+    wet_count = 0
 
     for sim in range(simulations):
+        
+        weather_state = generate_weather_state()
+        
+        if weather_state == "DRY":
+            dry_count +=1 
+        elif weather_state == "MIXED":
+            mixed_count +=1
+        elif weather_state == "WET":
+            wet_count += 1
 
         results = simulate_strategy(
             track,
@@ -34,6 +53,16 @@ def run_monte_carlo(
 
         total_time = results["total_time"]
 
+        if weather_state == "MIXED":
+            
+            weather_effect  = random.uniform(10,25)
+            total_time += weather_effect
+        
+        elif weather_state == "WET":
+            
+            weather_effect = random.uniform(35,60)
+            total_time +=weather_effect
+            
         safety_car = False
 
         if random.random() < 0.3:
@@ -133,8 +162,15 @@ def run_monte_carlo(
 
         "safety_car_race_average": (
             safety_car_race_average
-        )
+        ),
+        
+        "dry_count": dry_count,
+
+        "mixed_count": mixed_count,
+
+        "wet_count": wet_count,
     }
+
 
 
 # DEBUGGING TEST INPUTS
@@ -153,18 +189,18 @@ if __name__ == "__main__":
         # seed=42
     )
 
-    print(results["average_time"])
+    print("Average Time: ",results["average_time"])
 
-    print(results["best_case"])
+    print("Best Race Time: ",results["best_case"])
 
-    print(results["worst_case"])
+    print("Worst Race Time: ",results["worst_case"])
 
-    print(results["std_dev"])
+    print("Standard Deviations: ",results["std_dev"])
 
-    print(results["safety_car_count"])
+    print("Safety Car Count: ",results["safety_car_count"])
 
-    print(results["safety_car_rate"])
+    print("Rate of Safety Car(Safety car probability): ",results["safety_car_rate"]*100,"%")
 
-    print(results["clean_race_average"])
+    print("Clear Average Race: ",results["clean_race_average"])
 
-    print(results["safety_car_race_average"])
+    print("Safety Car Average Race: ",results["safety_car_race_average"])

@@ -2,18 +2,22 @@ from api.models.simulation.race_constraints import(
     validate_strategy
 )
 
-COMPOUNDS = ["SOFT", "MEDIUM", "HARD"]
+COMPOUNDS = ["SOFT", "MEDIUM", "HARD","INTERMEDIATE","WET"]
 
 MIN_STINT = {
     "SOFT": 10,
     "MEDIUM": 15,
-    "HARD": 20
+    "HARD": 20,
+    "INTERMEDIATE":5,
+    "WET":3
 }
 
 MAX_STINT = {
     "SOFT": 20,
     "MEDIUM": 30,
-    "HARD": 40
+    "HARD": 40,
+    "INTERMEDIATE":25,
+    "WET":20
 }
 
 
