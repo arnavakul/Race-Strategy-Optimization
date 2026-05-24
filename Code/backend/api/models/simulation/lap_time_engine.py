@@ -36,7 +36,7 @@ deg_model_path = os.path.join(
 
 with open(base_pace_path, "rb") as f:
     track_base_pace = pickle.load(f)
-    print(track_base_pace["bahrain_2024"])
+    # print(track_base_pace["bahrain_2024"])
 
 with open(deg_model_path, "rb") as f:
     degradation_models = pickle.load(f)
@@ -142,31 +142,31 @@ def compute_lap_time(
         - fuel_correction
     )
     
-    print("\nLAP TIME DEBUG\n")
+    # print("\nLAP TIME DEBUG\n")
 
-    print(
-        f"Track: {track}"
-    )
+    # print(
+    #     f"Track: {track}"
+    # )
 
-    print(
-        f"Base Pace: {base_pace:.3f}"
-    )
+    # print(
+    #     f"Base Pace: {base_pace:.3f}"
+    # )
 
-    print(
-        f"Compound Offset: {compound_offset:.3f}"
-    )
+    # print(
+    #     f"Compound Offset: {compound_offset:.3f}"
+    # )
 
-    print(
-        f"Degradation: {degradation:.3f}"
-    )
+    # print(
+    #     f"Degradation: {degradation:.3f}"
+    # )
 
-    print(
-        f"Fuel Correction: {fuel_correction:.3f}"
-    )
+    # print(
+    #     f"Fuel Correction: {fuel_correction:.3f}"
+    # )
 
-    print(
-        f"Final Lap Time: {lap_time:.3f}"
-    )
+    # print(
+    #     f"Final Lap Time: {lap_time:.3f}"
+    # )
 
     return {
         "lap_time": float(lap_time),

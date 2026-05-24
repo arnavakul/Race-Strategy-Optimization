@@ -72,9 +72,9 @@ if __name__ == "__main__":
         strategy=strategy
     )
 
-    print("\nSTRATEGY SIMULATION\n")
+    # print("\nSTRATEGY SIMULATION\n")
 
-    print("Strategy:", result["strategy"])
-    print("Total Race Time:", result["total_time"])
-    print("Pit Stops:", result["pitstops"])
-    print("Total Laps:", len(result["laps"]))
+    # print("Strategy:", result["strategy"])
+    # print("Total Race Time:", result["total_time"])
+    # print("Pit Stops:", result["pitstops"])
+    # print("Total Laps:", len(result["laps"]))

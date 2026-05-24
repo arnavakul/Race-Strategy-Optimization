@@ -58,9 +58,9 @@ def get_track_parameters(track):
     if track in TRACK_CHARACTERISTICS:
         return TRACK_CHARACTERISTICS[track]
 
-    print(
-        f"\nWARNING:"
-        f" Using default parameters for {track}\n"
-    )
+    # print(
+    #     f"\nWARNING:"
+    #     f" Using default parameters for {track}\n"
+    # )
 
     return DEFAULT_TRACK
