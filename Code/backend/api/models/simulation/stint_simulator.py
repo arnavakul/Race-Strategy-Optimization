@@ -13,6 +13,17 @@ from api.models.simulation.track_model import (
     get_track_parameters
 )
 
+from api.models.simulation.crossover_logic import(
+    get_recommended_compound
+)
+
+from api.models.simulation.pitstop_model import(
+    get_pitstop_time
+)
+
+from api.models.simulation.strategy_decision_engine import (
+    should_pit
+)
 
 # =========================================
 # STINT SIMULATOR
@@ -42,27 +53,41 @@ def simulate_stint(
 
     # warmup penalties for tyres
     warmup_map = track_data["warmup_penalty"]
+    
+    current_compound = compound
+    current_tyre_age = 0
 
     # simulate every lap
     for lap in range(total_laps):
 
         # current weather for this lap
         weather_state = weather_timeline[lap]
+        
+        pit_for_weather = should_pit(track=track, compound=current_compound, tyre_age=current_tyre_age,weather_state=weather_state)
+        
+        pit_loss = 0
+        
+        if pit_for_weather:
+            laps_remaining = (total_laps-current_lap)
+            new_compound = get_recommended_compound(weather_state,laps_remaining)
+            current_compound = new_compound
+            pit_loss = get_pitstop_time(track)
+            cumulative_time += pit_loss
+            current_tyre_age = 0
 
         # lap numbering starts from 1
         current_lap: int = lap + 1
-
-        # tyre age increases every lap
-        tyre_age: int = current_lap
+        
+        current_tyre_age += 1
 
         # default warmup penalty
         warmup_penalty: float = 0.0
 
         # apply warmup penalty for first 2 laps
-        if tyre_age <= 2:
+        if current_tyre_age <= 2:
 
             warmup_penalty = float(
-                warmup_map[compound]
+                warmup_map[current_compound]
             )
 
         # fuel correction effect
@@ -73,8 +98,8 @@ def simulate_stint(
         # compute base lap physics
         lap_data: Dict[str, Any] = compute_lap_time(
             track=track,
-            compound=compound,
-            tyre_age=tyre_age,
+            compound=current_compound,
+            tyre_age=current_tyre_age,
             fuel_correction=fuel_correction
         )
 
@@ -108,7 +133,7 @@ def simulate_stint(
 
             "lap": current_lap,
 
-            "tyre_age": tyre_age,
+            "tyre_age": current_tyre_age,
 
             "lap_time": corrected_lap_time,
 
@@ -122,7 +147,14 @@ def simulate_stint(
 
             "cumulative_time": cumulative_time,
 
-            "weather_state": weather_state
+            "weather_state": weather_state,
+            
+            "compound": current_compound,
+
+            "pit_for_weather": pit_for_weather,
+            
+            "pit_loss": pit_loss
+            
         })
 
         # burn fuel after lap
@@ -136,25 +168,54 @@ def simulate_stint(
         "laps": results
     }
 
-
-# =========================================
 # TESTING
-# =========================================
+
 
 if __name__ == "__main__":
 
-    from api.models.simulation.weather_model import (
-        generate_weather_timeline
-    )
+    # dynamic weather scenario
+    weather_timeline = [
 
-    weather_timeline = generate_weather_timeline(
-        15
-    )
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+
+        "MIXED",
+        "MIXED",
+        "MIXED",
+
+        "WET",
+        "WET",
+        "WET",
+
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY",
+        "DRY"
+    ]
 
     result = simulate_stint(
-        track="bahrain_2022",
+
+        track="bahrain_2024",
+
         compound="MEDIUM",
-        total_laps=15,
+
+        total_laps=25,
+
         weather_timeline=weather_timeline
     )
 
@@ -171,8 +232,18 @@ if __name__ == "__main__":
         else:
 
             delta = (
+
                 lap["lap_time"]
+
                 - previous_lap_time
+            )
+
+        # highlight pitstop
+        if lap["pit_for_weather"]:
+
+            print(
+                f"\n=== PITSTOP ON LAP "
+                f"{lap['lap']} ===\n"
             )
 
         print(
@@ -180,6 +251,8 @@ if __name__ == "__main__":
             f"Lap {lap['lap']:>2} | "
 
             f"Weather: {lap['weather_state']:<7} | "
+
+            f"Compound: {lap['compound']:<13} | "
 
             f"Tyre Age: {lap['tyre_age']:>2} | "
 
@@ -189,6 +262,10 @@ if __name__ == "__main__":
 
             f"Warmup: {lap['warmup_penalty']:.2f} | "
 
+            f"Pit: {lap['pit_for_weather']} | "
+
+            f"Pit Loss: {lap['pit_loss']:<5} | "
+
             f"Delta: {delta:+.3f} | "
 
             f"Cumulative: {lap['cumulative_time']:.3f}"
@@ -197,6 +274,8 @@ if __name__ == "__main__":
         previous_lap_time = lap["lap_time"]
 
     print(
+
         f"\nTotal Stint Time: "
+
         f"{result['total_time']:.3f}"
     )

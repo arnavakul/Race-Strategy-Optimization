@@ -22,14 +22,35 @@ def should_pit_for_weather(current_compound, current_weather):
             return True
     return False
 
-def get_recommended_compound(weather_state):
-    if weather_state == "DRY":
-        return "MEDIUM"
-    elif weather_state == "MIXED":
-        return "INTERMEDIATE"
-    elif weather_state == "WET":
+def get_recommended_compound(
+    weather_state,
+    laps_remaining
+):
+
+    # full wet conditions
+    if weather_state == "WET":
+
         return "WET"
-    return "MEDIUM"
+
+    # crossover conditions
+    elif weather_state == "MIXED":
+
+        return "INTERMEDIATE"
+
+    # aggressive final stint
+    elif laps_remaining <= 10:
+
+        return "SOFT"
+
+    # medium stint
+    elif laps_remaining <= 20:
+
+        return "MEDIUM"
+
+    # long stint
+    else:
+
+        return "HARD"
 
 #Testing
 if __name__ == "__main__":
@@ -63,20 +84,23 @@ if __name__ == "__main__":
     print(
         "Recommended for DRY:",
         get_recommended_compound(
-            "DRY"
-        )
+    "DRY",
+    8
+)
     )
 
     print(
         "Recommended for MIXED:",
         get_recommended_compound(
-            "MIXED"
-        )
+    "MIXED",
+    15
+)
     )
 
     print(
         "Recommended for WET:",
         get_recommended_compound(
-            "WET"
-        )
+    "WET",
+    20
+)
     )
