@@ -6,19 +6,44 @@
 # react to weather?
 # react to degradation?
 
-from api.models.simulation.crossover_logic import (should_pit_for_weather)
 from api.models.simulation.track_model import (get_track_parameters)
 
 import os
+
+def is_correct_tyre_for_weather(
+    compound,weather_state
+):
+    if weather_state == "DRY":
+        return compound in [
+            "SOFT",
+            "MEDIUM",
+            "HARD"
+        ]
+    
+    elif weather_state == "MIXED":
+        
+        return compound == "INTERMIDIATE"
+    
+    elif weather_state == "WET":
+        
+        return compound == "WET"
+    return False
+
 
 def should_pit(track, tyre_age, compound, weather_state):
     track_data = get_track_parameters(track)
     
     cliff_age = track_data["cliff_age"][compound]
     
-    weather_pit = should_pit_for_weather(compound, weather_state)
-    
-    if weather_pit:
+    correct_tyre = (
+        is_correct_tyre_for_weather(
+            compound,
+            weather_state
+        )
+    )
+
+    if not correct_tyre:
+
         return True
     
     if tyre_age >= cliff_age:

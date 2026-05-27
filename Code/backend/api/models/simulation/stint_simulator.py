@@ -13,11 +13,11 @@ from api.models.simulation.track_model import (
     get_track_parameters
 )
 
-from api.models.simulation.crossover_logic import(
+from api.models.simulation.crossover_logic import (
     get_recommended_compound
 )
 
-from api.models.simulation.pitstop_model import(
+from api.models.simulation.pitstop_model import (
     get_pitstop_time
 )
 
@@ -25,142 +25,211 @@ from api.models.simulation.strategy_decision_engine import (
     should_pit
 )
 
-# =========================================
+from api.models.simulation.race_state import (
+    RaceState
+)
+
 # STINT SIMULATOR
-# =========================================
 
 def simulate_stint(
     track: str,
-    compound: str,
     total_laps: int,
-    weather_timeline
+    weather_timeline,
+    race_state,
+    starting_lap=0
 ) -> Dict[str, Any]:
 
-    # store all lap data
+    # Store lap telemetry
     results: List[Dict[str, Any]] = []
 
-    # total stint time
+    # Total stint time
     cumulative_time: float = 0.0
 
-    # initialize fuel model
+    # Initialize fuel model
     fuel = FuelState(
         starting_fuel=100,
         fuel_burn_per_lap=1.8,
     )
 
-    # get track-specific parameters
+    # Track-specific parameters
     track_data = get_track_parameters(track)
 
-    # warmup penalties for tyres
+    # Warmup penalties
     warmup_map = track_data["warmup_penalty"]
-    
-    current_compound = compound
-    current_tyre_age = 0
 
-    # simulate every lap
+    # Simulate every lap
     for lap in range(total_laps):
 
-        # current weather for this lap
-        weather_state = weather_timeline[lap]
-        
-        pit_for_weather = should_pit(track=track, compound=current_compound, tyre_age=current_tyre_age,weather_state=weather_state)
-        
+        # Global race lap
+        global_lap = starting_lap + lap
+
+        # Human-readable lap number
+        current_lap = global_lap + 1
+
+        # Current weather
+        weather_state = weather_timeline[
+            global_lap
+        ]
+
+        # Pit decision logic
+        pit_for_weather = should_pit(
+
+            track=track,
+
+            compound=race_state.current_compound,
+
+            tyre_age=race_state.current_tyre_age,
+
+            weather_state=weather_state
+        )
+
         pit_loss = 0
-        
+
+        # Dynamic crossover pitstop
         if pit_for_weather:
-            laps_remaining = (total_laps-current_lap)
-            new_compound = get_recommended_compound(weather_state,laps_remaining)
-            current_compound = new_compound
-            pit_loss = get_pitstop_time(track)
-            cumulative_time += pit_loss
-            current_tyre_age = 0
 
-        # lap numbering starts from 1
-        current_lap: int = lap + 1
-        
-        current_tyre_age += 1
-
-        # default warmup penalty
-        warmup_penalty: float = 0.0
-
-        # apply warmup penalty for first 2 laps
-        if current_tyre_age <= 2:
-
-            warmup_penalty = float(
-                warmup_map[current_compound]
+            laps_remaining = (
+                total_laps - lap
             )
 
-        # fuel correction effect
+            new_compound = (
+                get_recommended_compound(
+                    weather_state,
+                    laps_remaining
+                )
+            )
+
+            # Register new compound
+            race_state.register_compound_usage(
+                new_compound
+            )
+
+            # Register pitstop
+            race_state.register_pitstop()
+
+            # Add pitloss
+            pit_loss = get_pitstop_time(
+                track
+            )
+
+            cumulative_time += pit_loss
+
+            # Log event
+            race_state.log_event(
+                f"Lap {current_lap}: "
+                f"Pit for {new_compound}"
+            )
+
+        # Increment tyre age
+        race_state.increment_tyre_age()
+
+        # Default warmup
+        warmup_penalty: float = 0.0
+
+        # Warmup for first 2 laps
+        if race_state.current_tyre_age <= 2:
+
+            warmup_penalty = float(
+
+                warmup_map[
+                    race_state.current_compound
+                ]
+            )
+
+        # Fuel correction
         fuel_correction: float = (
             fuel.getFuelCorrection()
         )
 
-        # compute base lap physics
-        lap_data: Dict[str, Any] = compute_lap_time(
-            track=track,
-            compound=current_compound,
-            tyre_age=current_tyre_age,
-            fuel_correction=fuel_correction
+        # Compute lap physics
+        lap_data: Dict[str, Any] = (
+            compute_lap_time(
+
+                track=track,
+
+                compound=(
+                    race_state.current_compound
+                ),
+
+                tyre_age=(
+                    race_state.current_tyre_age
+                ),
+
+                fuel_correction=fuel_correction
+            )
         )
 
-        # final lap time after warmup
+        # Final lap time
         corrected_lap_time: float = (
+
             float(lap_data["lap_time"])
+
             + warmup_penalty
         )
 
-        # mixed weather slows lap slightly
+        # Mixed weather slowdown
         if weather_state == "MIXED":
 
-            corrected_lap_time += random.uniform(
-                0.5,
-                1.5
+            corrected_lap_time += (
+                random.uniform(0.5, 1.5)
             )
 
-        # wet weather causes large slowdown
+        # Wet weather slowdown
         elif weather_state == "WET":
 
-            corrected_lap_time += random.uniform(
-                2,
-                5
+            corrected_lap_time += (
+                random.uniform(2, 5)
             )
 
-        # update cumulative stint time
+        # Update stint time
         cumulative_time += corrected_lap_time
 
-        # store lap telemetry
+        # Store telemetry
         results.append({
 
             "lap": current_lap,
 
-            "tyre_age": current_tyre_age,
+            "tyre_age": (
+                race_state.current_tyre_age
+            ),
 
             "lap_time": corrected_lap_time,
 
-            "warmup_penalty": warmup_penalty,
+            "warmup_penalty": (
+                warmup_penalty
+            ),
 
             "fuel_load": float(
                 fuel.current_fuel
             ),
 
-            "fuel_correction": fuel_correction,
+            "fuel_correction": (
+                fuel_correction
+            ),
 
-            "cumulative_time": cumulative_time,
+            "cumulative_time": (
+                cumulative_time
+            ),
 
-            "weather_state": weather_state,
-            
-            "compound": current_compound,
+            "weather_state": (
+                weather_state
+            ),
 
-            "pit_for_weather": pit_for_weather,
-            
+            "compound": (
+                race_state.current_compound
+            ),
+
+            "pit_for_weather": (
+                pit_for_weather
+            ),
+
             "pit_loss": pit_loss
-            
         })
 
-        # burn fuel after lap
+        # Burn fuel
         fuel.burnFuel()
 
-    # final stint output
+    # Final output
     return {
 
         "total_time": cumulative_time,
@@ -168,12 +237,12 @@ def simulate_stint(
         "laps": results
     }
 
+
 # TESTING
 
 
 if __name__ == "__main__":
 
-    # dynamic weather scenario
     weather_timeline = [
 
         "DRY",
@@ -208,15 +277,21 @@ if __name__ == "__main__":
         "DRY"
     ]
 
+    race_state = RaceState()
+
+    race_state.register_compound_usage(
+        "MEDIUM"
+    )
+
     result = simulate_stint(
 
         track="bahrain_2024",
 
-        compound="MEDIUM",
-
         total_laps=25,
 
-        weather_timeline=weather_timeline
+        weather_timeline=weather_timeline,
+
+        race_state=race_state
     )
 
     print("\nSTINT SIMULATION\n")
@@ -238,7 +313,6 @@ if __name__ == "__main__":
                 - previous_lap_time
             )
 
-        # highlight pitstop
         if lap["pit_for_weather"]:
 
             print(
