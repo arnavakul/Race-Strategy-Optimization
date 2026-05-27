@@ -58,6 +58,20 @@ class RaceState:
             "MEDIUM",
             "HARD"
         }
+        wet_compounds = {
+            "INTERMEDIATE",
+            "WET"
+        }
+
+        used_wet = self.used_compounds.intersection(
+            wet_compounds
+        )
+
+        if len(used_wet) > 0:
+
+            self.is_legal_race = True
+
+            return True
 
         used_dry = self.used_compounds.intersection(
             dry_compounds

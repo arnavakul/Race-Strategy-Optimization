@@ -7,6 +7,7 @@
 # react to degradation?
 
 from api.models.simulation.track_model import (get_track_parameters)
+from api.models.simulation.pit_window_model import(evaluate_pit_window)
 
 import os
 
@@ -22,7 +23,7 @@ def is_correct_tyre_for_weather(
     
     elif weather_state == "MIXED":
         
-        return compound == "INTERMIDIATE"
+        return compound == "INTERMEDIATE"
     
     elif weather_state == "WET":
         
@@ -35,19 +36,39 @@ def should_pit(track, tyre_age, compound, weather_state):
     
     cliff_age = track_data["cliff_age"][compound]
     
+    pit_window = evaluate_pit_window(
+        tyre_age,
+        cliff_age
+    )
+    
     correct_tyre = (
         is_correct_tyre_for_weather(
             compound,
             weather_state
         )
     )
-
+    
     if not correct_tyre:
 
         return True
     
-    if tyre_age >= cliff_age:
+    
+    if pit_window == "FORCE_PIT":
         return True
+    
+    elif pit_window == "TOO_EARLY":
+
+        return False
+    
+    elif pit_window == "UNDERCUT_WINDOW":
+        return False
+    
+  
+    elif pit_window == "EXTEND_WINDOW":
+        return False
+
+    
+    
     
     return False
 
