@@ -7,7 +7,8 @@ from api.models.simulation.pitstop_model import (
 )
 
 
-def simulate_strategy(track, strategy):
+
+def simulate_strategy(track, strategy,weather_timeline):
 
     total_race_time = 0
     all_laps = []
@@ -20,7 +21,8 @@ def simulate_strategy(track, strategy):
         stint_result = simulate_stint(
             track=track,
             compound=compound,
-            total_laps=laps
+            total_laps=laps,
+            weather_timeline=weather_timeline
         )
 
         # add stint race time
@@ -50,6 +52,8 @@ def simulate_strategy(track, strategy):
             total_race_time += pit_loss
 
             pit_count += 1
+            print(stint_result["laps"][:5])
+            
 
     return {
         "strategy": strategy,
@@ -69,12 +73,14 @@ if __name__ == "__main__":
 
     result = simulate_strategy(
         track="bahrain_2022",
-        strategy=strategy
+        strategy=strategy,
+        weather_timeline="MIXED"
     )
 
-    # print("\nSTRATEGY SIMULATION\n")
+    print("\nSTRATEGY SIMULATION\n")
 
-    # print("Strategy:", result["strategy"])
-    # print("Total Race Time:", result["total_time"])
-    # print("Pit Stops:", result["pitstops"])
-    # print("Total Laps:", len(result["laps"]))
+    print("Strategy:", result["strategy"])
+    print("Total Race Time:", result["total_time"])
+    print("Pit Stops:", result["pitstops"])
+    print("Total Laps:", len(result["laps"]))
+    print("Weather :", (result["weather"]))

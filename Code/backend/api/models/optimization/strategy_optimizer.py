@@ -10,6 +10,14 @@ from api.models.optimization.monte_carlo_simulator import(
     run_monte_carlo
 )
 
+from api.models.simulation.race_constraints import(
+    validate_weather_strategy
+)
+
+from api.models.simulation.weather_model import(
+    generate_weather_state
+)
+
 def strategy_optimizer(track, total_laps,risk_factor):
     
     risk_factor = 1.0 
@@ -19,6 +27,16 @@ def strategy_optimizer(track, total_laps,risk_factor):
     results = []
 
     for strategy in strategies:
+        
+        weather_state = generate_weather_state()
+        is_valid_weather_strategy = (
+            validate_weather_strategy(
+                strategy, weather_state
+            )
+        )
+        
+        if not is_valid_weather_strategy:
+            continue
         
         mc_result = run_monte_carlo(
             strategy=strategy,

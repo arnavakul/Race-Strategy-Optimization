@@ -3,7 +3,7 @@ from api.models.simulation.strategy_simulation import (
 )
 
 from api.models.simulation.weather_model import(
-    generate_weather_state
+    generate_weather_state,generate_weather_timeline
 )
 
 import random
@@ -37,32 +37,22 @@ def run_monte_carlo(
 
     for sim in range(simulations):
         
-        weather_state = generate_weather_state()
+        weather_timeline = (generate_weather_timeline(57))   
         
-        if weather_state == "DRY":
+        if weather_timeline == "DRY":
             dry_count +=1 
-        elif weather_state == "MIXED":
+        elif weather_timeline == "MIXED":
             mixed_count +=1
-        elif weather_state == "WET":
+        elif weather_timeline == "WET":
             wet_count += 1
 
         results = simulate_strategy(
             track,
-            strategy
+            strategy,
+            weather_timeline
         )
 
-        total_time = results["total_time"]
-
-        if weather_state == "MIXED":
-            
-            weather_effect  = random.uniform(10,25)
-            total_time += weather_effect
-        
-        elif weather_state == "WET":
-            
-            weather_effect = random.uniform(35,60)
-            total_time +=weather_effect
-            
+        total_time = results["total_time"]            
         safety_car = False
 
         if random.random() < 0.3:
