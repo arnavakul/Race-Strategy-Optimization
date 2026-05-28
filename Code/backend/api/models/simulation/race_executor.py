@@ -30,8 +30,14 @@ from api.models.simulation.track_model import (
     get_track_parameters
 )
 
-from api.models.simulation.pit_window_model import(
+from api.models.simulation.pit_window_model import (
     evaluate_pit_window
+)
+
+from api.models.simulation.safety_car_model import (
+    check_safety_car,
+    get_safety_car_multiplier,
+    generate_safety_car_duration
 )
 
 import random
@@ -81,6 +87,13 @@ def execute_race(
     # Total race time
     total_race_time = 0
 
+    # Safety car state
+    safety_car_active = False
+
+    safety_car_remaining = 0
+
+    safety_car_deployments = 0
+
     # Simulate full race
     for lap in range(total_laps):
 
@@ -92,6 +105,38 @@ def execute_race(
             lap
         ]
 
+        # Random SC deployment
+        if not safety_car_active:
+
+            if check_safety_car():
+
+                safety_car_active = True
+
+                safety_car_remaining = (
+                    generate_safety_car_duration()
+                )
+
+                safety_car_deployments += 1
+
+                race_state.log_event(
+                    f"Lap {current_lap}: "
+                    f"SAFETY CAR DEPLOYED"
+                )
+
+        # Handle active safety car
+        if safety_car_active:
+
+            safety_car_remaining -= 1
+
+            if safety_car_remaining <= 0:
+
+                safety_car_active = False
+
+                race_state.log_event(
+                    f"Lap {current_lap}: "
+                    f"SAFETY CAR ENDED"
+                )
+
         # Strategy pit decision
         pit_decision = should_pit(
 
@@ -102,8 +147,10 @@ def execute_race(
             tyre_age=race_state.current_tyre_age,
 
             weather_state=weather_state,
+
+            strategy_profile="BALANCED",
             
-            strategy_profile= "BALANCED"
+            safety_car_active=safety_car_active
         )
 
         pit_now = pit_decision["pit"]
@@ -126,7 +173,7 @@ def execute_race(
                     laps_remaining
                 )
             )
-            
+
             pit_window = evaluate_pit_window(
 
                 race_state.current_tyre_age,
@@ -134,8 +181,8 @@ def execute_race(
                 track_data["cliff_age"][
                     race_state.current_compound
                 ]
-)
-            
+            )
+
             # Avoid useless same-tyre stop
             if (
                 new_compound == race_state.current_compound
@@ -145,27 +192,30 @@ def execute_race(
 
                 pit_now = False
 
-            # Register tyre switch
-            race_state.register_compound_usage(
-                new_compound
-            )
+            # Execute valid pitstop
+            if pit_now:
 
-            # Register pitstop
-            race_state.register_pitstop()
+                # Register tyre switch
+                race_state.register_compound_usage(
+                    new_compound
+                )
 
-            # Add pitloss
-            pit_loss = get_pitstop_time(
-                track
-            )
+                # Register pitstop
+                race_state.register_pitstop()
 
-            total_race_time += pit_loss
+                # Add pitloss
+                pit_loss = get_pitstop_time(
+                    track
+                )
 
-            # Store event
-            race_state.log_event(
-                f"Lap {current_lap}: "
-                f"{pit_reason} -> "
-                f"{new_compound}"
-            )
+                total_race_time += pit_loss
+
+                # Store event
+                race_state.log_event(
+                    f"Lap {current_lap}: "
+                    f"{pit_reason} -> "
+                    f"{new_compound}"
+                )
 
         # Increase tyre age
         race_state.increment_tyre_age()
@@ -228,6 +278,13 @@ def execute_race(
                 random.uniform(2, 5)
             )
 
+        # Apply SC slowdown
+        if safety_car_active:
+
+            corrected_lap_time *= (
+                get_safety_car_multiplier()
+            )
+
         # Update total race time
         total_race_time += (
             corrected_lap_time
@@ -240,6 +297,10 @@ def execute_race(
 
             "compound": (
                 race_state.current_compound
+            ),
+
+            "safety_car": (
+                safety_car_active
             ),
 
             "tyre_age": (
@@ -276,6 +337,10 @@ def execute_race(
 
         "total_time": total_race_time,
 
+        "safety_car_deployments": (
+            safety_car_deployments
+        ),
+
         "laps": all_laps,
 
         "pitstops": (
@@ -295,8 +360,8 @@ def execute_race(
         )
     }
 
-# TESTING
 
+# TESTING
 
 if __name__ == "__main__":
 
@@ -314,6 +379,11 @@ if __name__ == "__main__":
     print(
         "Total Race Time:",
         result["total_time"]
+    )
+
+    print(
+        "Safety Car Deployments:",
+        result["safety_car_deployments"]
     )
 
     print(

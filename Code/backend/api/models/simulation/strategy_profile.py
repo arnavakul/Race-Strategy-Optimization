@@ -1,31 +1,29 @@
-
 # Responsible for:
 # - aggressive strategies
 # - conservative strategies
 # - balanced strategies
 # - pit decision weighting
 
+STRATEGY_PROFILES = {
 
-STRATEGY_PROFILE = {
     "AGGRESSIVE": {
 
-        "undercut_chance": 0.65,
+        "undercut_chance": 0.85,
 
-        "extend_chance": 0.05
+        "extend_chance": 0.10
     },
-    
+
     "BALANCED": {
 
-        "undercut_chance": 0.35,
+        "undercut_chance": 0.50,
 
-        "extend_chance": 0.15
+        "extend_chance": 0.35
     },
-    
-    "BALANCED": {
 
-        "undercut_chance": 0.35,
+    "CONSERVATIVE": {
 
-        "extend_chance": 0.15
-    },
-    
+        "undercut_chance": 0.20,
+
+        "extend_chance": 0.70
+    }
 }
