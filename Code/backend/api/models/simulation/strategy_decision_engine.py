@@ -8,6 +8,7 @@
 
 from api.models.simulation.track_model import (get_track_parameters)
 from api.models.simulation.pit_window_model import(evaluate_pit_window)
+from api.models.simulation.strategy_profile import (STRATEGY_PROFILE)
 import random
 import os
 
@@ -31,8 +32,17 @@ def is_correct_tyre_for_weather(
     return False
 
 
-def should_pit(track, tyre_age, compound, weather_state):
+def should_pit(track, tyre_age, compound, weather_state, strategy_profile = "BALANCED"):
     track_data = get_track_parameters(track)
+    profile = STRATEGY_PROFILE[strategy_profile]
+    
+    undercut_chance = profile[
+        "undercut_chance"
+    ]
+    
+    extend_chance = profile[
+        "extend_chance"
+    ]
     
     cliff_age = track_data["cliff_age"][compound]
     
@@ -75,7 +85,7 @@ def should_pit(track, tyre_age, compound, weather_state):
         }
     
     elif pit_window == "UNDERCUT_WINDOW":
-        if random.random()<0.35:
+        if random.random()<undercut_chance:
             return{
             "pit":True,
             "reason" : "UNDERCUT"
@@ -87,7 +97,7 @@ def should_pit(track, tyre_age, compound, weather_state):
     
   
     elif pit_window == "EXTEND_WINDOW":
-        if random.random() < 0.15:
+        if random.random() < extend_chance:
             return {
                 "pit": True,
                 "reason": "EXTEND_COMPLETE"

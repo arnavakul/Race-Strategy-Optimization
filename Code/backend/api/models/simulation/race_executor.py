@@ -101,7 +101,9 @@ def execute_race(
 
             tyre_age=race_state.current_tyre_age,
 
-            weather_state=weather_state
+            weather_state=weather_state,
+            
+            strategy_profile= "BALANCED"
         )
 
         pit_now = pit_decision["pit"]
