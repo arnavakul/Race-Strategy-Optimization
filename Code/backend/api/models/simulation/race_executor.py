@@ -40,6 +40,12 @@ from api.models.simulation.safety_car_model import (
     generate_safety_car_duration
 )
 
+from api.models.simulation.vsc_model import (
+    check_virtual_safety_Car,
+    generate_vsc_duration,
+    get_vsc_multiplier
+)
+
 import random
 
 # RACE EXECUTOR
@@ -94,6 +100,13 @@ def execute_race(
 
     safety_car_deployments = 0
 
+    # VSC state
+    vsc_active = False
+
+    vsc_remaining = 0
+
+    vsc_deployments = 0
+
     # Simulate full race
     for lap in range(total_laps):
 
@@ -106,7 +119,7 @@ def execute_race(
         ]
 
         # Random SC deployment
-        if not safety_car_active:
+        if not safety_car_active and not vsc_active:
 
             if check_safety_car():
 
@@ -123,6 +136,25 @@ def execute_race(
                     f"SAFETY CAR DEPLOYED"
                 )
 
+        # Random VSC deployment
+        if not safety_car_active and not vsc_active:
+
+            if check_virtual_safety_Car():
+
+                vsc_active = True
+
+                vsc_remaining = (
+                    generate_vsc_duration()
+                )
+
+                vsc_deployments += 1
+
+                race_state.log_event(
+
+                    f"Lap {current_lap}: "
+                    f"VIRTUAL SAFETY CAR DEPLOYED"
+                )
+
         # Handle active safety car
         if safety_car_active:
 
@@ -137,6 +169,21 @@ def execute_race(
                     f"SAFETY CAR ENDED"
                 )
 
+        # Handle active VSC
+        if vsc_active:
+
+            vsc_remaining -= 1
+
+            if vsc_remaining <= 0:
+
+                vsc_active = False
+
+                race_state.log_event(
+
+                    f"Lap {current_lap}: "
+                    f"VIRTUAL SAFETY CAR ENDED"
+                )
+
         # Strategy pit decision
         pit_decision = should_pit(
 
@@ -149,8 +196,10 @@ def execute_race(
             weather_state=weather_state,
 
             strategy_profile="BALANCED",
-            
-            safety_car_active=safety_car_active
+
+            safety_car_active=safety_car_active,
+
+            vsc_active=vsc_active
         )
 
         pit_now = pit_decision["pit"]
@@ -203,11 +252,22 @@ def execute_race(
                 # Register pitstop
                 race_state.register_pitstop()
 
-                # Add pitloss
+                # Base pitloss
                 pit_loss = get_pitstop_time(
                     track
                 )
 
+                # Reduced pitloss under SC
+                if safety_car_active:
+
+                    pit_loss *= 0.65
+
+                # Reduced pitloss under VSC
+                elif vsc_active:
+
+                    pit_loss *= 0.82
+
+                # Add pitloss
                 total_race_time += pit_loss
 
                 # Store event
@@ -285,6 +345,13 @@ def execute_race(
                 get_safety_car_multiplier()
             )
 
+        # Apply VSC slowdown
+        elif vsc_active:
+
+            corrected_lap_time *= (
+                get_vsc_multiplier()
+            )
+
         # Update total race time
         total_race_time += (
             corrected_lap_time
@@ -301,6 +368,10 @@ def execute_race(
 
             "safety_car": (
                 safety_car_active
+            ),
+
+            "virtual_safety_car": (
+                vsc_active
             ),
 
             "tyre_age": (
@@ -339,6 +410,10 @@ def execute_race(
 
         "safety_car_deployments": (
             safety_car_deployments
+        ),
+
+        "vsc_deployments": (
+            vsc_deployments
         ),
 
         "laps": all_laps,
@@ -384,6 +459,11 @@ if __name__ == "__main__":
     print(
         "Safety Car Deployments:",
         result["safety_car_deployments"]
+    )
+
+    print(
+        "VSC Deployments:",
+        result["vsc_deployments"]
     )
 
     print(

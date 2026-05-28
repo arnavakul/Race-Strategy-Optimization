@@ -34,7 +34,7 @@ def is_correct_tyre_for_weather(
     return False
 
 
-def should_pit(track, tyre_age, compound, weather_state, strategy_profile = "BALANCED",safety_car_active = False):
+def should_pit(track, tyre_age, compound, weather_state, strategy_profile = "BALANCED",safety_car_active = False,     vsc_active=False):
     track_data = get_track_parameters(track)
     profile = STRATEGY_PROFILES[strategy_profile]
     
