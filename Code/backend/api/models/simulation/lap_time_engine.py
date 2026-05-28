@@ -12,6 +12,10 @@ from api.models.simulation.track_evolution_model import (
     get_track_grip
 )
 
+from api.models.simulation.driver_behavior_model import (
+    DRIVER_PROFILES
+)
+
 # Paths
 
 BASE_DIR = os.path.dirname(
@@ -75,53 +79,71 @@ def get_degradation(
     # Fresh tyre gain
     if tyre_age <= 3:
 
-        degradation = -0.05 * tyre_age
+        degradation = (
+            -0.05 * tyre_age
+        )
 
-    # Stable degradation phase
+    # Normal degradation phase
     elif tyre_age <= 10:
+
+        base_phase = -0.15
 
         degradation = (
 
-            (tyre_age - 3)
+            base_phase
+
+            + (tyre_age - 3)
 
             * abs(deg)
 
-            * 0.3
+            * 0.30
         )
 
     # High degradation phase
     elif tyre_age <= cliff_age:
 
+        base_phase = (
+
+            -0.15
+
+            + (7 * abs(deg) * 0.30)
+        )
+
         degradation = (
 
-            0.10
+            base_phase
 
             + (tyre_age - 10)
 
             * abs(deg)
 
-            * 0.25
+            * 0.45
         )
 
-    # Tyre cliff phase
+    # Tyre cliff
     else:
 
-        degradation = (
+        base_phase = (
 
-            2.1
+            -0.15
 
-            + (cliff_age - 10)
+            + (7 * abs(deg) * 0.30)
+
+            + ((cliff_age - 10)
 
             * abs(deg)
 
-            * 0.8
+            * 0.45)
         )
 
-        degradation += (
+        degradation = (
 
-            tyre_age - cliff_age
+            base_phase
 
-        ) * cliff_multiplier
+            + (tyre_age - cliff_age)
+
+            * cliff_multiplier
+        )
 
     return degradation
 
@@ -133,10 +155,24 @@ def compute_lap_time(
     tyre_age,
     fuel_correction,
     current_lap,
-    total_laps
+    total_laps,
+    driver_profile = "BALANCED"
 ):
 
     track_data = get_track_parameters(track)
+    
+    # Driver behavior profile
+    driver_data = DRIVER_PROFILES[
+        driver_profile
+    ]
+
+    pace_gain = driver_data[
+        "pace_gain"
+    ]
+
+    deg_multiplier = driver_data[
+        "deg_multiplier"
+    ]
 
     # Track evolution grip
     track_grip = get_track_grip(
@@ -150,10 +186,13 @@ def compute_lap_time(
 
     base_pace = get_base_pace(track)
 
-    degradation = get_degradation(
-        track,
-        compound,
-        tyre_age
+    degradation = (
+        get_degradation(
+            track,
+            compound,
+            tyre_age
+        )
+        * deg_multiplier
     )
 
     compound_offset = (
@@ -170,7 +209,9 @@ def compute_lap_time(
         + degradation
 
         - fuel_correction
-    )
+
+        - pace_gain
+    )   
 
     # Apply track evolution
     lap_time = (
@@ -182,37 +223,7 @@ def compute_lap_time(
         -0.08,
         0.08
     )
-
-    # print("\nLAP TIME DEBUG\n")
-
-    # print(
-    #     f"Track: {track}"
-    # )
-
-    # print(
-    #     f"Base Pace: {base_pace:.3f}"
-    # )
-
-    # print(
-    #     f"Compound Offset: {compound_offset:.3f}"
-    # )
-
-    # print(
-    #     f"Degradation: {degradation:.3f}"
-    # )
-
-    # print(
-    #     f"Fuel Correction: {fuel_correction:.3f}"
-    # )
-
-    # print(
-    #     f"Track Grip: {track_grip:.3f}"
-    # )
-
-    # print(
-    #     f"Final Lap Time: {lap_time:.3f}"
-    # )
-
+    
     return {
 
         "lap_time": float(lap_time),
@@ -255,7 +266,9 @@ def main():
 
             current_lap=lap,
 
-            total_laps=57
+            total_laps=57,
+
+            driver_profile="AGGRESSIVE"
         )
 
         print(
