@@ -8,6 +8,9 @@ from api.models.simulation.track_model import (
     get_track_parameters
 )
 
+from api.models.simulation.track_evolution_model import (
+    get_track_grip
+)
 
 # Paths
 
@@ -31,23 +34,21 @@ deg_model_path = os.path.join(
     "all_tracks_degradation.pkl"
 )
 
-
 # Load models
 
 with open(base_pace_path, "rb") as f:
+
     track_base_pace = pickle.load(f)
-    # print(track_base_pace["bahrain_2024"])
 
 with open(deg_model_path, "rb") as f:
-    degradation_models = pickle.load(f)
 
+    degradation_models = pickle.load(f)
 
 # Base pace
 
 def get_base_pace(track):
 
-    return track_base_pace[track] +4.5
-
+    return track_base_pace[track] + 4.5
 
 # Tyre degradation
 
@@ -71,42 +72,58 @@ def get_degradation(
         track_data["cliff_multiplier"][compound]
     )
 
+    # Fresh tyre gain
     if tyre_age <= 3:
 
         degradation = -0.05 * tyre_age
 
+    # Stable degradation phase
     elif tyre_age <= 10:
 
         degradation = (
+
             (tyre_age - 3)
+
             * abs(deg)
+
             * 0.3
         )
 
+    # High degradation phase
     elif tyre_age <= cliff_age:
 
         degradation = (
+
             0.10
+
             + (tyre_age - 10)
+
             * abs(deg)
+
             * 0.25
         )
 
+    # Tyre cliff phase
     else:
 
         degradation = (
+
             2.1
+
             + (cliff_age - 10)
+
             * abs(deg)
+
             * 0.8
         )
 
         degradation += (
+
             tyre_age - cliff_age
+
         ) * cliff_multiplier
 
     return degradation
-
 
 # Lap time engine
 
@@ -114,10 +131,18 @@ def compute_lap_time(
     track,
     compound,
     tyre_age,
-    fuel_correction
+    fuel_correction,
+    current_lap,
+    total_laps
 ):
 
     track_data = get_track_parameters(track)
+
+    # Track evolution grip
+    track_grip = get_track_grip(
+        current_lap,
+        total_laps
+    )
 
     compound_pace_delta = (
         track_data["compound_pace_delta"]
@@ -135,13 +160,29 @@ def compute_lap_time(
         compound_pace_delta[compound]
     )
 
+    # Core lap time model
     lap_time = (
+
         base_pace
+
         + compound_offset
+
         + degradation
+
         - fuel_correction
     )
-    
+
+    # Apply track evolution
+    lap_time = (
+        lap_time / track_grip
+    )
+
+    # Optional micro-randomness
+    lap_time += random.uniform(
+        -0.08,
+        0.08
+    )
+
     # print("\nLAP TIME DEBUG\n")
 
     # print(
@@ -165,17 +206,27 @@ def compute_lap_time(
     # )
 
     # print(
+    #     f"Track Grip: {track_grip:.3f}"
+    # )
+
+    # print(
     #     f"Final Lap Time: {lap_time:.3f}"
     # )
 
     return {
-        "lap_time": float(lap_time),
-        "base_pace": float(base_pace),
-        "compound_offset": float(compound_offset),
-        "degradation": float(degradation),
-        "fuel_correction": float(fuel_correction)
-    }
 
+        "lap_time": float(lap_time),
+
+        "base_pace": float(base_pace),
+
+        "compound_offset": float(compound_offset),
+
+        "degradation": float(degradation),
+
+        "fuel_correction": float(fuel_correction),
+
+        "track_grip": float(track_grip)
+    }
 
 # Testing
 
@@ -183,21 +234,43 @@ def main():
 
     fuel = FuelState(
         starting_fuel=100,
-        fuel_burn_per_lap=1.8,
-        fuel_effect_per_kg=0.035
+        fuel_burn_per_lap=1.8
     )
 
-    fuel_correction = fuel.getFuelCorrection()
+    for lap in range(1, 21):
 
-    result = compute_lap_time(
-        track="bahrain_2022",
-        compound="MEDIUM",
-        tyre_age=12,
-        fuel_correction=fuel_correction
-    )
+        fuel_correction = (
+            fuel.getFuelCorrection()
+        )
 
-    print(result)
+        result = compute_lap_time(
 
+            track="bahrain_2022",
+
+            compound="MEDIUM",
+
+            tyre_age=lap,
+
+            fuel_correction=fuel_correction,
+
+            current_lap=lap,
+
+            total_laps=57
+        )
+
+        print(
+
+            f"Lap {lap:>2} | "
+
+            f"Lap Time: {result['lap_time']:.3f} | "
+
+            f"Grip: {result['track_grip']:.3f} | "
+
+            f"Deg: {result['degradation']:.3f}"
+        )
+
+        fuel.burnFuel()
 
 if __name__ == "__main__":
+
     main()
