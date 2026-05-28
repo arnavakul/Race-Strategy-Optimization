@@ -48,6 +48,7 @@ from api.models.simulation.vsc_model import (
 
 import random
 
+
 # RACE EXECUTOR
 
 def execute_race(
@@ -100,6 +101,8 @@ def execute_race(
 
     safety_car_deployments = 0
 
+    sc_cooldown = 0
+
     # VSC state
     vsc_active = False
 
@@ -107,11 +110,22 @@ def execute_race(
 
     vsc_deployments = 0
 
+    vsc_cooldown = 0
+
     # Simulate full race
     for lap in range(total_laps):
 
         # Human-readable lap number
         current_lap = lap + 1
+
+        # Reduce cooldowns
+        if sc_cooldown > 0:
+
+            sc_cooldown -= 1
+
+        if vsc_cooldown > 0:
+
+            vsc_cooldown -= 1
 
         # Current weather
         weather_state = weather_timeline[
@@ -119,7 +133,13 @@ def execute_race(
         ]
 
         # Random SC deployment
-        if not safety_car_active and not vsc_active:
+        if (
+            not safety_car_active
+            and
+            not vsc_active
+            and
+            sc_cooldown == 0
+        ):
 
             if check_safety_car():
 
@@ -137,7 +157,13 @@ def execute_race(
                 )
 
         # Random VSC deployment
-        if not safety_car_active and not vsc_active:
+        if (
+            not safety_car_active
+            and
+            not vsc_active
+            and
+            vsc_cooldown == 0
+        ):
 
             if check_virtual_safety_Car():
 
@@ -150,7 +176,6 @@ def execute_race(
                 vsc_deployments += 1
 
                 race_state.log_event(
-
                     f"Lap {current_lap}: "
                     f"VIRTUAL SAFETY CAR DEPLOYED"
                 )
@@ -163,6 +188,8 @@ def execute_race(
             if safety_car_remaining <= 0:
 
                 safety_car_active = False
+
+                sc_cooldown = 5
 
                 race_state.log_event(
                     f"Lap {current_lap}: "
@@ -178,8 +205,9 @@ def execute_race(
 
                 vsc_active = False
 
-                race_state.log_event(
+                vsc_cooldown = 3
 
+                race_state.log_event(
                     f"Lap {current_lap}: "
                     f"VIRTUAL SAFETY CAR ENDED"
                 )
@@ -232,7 +260,7 @@ def execute_race(
                 ]
             )
 
-            # Avoid useless same-tyre stop
+            # Avoid useless same tyre stop
             if (
                 new_compound == race_state.current_compound
                 and
@@ -280,6 +308,11 @@ def execute_race(
         # Increase tyre age
         race_state.increment_tyre_age()
 
+        # Update tyre usage
+        race_state.current_tyre_set[
+            "used_laps"
+        ] += 1
+
         # Default warmup
         warmup_penalty = 0
 
@@ -313,6 +346,16 @@ def execute_race(
 
             fuel_correction=(
                 fuel_correction
+            ),
+
+            current_lap=current_lap,
+
+            total_laps=total_laps,
+
+            driver_profile="BALANCED",
+
+            tyre_set=(
+                race_state.current_tyre_set
             )
         )
 

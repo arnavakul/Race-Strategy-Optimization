@@ -6,7 +6,7 @@
 import random
 
 def check_virtual_safety_Car():
-    return random.random() < 0.006
+    return random.random() < 0.013
 
 def generate_vsc_duration():
     return random.randint(

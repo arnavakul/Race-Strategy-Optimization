@@ -14,7 +14,7 @@ import random
 
 #deploy sc randomly
 def check_safety_car():
-    return random.random() <0.035
+    return random.random() <0.006
 
 #generate sc duration
 def generate_safety_car_duration():
