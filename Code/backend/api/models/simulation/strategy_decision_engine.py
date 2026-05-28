@@ -8,7 +8,7 @@
 
 from api.models.simulation.track_model import (get_track_parameters)
 from api.models.simulation.pit_window_model import(evaluate_pit_window)
-
+import random
 import os
 
 def is_correct_tyre_for_weather(
@@ -41,6 +41,13 @@ def should_pit(track, tyre_age, compound, weather_state):
         cliff_age
     )
     
+    print(
+        f"Tyre: {compound} | "
+        f"Age: {tyre_age} | "
+        f"Cliff: {cliff_age} | "
+        f"Window: {pit_window}"
+    )
+    
     correct_tyre = (
         is_correct_tyre_for_weather(
             compound,
@@ -49,28 +56,52 @@ def should_pit(track, tyre_age, compound, weather_state):
     )
     
     if not correct_tyre:
-
-        return True
-    
+        return{
+            "pit":True,
+            "reason" : "WEATHER_MISMATCH"
+        }
     
     if pit_window == "FORCE_PIT":
-        return True
+        return{
+            "pit":True,
+            "reason" : "FORCE_PIT"
+        }
     
     elif pit_window == "TOO_EARLY":
 
-        return False
+        return {
+            "pit": False,
+            "reason": "TOO_EARLY"
+        }
     
     elif pit_window == "UNDERCUT_WINDOW":
-        return False
+        if random.random()<0.35:
+            return{
+            "pit":True,
+            "reason" : "UNDERCUT"
+        }
+        return {
+        "pit": False,
+        "reason": "STAY_OUT"
+        }   
     
   
     elif pit_window == "EXTEND_WINDOW":
-        return False
+        if random.random() < 0.15:
+            return {
+                "pit": True,
+                "reason": "EXTEND_COMPLETE"
+            }
 
+        return {
+            "pit": False,
+            "reason": "STAY_OUT"
+        }
     
-    
-    
-    return False
+    return {
+        "pit": False,
+        "reason": "STAY_OUT"
+    }
 
 if __name__ == "__main__":
 

@@ -30,6 +30,10 @@ from api.models.simulation.track_model import (
     get_track_parameters
 )
 
+from api.models.simulation.pit_window_model import(
+    evaluate_pit_window
+)
+
 import random
 
 # RACE EXECUTOR
@@ -89,7 +93,7 @@ def execute_race(
         ]
 
         # Strategy pit decision
-        pit_now = should_pit(
+        pit_decision = should_pit(
 
             track=track,
 
@@ -99,6 +103,10 @@ def execute_race(
 
             weather_state=weather_state
         )
+
+        pit_now = pit_decision["pit"]
+
+        pit_reason = pit_decision["reason"]
 
         pit_loss = 0
 
@@ -116,6 +124,24 @@ def execute_race(
                     laps_remaining
                 )
             )
+            
+            pit_window = evaluate_pit_window(
+
+                race_state.current_tyre_age,
+
+                track_data["cliff_age"][
+                    race_state.current_compound
+                ]
+)
+            
+            # Avoid useless same-tyre stop
+            if (
+                new_compound == race_state.current_compound
+                and
+                pit_window != "FORCE_PIT"
+            ):
+
+                pit_now = False
 
             # Register tyre switch
             race_state.register_compound_usage(
@@ -135,7 +161,8 @@ def execute_race(
             # Store event
             race_state.log_event(
                 f"Lap {current_lap}: "
-                f"Pit for {new_compound}"
+                f"{pit_reason} -> "
+                f"{new_compound}"
             )
 
         # Increase tyre age
