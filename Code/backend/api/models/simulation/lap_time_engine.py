@@ -16,6 +16,10 @@ from api.models.simulation.driver_behavior_model import (
     DRIVER_PROFILES
 )
 
+from api.models.simulation.tyre_set_model import (
+    get_freshness_penalty
+)
+
 # Paths
 
 BASE_DIR = os.path.dirname(
@@ -156,7 +160,8 @@ def compute_lap_time(
     fuel_correction,
     current_lap,
     total_laps,
-    driver_profile = "BALANCED"
+    driver_profile = "BALANCED",
+    tyre_set = None
 ):
 
     track_data = get_track_parameters(track)
@@ -212,6 +217,20 @@ def compute_lap_time(
 
         - pace_gain
     )   
+    
+    # Tyre freshness penalty
+
+    freshness_penalty = 0
+
+    if tyre_set is not None:
+
+        freshness_penalty = (
+            get_freshness_penalty(
+                tyre_set
+            )
+        )
+
+    lap_time += freshness_penalty
 
     # Apply track evolution
     lap_time = (
@@ -236,10 +255,29 @@ def compute_lap_time(
 
         "fuel_correction": float(fuel_correction),
 
-        "track_grip": float(track_grip)
+        "track_grip": float(track_grip),
+        
+        "freshness_penalty": (
+            float(freshness_penalty)
+        ),
     }
 
 # Testing
+
+from api.models.simulation.tyre_set_model import (
+    create_tyre_set
+)
+
+test_tyre = create_tyre_set(
+
+    compound="MEDIUM",
+
+    freshness=0.82,
+
+    heat_cycles=2,
+
+    used_laps=6
+)
 
 def main():
 
@@ -268,7 +306,10 @@ def main():
 
             total_laps=57,
 
-            driver_profile="AGGRESSIVE"
+            driver_profile="AGGRESSIVE",
+            
+            tyre_set=test_tyre
+            
         )
 
         print(
@@ -280,6 +321,10 @@ def main():
             f"Grip: {result['track_grip']:.3f} | "
 
             f"Deg: {result['degradation']:.3f}"
+            
+            f"Freshness Penalty: "
+            
+            f"{result['freshness_penalty']:.3f}"
         )
 
         fuel.burnFuel()
