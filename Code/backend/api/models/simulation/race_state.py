@@ -54,14 +54,14 @@ class RaceState:
 
                 create_tyre_set("INTERMEDIATE")
 
-                for _ in range(3)
+                for _ in range(8)
             ],
 
             "WET": [
 
                 create_tyre_set("WET")
 
-                for _ in range(2)
+                for _ in range(6)
             ]
         }
 
@@ -102,7 +102,7 @@ class RaceState:
 
     # Fetch tyre set from inventory
     def get_tyre_set(
-        self,
+    self,
         compound
     ):
 
@@ -112,8 +112,21 @@ class RaceState:
 
         if len(available_sets) == 0:
 
-            raise ValueError(
-                f"No tyre sets remaining for {compound}"
+            print(
+                f"\nWARNING: "
+                f"Emergency tyre allocation "
+                f"used for {compound}"
+            )
+
+            return create_tyre_set(
+
+                compound=compound,
+
+                freshness=0.85,
+
+                heat_cycles=1,
+
+                used_laps=0
             )
 
         return available_sets.pop(0)

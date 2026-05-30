@@ -3,6 +3,9 @@
 # - used tyre sets
 # - heat cycles
 
+from api.models.optimization.stochastic_models import (
+    StochasticModels
+)
 
 def create_tyre_set(
     compound,
@@ -19,7 +22,10 @@ def create_tyre_set(
 
         "heat_cycles": heat_cycles,
 
-        "used_laps": used_laps
+        "used_laps": used_laps,
+        
+        "performance_offset": StochasticModels.sample_tyre_variation()
+        
     }
 
 def get_freshness_penalty(
@@ -63,3 +69,9 @@ def get_freshness_penalty(
     )
 
     return total_penalty
+
+def get_performance_offset(tyre_set):
+    
+    return tyre_set[
+        "performance_offset"
+    ]

@@ -46,6 +46,10 @@ from api.models.simulation.vsc_model import (
     get_vsc_multiplier
 )
 
+from api.models.optimization.stochastic_models import (
+    StochasticModels
+)
+
 import random
 
 
@@ -273,6 +277,14 @@ def execute_race(
             if pit_now:
 
                 # Register tyre switch
+                print(
+                    f"Lap {current_lap}: "
+                    f"Switching "
+                    f"{race_state.current_compound}"
+                    f" -> "
+                    f"{new_compound}"
+                )
+
                 race_state.register_compound_usage(
                     new_compound
                 )
@@ -294,6 +306,12 @@ def execute_race(
                 elif vsc_active:
 
                     pit_loss *= 0.82
+
+                # Stochastic pit variation
+                pit_loss += (
+                    StochasticModels
+                    .sample_pitstop_noise()
+                )
 
                 # Add pitloss
                 total_race_time += pit_loss
@@ -479,6 +497,8 @@ def execute_race(
     }
 
 
+
+
 # TESTING
 
 if __name__ == "__main__":
@@ -522,15 +542,18 @@ if __name__ == "__main__":
     print(
         "Events:"
     )
+    
 
     for event in result["events"]:
 
         print(event)
 
     print(
-        "\nFirst 5 Laps:"
+        "\nFirst 40 Laps:"
     )
+    
+    
 
-    for lap in result["laps"][:5]:
+    for lap in result["laps"][:40]:
 
         print(lap)

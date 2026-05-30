@@ -17,7 +17,11 @@ from api.models.simulation.driver_behavior_model import (
 )
 
 from api.models.simulation.tyre_set_model import (
-    get_freshness_penalty
+    get_freshness_penalty, get_performance_offset
+)
+
+from api.models.optimization.stochastic_models import(
+    StochasticModels
 )
 
 # Paths
@@ -221,7 +225,8 @@ def compute_lap_time(
     # Tyre freshness penalty
 
     freshness_penalty = 0
-
+    performance_offset = 0
+    
     if tyre_set is not None:
 
         freshness_penalty = (
@@ -229,8 +234,15 @@ def compute_lap_time(
                 tyre_set
             )
         )
+        
+        performance_offset =(
+            get_performance_offset(
+                tyre_set
+            )
+        )
 
     lap_time += freshness_penalty
+    lap_time += performance_offset
 
     # Apply track evolution
     lap_time = (
@@ -238,9 +250,8 @@ def compute_lap_time(
     )
 
     # Optional micro-randomness
-    lap_time += random.uniform(
-        -0.08,
-        0.08
+    lap_time += (
+        StochasticModels.sample_driver_variation()
     )
     
     return {
@@ -260,6 +271,11 @@ def compute_lap_time(
         "freshness_penalty": (
             float(freshness_penalty)
         ),
+        
+        "performance_offset": (
+            float(performance_offset)
+        )
+        
     }
 
 # Testing
@@ -325,7 +341,12 @@ def main():
             f"Freshness Penalty: "
             
             f"{result['freshness_penalty']:.3f}"
-        )
+            
+            f"\nTyre Performance Offset: "
+            
+            f"{test_tyre['performance_offset']:.3f}\n"
+            
+        )        
 
         fuel.burnFuel()
 

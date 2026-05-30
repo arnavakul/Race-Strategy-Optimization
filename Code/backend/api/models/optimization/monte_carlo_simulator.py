@@ -1,122 +1,71 @@
-from api.models.simulation.strategy_simulation import (
-    simulate_strategy
-)
-
-from api.models.simulation.weather_model import(
-    generate_weather_state,generate_weather_timeline
-)
-
 import random
 import statistics
 
+from api.models.simulation.race_executor import (
+    execute_race
+)
+
 
 def run_monte_carlo(
-    strategy,
     track,
+    starting_compound,
+    total_laps,
     simulations=100,
     seed=None
 ):
-
-    race_times = []
-
-    clean_race_times = []
-
-    safety_car_race_times = []
 
     if seed is not None:
 
         random.seed(seed)
 
-    safety_car_count = 0
-    
-    dry_count = 0
+    race_times = []
 
-    mixed_count = 0
+    safety_car_deployments = []
 
-    wet_count = 0
+    vsc_deployments = []
+
+    legal_races = 0
 
     for sim in range(simulations):
-        
-        weather_timeline = (generate_weather_timeline(57))   
-        
-        if weather_timeline == "DRY":
-            dry_count +=1 
-        elif weather_timeline == "MIXED":
-            mixed_count +=1
-        elif weather_timeline == "WET":
-            wet_count += 1
 
-        results = simulate_strategy(
-            track,
-            strategy,
-            weather_timeline
+        result = execute_race(
+
+            track=track,
+
+            starting_compound=starting_compound,
+
+            total_laps=total_laps
         )
-
-        total_time = results["total_time"]            
-        safety_car = False
-
-        if random.random() < 0.3:
-
-            safety_car = True
-
-            safety_car_count += 1
-
-            sc_effect = random.uniform(
-                -15,
-                8
-            )
-
-            total_time += sc_effect
-
-        race_variation = random.uniform(
-            -3,
-            3
-        )
-
-        total_time += race_variation
-
-        if safety_car:
-
-            safety_car_race_times.append(
-                total_time
-            )
-
-        else:
-
-            clean_race_times.append(
-                total_time
-            )
 
         race_times.append(
-            total_time
+            result["total_time"]
         )
 
-    if clean_race_times:
+        safety_car_deployments.append(
 
-        clean_race_average = statistics.mean(
-            clean_race_times
+            result[
+                "safety_car_deployments"
+            ]
         )
 
-    else:
+        vsc_deployments.append(
 
-        clean_race_average = None
-
-    if safety_car_race_times:
-
-        safety_car_race_average = statistics.mean(
-            safety_car_race_times
+            result[
+                "vsc_deployments"
+            ]
         )
 
-    else:
+        if result["legal_race"]:
 
-        safety_car_race_average = None
+            legal_races += 1
 
-    safety_car_rate = (
-        safety_car_count /
-        simulations
-    )
+    race_times.sort()
 
     average_time = statistics.mean(
+        race_times
+    )
+
+    median_time = statistics.median(
         race_times
     )
 
@@ -132,9 +81,38 @@ def run_monte_carlo(
         race_times
     )
 
+    p5 = race_times[
+        int(
+            len(race_times) * 0.05
+        )
+    ]
+
+    p95 = race_times[
+        int(
+            len(race_times) * 0.95
+        )
+    ]
+
+    average_sc = statistics.mean(
+        safety_car_deployments
+    )
+
+    average_vsc = statistics.mean(
+        vsc_deployments
+    )
+
+    legality_rate = (
+        legal_races
+        / simulations
+    )
+
     return {
 
+        "simulations": simulations,
+
         "average_time": average_time,
+
+        "median_time": median_time,
 
         "best_case": best_case,
 
@@ -142,55 +120,118 @@ def run_monte_carlo(
 
         "std_dev": std_dev,
 
-        "race_times": race_times,
+        "p5": p5,
 
-        "safety_car_count": safety_car_count,
+        "p95": p95,
 
-        "safety_car_rate": safety_car_rate,
+        "average_sc": average_sc,
 
-        "clean_race_average": clean_race_average,
+        "average_vsc": average_vsc,
 
-        "safety_car_race_average": (
-            safety_car_race_average
-        ),
-        
-        "dry_count": dry_count,
+        "legality_rate": legality_rate,
 
-        "mixed_count": mixed_count,
-
-        "wet_count": wet_count,
+        "race_times": race_times
     }
 
-
-
-# DEBUGGING TEST INPUTS
+# TESTING
 
 if __name__ == "__main__":
 
-    strategy = [
-        ("SOFT", 15),
-        ("HARD", 42)
-    ]
-
     results = run_monte_carlo(
-        strategy=strategy,
+
         track="bahrain_2022",
-        simulations=10,
-        # seed=42
+
+        starting_compound="SOFT",
+
+        total_laps=57,
+
+        simulations=100
     )
 
-    print("Average Time: ",results["average_time"])
+    print("\nMONTE CARLO RESULTS\n")
 
-    print("Best Race Time: ",results["best_case"])
+    print(
+        "Simulations:",
+        results["simulations"]
+    )
 
-    print("Worst Race Time: ",results["worst_case"])
+    print(
+        "Average Time:",
+        round(
+            results["average_time"],
+            3
+        )
+    )
 
-    print("Standard Deviations: ",results["std_dev"])
+    print(
+        "Median Time:",
+        round(
+            results["median_time"],
+            3
+        )
+    )
 
-    print("Safety Car Count: ",results["safety_car_count"])
+    print(
+        "Best Case:",
+        round(
+            results["best_case"],
+            3
+        )
+    )
 
-    print("Rate of Safety Car(Safety car probability): ",results["safety_car_rate"]*100,"%")
+    print(
+        "Worst Case:",
+        round(
+            results["worst_case"],
+            3
+        )
+    )
 
-    print("Clear Average Race: ",results["clean_race_average"])
+    print(
+        "Std Dev:",
+        round(
+            results["std_dev"],
+            3
+        )
+    )
 
-    print("Safety Car Average Race: ",results["safety_car_race_average"])
+    print(
+        "P5:",
+        round(
+            results["p5"],
+            3
+        )
+    )
+
+    print(
+        "P95:",
+        round(
+            results["p95"],
+            3
+        )
+    )
+
+    print(
+        "Average SC Deployments:",
+        round(
+            results["average_sc"],
+            2
+        )
+    )
+
+    print(
+        "Average VSC Deployments:",
+        round(
+            results["average_vsc"],
+            2
+        )
+    )
+
+    print(
+        "Legality Rate:",
+        round(
+            results["legality_rate"] * 100,
+            2
+        ),
+        "%"
+    )
