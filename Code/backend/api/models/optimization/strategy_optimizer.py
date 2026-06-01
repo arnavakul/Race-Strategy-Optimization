@@ -6,8 +6,8 @@ from api.models.simulation.strategy_simulation import (
     simulate_strategy
 )
 
-from api.models.optimization.monte_carlo_simulator import(
-    run_monte_carlo
+from api.models.optimization.race_variability_monte_carlo import(
+    run_strategy_monte_carlo
 )
 
 from api.models.simulation.race_constraints import(
@@ -19,14 +19,34 @@ from api.models.simulation.weather_model import(
 )
 
 def strategy_optimizer(track, total_laps,risk_factor):
-    
-    risk_factor = 1.0 
 
     strategies = generate_strategies(total_laps)
 
+    print(
+        f"Generated Strategies: "
+        f"{len(strategies)}"
+    )
+
+    # DEBUG MODE
+    strategies = strategies[:5]
+
+    print(
+        f"Testing "
+        f"{len(strategies)} "
+        f"strategies only"
+)
+
     results = []
 
-    for strategy in strategies:
+    for index, strategy in enumerate(
+        strategies,
+        start=1
+    ):
+
+        print(
+            f"\nProcessing "
+            f"{index}/{len(strategies)}"
+        )
         
         weather_state = generate_weather_state()
         is_valid_weather_strategy = (
@@ -38,10 +58,10 @@ def strategy_optimizer(track, total_laps,risk_factor):
         if not is_valid_weather_strategy:
             continue
         
-        mc_result = run_monte_carlo(
+        mc_result = run_strategy_monte_carlo(
             strategy=strategy,
             track = track,
-            simulations = 100
+            simulations = 20
         )
         
         average_time = mc_result["average_time"]
@@ -118,73 +138,79 @@ def strategy_optimizer(track, total_laps,risk_factor):
     )[:20]
 
 
+#TESTING BLOCK 
 if __name__ == "__main__":
 
-    best = strategy_optimizer(
-        track="monza_2022",
-        total_laps=57,
-        risk_factor=0.2 #convervative risk factor
+    print("\nSTARTING STRATEGY OPTIMIZER\n")
+
+    strategies = generate_strategies(57)
+
+    print(
+        f"Generated Strategies: "
+        f"{len(strategies)}"
     )
 
-    print("\nTOP STRATEGIES\n")
+    # DEBUG MODE
+    strategies = strategies[:20]
 
-    for i, result in enumerate(best, start=1):
+    print(
+        f"Testing First "
+        f"{len(strategies)} "
+        f"Strategies Only\n"
+    )
 
-        print(f"{i}.")
+    for i, strategy in enumerate(
+        strategies,
+        start=1
+    ):
 
         print(
-            f"Strategy: "
-            f"{result['strategy']}"
+            f"\n[{i}/{len(strategies)}]"
         )
 
         print(
-            f"Strategy Type: "
-            f"{result['strategy_type']}"
+            f"Strategy: {strategy}"
         )
 
-        print(
-            f"Total Time: "
-            f"{result['total_time']:.3f}"
-        )
+        try:
 
-        print(
-            f"Average Lap: "
-            f"{result['average_lap_time']:.3f}"
-        )
+            mc_result = run_strategy_monte_carlo(
 
-        print(
-            f"Pit Stops: "
-            f"{result['pitstops']}"
-        )
+                strategy=strategy,
 
-        print(
-            f"Compounds Used: "
-            f"{result['compounds_used']}"
-        )
+                track="monza_2022",
 
-        print(
-            f"Stint Count: "
-            f"{result['stint_count']}"
-        )
+                simulations=3
+            )
 
-        print(
-            f"Total Laps: "
-            f"{result['total_laps']}"
-        )
-               
-        print(
-            f"Average Time: "
-            f"{result['average_time']:.3f}"
-        )
+            print(
+                f"Average Time: "
+                f"{mc_result['average_time']:.3f}"
+            )
 
-        print(
-            f"Std Dev: "
-            f"{result['std_dev']:.3f}"
-        )
+            print(
+                f"Std Dev: "
+                f"{mc_result['std_dev']:.3f}"
+            )
 
-        print(
-            f"Strategy Score: "
-            f"{result['strategy_score']:.3f}"
-        )
-        
-        print("-" * 40)
+            print(
+                f"Best Case: "
+                f"{mc_result['best_case']:.3f}"
+            )
+
+            print(
+                f"Worst Case: "
+                f"{mc_result['worst_case']:.3f}"
+            )
+
+        except Exception as e:
+
+            print(
+                f"FAILED: {e}"
+            )
+
+        print("-" * 50)
+
+    print(
+        "\nDEBUG RUN COMPLETE\n"
+    )

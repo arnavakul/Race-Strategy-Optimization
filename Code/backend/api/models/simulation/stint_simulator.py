@@ -155,6 +155,10 @@ def simulate_stint(
                     race_state.current_tyre_age
                 ),
 
+                current_lap=current_lap,
+
+                total_laps=total_laps,
+
                 fuel_correction=fuel_correction
             )
         )

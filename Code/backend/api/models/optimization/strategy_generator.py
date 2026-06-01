@@ -4,6 +4,8 @@ from api.models.simulation.race_constraints import(
 
 COMPOUNDS = ["SOFT", "MEDIUM", "HARD","INTERMEDIATE","WET"]
 
+DRY_COMPOUNDS = ["SOFT", "MEDIUM", "HARD"]
+
 MIN_STINT = {
     "SOFT": 10,
     "MEDIUM": 15,
@@ -27,16 +29,16 @@ def generate_strategies(total_laps):
 
     # 1-stop
 
-    for compound1 in COMPOUNDS:
+    for compound1 in DRY_COMPOUNDS:
 
-        for compound2 in COMPOUNDS:
+        for compound2 in DRY_COMPOUNDS:
 
             if compound1 == compound2:
                 continue
 
             for stint1_laps in range(
                 MIN_STINT[compound1],
-                MAX_STINT[compound1] + 1
+                MAX_STINT[compound1] + 1,3
             ):
 
                 stint2_laps = (
@@ -62,11 +64,11 @@ def generate_strategies(total_laps):
 
     # 2-stop
 
-    for compound1 in COMPOUNDS:
+    for compound1 in DRY_COMPOUNDS:
 
-        for compound2 in COMPOUNDS:
+        for compound2 in DRY_COMPOUNDS:
 
-            for compound3 in COMPOUNDS:
+            for compound3 in DRY_COMPOUNDS:
 
                 used_compounds = {
                     compound1,
@@ -79,12 +81,12 @@ def generate_strategies(total_laps):
 
                 for stint1 in range(
                     MIN_STINT[compound1],
-                    MAX_STINT[compound1] + 1
+                    MAX_STINT[compound1] + 1,3
                 ):
 
                     for stint2 in range(
                         MIN_STINT[compound2],
-                        MAX_STINT[compound2] + 1
+                        MAX_STINT[compound2] + 1,3
                     ):
 
                         stint3 = (

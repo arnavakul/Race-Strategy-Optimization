@@ -112,11 +112,15 @@ class RaceState:
 
         if len(available_sets) == 0:
 
-            print(
-                f"\nWARNING: "
-                f"Emergency tyre allocation "
-                f"used for {compound}"
-            )
+            DEBUG_TYRES = False
+
+            if DEBUG_TYRES:
+
+                print(
+                    f"\nWARNING: "
+                    f"Emergency tyre allocation "
+                    f"used for {compound}"
+                )
 
             return create_tyre_set(
 
