@@ -151,6 +151,24 @@ def should_pit(
             weather_state
         )
     )
+    
+    if weather_state == "MIXED":
+        
+        if compound == "INTERMEDIATE":
+            
+            return {
+                "pit":False,
+                "reason": "WEATHER_LOCK"
+            }
+    
+    if weather_state == "WET":
+        
+        if compound == 'WET':
+            
+            return{
+                "pit":False,
+                "reason":"WEATHER_LOCK"
+            }
 
     if not correct_tyre:
 

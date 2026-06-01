@@ -1,6 +1,5 @@
 import os
 import pickle
-import random
 
 from api.models.simulation.fuel_state import FuelState
 
@@ -22,6 +21,10 @@ from api.models.simulation.tyre_set_model import (
 
 from api.models.optimization.stochastic_models import(
     StochasticModels
+)
+
+from api.models.simulation.ml_pace_adapter import (
+    get_ml_pace_adjustment
 )
 
 # Paths
@@ -165,7 +168,12 @@ def compute_lap_time(
     current_lap,
     total_laps,
     driver_profile = "BALANCED",
-    tyre_set = None
+    tyre_set = None,
+    driver="VER",
+    team="Red Bull",
+    position=1,
+    stint=1,
+    race_year=2024
 ):
 
     track_data = get_track_parameters(track)
@@ -207,6 +215,22 @@ def compute_lap_time(
     compound_offset = (
         compound_pace_delta[compound]
     )
+    
+    ml_adjustment = get_ml_pace_adjustment(
+        driver=driver,
+        team=team,
+        track=track.split("_")[0],
+        compound=compound,
+        tyre_life=tyre_age,
+        position=position,
+        stint=stint,
+        race_year=race_year
+    )
+    
+    ml_adjustment = (
+        ml_adjustment
+        - 5.0
+    ) * 0.05
 
     # Core lap time model
     lap_time = (
@@ -220,6 +244,8 @@ def compute_lap_time(
         - fuel_correction
 
         - pace_gain
+        
+        + ml_adjustment 
     )   
     
     # Tyre freshness penalty
@@ -274,7 +300,10 @@ def compute_lap_time(
         
         "performance_offset": (
             float(performance_offset)
-        )
+        ),
+        
+        "ml_adjustment":
+            float(ml_adjustment),
         
     }
 

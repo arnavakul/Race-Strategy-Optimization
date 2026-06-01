@@ -1,10 +1,15 @@
 #rival driver sim
 
 def create_rival_driver(
-    name,pace_offset,strategy
+    name,
+    team,
+    pace_offset,
+    strategy
 ):
     return {
         "name": name,
+        
+        "team":team,
         
         "pace_offset": pace_offset,
         

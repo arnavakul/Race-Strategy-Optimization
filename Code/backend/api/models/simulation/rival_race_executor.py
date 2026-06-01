@@ -6,6 +6,9 @@ from api.models.simulation.pitstop_model import (
     get_pitstop_time
 )
 
+from api.models.simulation.ml_pace_adapter import (
+    get_ml_pace_adjustment
+)
 import random
 
 
@@ -75,7 +78,17 @@ def simulate_rival_lap(
 
         current_lap=current_lap,
 
-        total_laps=total_laps
+        total_laps=total_laps,
+
+        driver=rival["name"],
+
+        team=rival["team"],
+
+        position=1,
+
+        stint=current_stint + 1,
+
+        race_year=2024
     )
 
     lap_time = (

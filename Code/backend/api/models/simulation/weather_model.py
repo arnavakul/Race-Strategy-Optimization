@@ -31,12 +31,21 @@ def generate_weather_state():
 
 def generate_weather_timeline(total_laps):
     weather_timeline = []
-    
+        
     first_transition = random.randint(
-        total_laps // 5,
+        total_laps // 4,
         total_laps // 2
     )
-    second_transition = random.randint(min(first_transition + 2, total_laps),total_laps)
+
+    rain_duration = random.randint(
+        3,
+        8
+    )
+
+    second_transition = min(
+        first_transition + rain_duration,
+        total_laps
+    )
     weather_pattern = random.choices(
         [
             "DRY_ONLY",
@@ -61,22 +70,44 @@ def generate_weather_timeline(total_laps):
         if weather_pattern == "DRY_ONLY":
             weather_state = "DRY"
         elif weather_pattern == "DRY_TO_MIXED":
+
             if lap < first_transition:
+
                 weather_state = "DRY"
-            else:
-                weather_state = "MIXED"
-        elif weather_pattern == "DRY_TO_WET":
-            if lap < first_transition:
-                weather_state = "DRY"
+
             elif lap < second_transition:
+
                 weather_state = "MIXED"
+
             else:
-                weather_state = "WET"
-        elif weather_pattern == "MIXED_TO_WET":
+
+                weather_state = "DRY"
+        elif weather_pattern == "DRY_TO_WET":
+
             if lap < first_transition:
-                weather_state = "MIXED"
-            else:
+
+                weather_state = "DRY"
+
+            elif lap < second_transition:
+
                 weather_state = "WET"
+
+            else:
+
+                weather_state = "DRY"
+        elif weather_pattern == "MIXED_TO_WET":
+
+            if lap < first_transition:
+
+                weather_state = "MIXED"
+
+            elif lap < second_transition:
+
+                weather_state = "WET"
+
+            else:
+
+                weather_state = "MIXED"
 
         weather_timeline.append(
             weather_state

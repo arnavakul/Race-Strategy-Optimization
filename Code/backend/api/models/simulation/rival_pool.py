@@ -10,6 +10,8 @@ def create_rival_pool():
         create_rival_driver(
 
             name="VER",
+            
+            team = "Red Bull",
 
             pace_offset=-0.25,
 
@@ -22,6 +24,8 @@ def create_rival_pool():
         create_rival_driver(
 
             name="NOR",
+            
+            team = "McLaren",
 
             pace_offset=-0.10,
 
@@ -34,6 +38,8 @@ def create_rival_pool():
         create_rival_driver(
 
             name="LEC",
+            
+            team = "Ferrari",
 
             pace_offset=-0.05,
 

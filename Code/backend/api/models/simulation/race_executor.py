@@ -76,6 +76,14 @@ def execute_race(
     # Initialize race memory
     race_state = RaceState()
     
+    driver_name = "VER"
+
+    team_name = "Red Bull"
+
+    race_year = 2024
+    
+    position = 1
+        
     #creating a rival pool 
     rivals = create_rival_pool()
 
@@ -418,7 +426,12 @@ def execute_race(
         )
 
         # Compute lap physics
+        current_stint = (
+            race_state.pitstop_count + 1
+        )
+
         lap_data = compute_lap_time(
+            
 
             track=track,
 
@@ -442,8 +455,25 @@ def execute_race(
 
             tyre_set=(
                 race_state.current_tyre_set
-            )
+            ),
+
+            driver=driver_name,
+
+            team=team_name,
+
+            position=1,
+
+            stint=current_stint,
+
+            race_year=race_year
         )
+        DEBUG_ML = False
+        
+        if DEBUG_ML:
+            print(
+                f"ML Adj: "
+                f"{lap_data['ml_adjustment']:.4f}"
+            )
 
         # Final lap time
         corrected_lap_time = (
@@ -558,6 +588,21 @@ def execute_race(
 
     # Validate FIA legality
     race_state.validate_fia_legality()
+    
+    print("\nOUR TIME")
+    print(round(total_race_time, 3))
+
+    print("\nRIVAL TIMES")
+
+    for rival in rivals:
+
+        print(
+            rival["name"],
+            round(
+                rival["total_time"],
+                3
+            )
+    )
 
     # Final output
     return {
@@ -577,6 +622,7 @@ def execute_race(
         "pitstops": (
             race_state.pitstop_count
         ),
+        
 
         "events": (
             race_state.strategy_events
