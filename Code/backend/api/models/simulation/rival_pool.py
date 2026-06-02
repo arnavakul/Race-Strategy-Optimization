@@ -9,11 +9,11 @@ def create_rival_pool():
 
         create_rival_driver(
 
-            name="VER",
+            name="HAM",
             
-            team = "Red Bull",
+            team="Mercedes",
 
-            pace_offset=-0.25,
+            pace_offset=-0.10,
 
             strategy=[
                 ("MEDIUM", 21),
@@ -27,7 +27,7 @@ def create_rival_pool():
             
             team = "McLaren",
 
-            pace_offset=-0.10,
+            pace_offset=-0.05,
 
             strategy=[
                 ("MEDIUM", 24),

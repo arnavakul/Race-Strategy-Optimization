@@ -253,7 +253,7 @@ def compute_lap_time(
     freshness_penalty = 0
     performance_offset = 0
     
-    if tyre_set is not None:
+    if False:
 
         freshness_penalty = (
             get_freshness_penalty(
@@ -353,9 +353,11 @@ def main():
 
             driver_profile="AGGRESSIVE",
             
-            tyre_set=test_tyre
+            tyre_set=test_tyre,
+            
             
         )
+        
 
         print(
 

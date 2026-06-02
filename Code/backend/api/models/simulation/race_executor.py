@@ -62,6 +62,15 @@ from api.models.simulation.rival_gap_calculator import (
     get_closest_rival_gap
 )
 
+from api.models.simulation.position_tracker import(
+    get_race_leader,
+    get_player_position,
+    calculate_positions,
+    gap_to_car_ahead,
+    gap_to_car_behind,
+    gap_to_leader,
+)
+
 import random
 
 
@@ -86,6 +95,7 @@ def execute_race(
         
     #creating a rival pool 
     rivals = create_rival_pool()
+    
 
     # Register starting tyre
     race_state.register_compound_usage(
@@ -244,34 +254,45 @@ def execute_race(
                 
         closest_rival_gap = 999
         # Strategy pit decision
-        pit_decision = should_pit(
-
-            track=track,
-
-            compound=race_state.current_compound,
-
-            tyre_age=race_state.current_tyre_age,
-
-            weather_state=weather_state,
-
-            rival_gap=closest_rival_gap,
-
-            strategy_profile="BALANCED",
-
-            safety_car_active=safety_car_active,
-
-            vsc_active=vsc_active,
-            
-            current_lap=current_lap,
-
-            total_laps=total_laps,
-        )
         
-        print(
-            f"Lap {current_lap} | "
-            f"Pit? {pit_decision['pit']} | "
-            f"Reason: {pit_decision['reason']}"
-        )
+        if race_state.weather_lock_remaining > 0:
+
+            pit_decision = {
+                "pit": False,
+                "reason": "WEATHER_LOCK"
+            }
+
+        else:
+            pit_decision = should_pit(
+
+                track=track,
+
+                compound=race_state.current_compound,
+
+                tyre_age=race_state.current_tyre_age,
+
+                weather_state=weather_state,
+
+                rival_gap=closest_rival_gap,
+
+                strategy_profile="BALANCED",
+
+                safety_car_active=safety_car_active,
+
+                vsc_active=vsc_active,
+                
+                current_lap=current_lap,
+
+                total_laps=total_laps,
+            )
+        
+        if pit_decision["pit"]:
+
+            print(
+                f"Lap {current_lap} | "
+                f"PIT | "
+                f"{pit_decision['reason']}"
+            )
 
         pit_now = pit_decision["pit"]
 
@@ -311,9 +332,23 @@ def execute_race(
                         "WEATHER PIT -> WET"
                     )
 
-                else:
+                elif weather_state == "DRY":
 
-                    new_compound = "MEDIUM"
+                    if race_state.current_compound == "WET":
+
+                        new_compound = "HARD"
+
+                    elif race_state.current_compound == "INTERMEDIATE":
+
+                        new_compound = "MEDIUM"
+
+                    else:
+
+                        new_compound = race_state.current_compound
+
+                    print(
+                        f"WEATHER PIT -> {new_compound}"
+                    )
 
             # NORMAL STRATEGY PITS
 
@@ -346,30 +381,33 @@ def execute_race(
 
             # Register tyre switch
             print(
-                    f"Lap {current_lap}: "
-                    f"Switching "
-                    f"{race_state.current_compound}"
-                    f" -> "
-                    f"{new_compound}"
-                )
-            
-            
+                f"Lap {current_lap}: "
+                f"Switching "
+                f"{race_state.current_compound}"
+                f" -> "
+                f"{new_compound}"
+            )
+
             if new_compound == race_state.current_compound:
+
                 race_state.log_event(
-                    f"Lap {current_lap}"
+                    f"Lap {current_lap}: "
                     f"Redundant pit ignored"
                 )
 
-                continue
-            race_state.register_compound_usage(
+                pit_now = False
+
+            else:
+                
+                race_state.register_compound_usage(
                     new_compound
                 )
 
                 # Register pitstop
-            race_state.register_pitstop()
+                race_state.register_pitstop()
 
                 # Base pitloss
-            pit_loss = get_pitstop_time(
+                pit_loss = get_pitstop_time(
                     track
                 )
 
@@ -467,6 +505,52 @@ def execute_race(
 
             race_year=race_year
         )
+        if current_lap in [10, 15]:
+
+            print(
+                f"\nPLAYER CHECK LAP {current_lap}"
+            )
+
+            print(
+                "lap_time:",
+                round(
+                    lap_data["lap_time"],
+                    3
+                )
+            )
+
+            print(
+                "corrected:",
+                round(
+                    corrected_lap_time,
+                    3
+                ) if 'corrected_lap_time' in locals() else "N/A"
+            )
+
+            print(
+                "pit_loss:",
+                round(
+                    pit_loss,
+                    3
+                )
+            )
+
+            print(
+                "weather:",
+                weather_state
+            )
+
+            print(
+                "SC:",
+                safety_car_active
+            )
+
+            print(
+                "VSC:",
+                vsc_active
+            )
+        
+        
         DEBUG_ML = False
         
         if DEBUG_ML:
@@ -482,7 +566,19 @@ def execute_race(
 
             + warmup_penalty
         )
+        
+        if current_lap <= 5:
 
+            print(
+                f"PLAYER LAP {current_lap}"
+                f" | Time={corrected_lap_time:.3f}"
+                f" | Fuel={lap_data['fuel_correction']:.3f}"
+                f" | Deg={lap_data['degradation']:.3f}"
+                f" | Base={lap_data['base_pace']:.3f}"
+                f" | Grip={lap_data['track_grip']:.3f}"
+                f" | Fresh={lap_data['freshness_penalty']:.3f}"
+                f" | Perf={lap_data['performance_offset']:.3f}"
+            )
         # Mixed weather slowdown
         if weather_state == "MIXED":
 
@@ -503,6 +599,12 @@ def execute_race(
             corrected_lap_time *= (
                 get_safety_car_multiplier()
             )
+            
+            print(
+                f"SC ACTIVE LAP {current_lap} "
+                f"| Multiplier="
+                f"{get_safety_car_multiplier()}"
+            )
 
         # Apply VSC slowdown
         elif vsc_active:
@@ -518,16 +620,51 @@ def execute_race(
         
         for rival in rivals:
 
-            simulate_rival_lap(
-
+            rival_lap = simulate_rival_lap(
                 rival=rival,
-
                 track=track,
-
                 current_lap=current_lap,
-
-                total_laps=total_laps
+                total_laps=total_laps,
+                weather_state=weather_state,
+                safety_car_active=safety_car_active,
+                vsc_active=vsc_active
             )
+            
+            if current_lap >= 50:
+
+                print(
+                    rival["name"],
+                    "TIME",
+                    round(rival["total_time"], 3),
+                    "TYRE",
+                    rival["current_compound"],
+                    "AGE",
+                    rival["current_tyre_age"],
+                    "PITS",
+                    rival["pitstops"]
+                )
+            
+
+                for rival in rivals:
+
+                    print(
+                        rival["name"],
+                        round(
+                            rival["total_time"],
+                            3
+                        )
+                    )
+
+            if current_lap <= 5:
+
+                print(
+                    f"{rival['name']} LAP {current_lap}"
+                    f" | Time={rival_lap['lap_time']:.3f}"
+                    f" | Fuel={rival_lap['fuel_correction']:.3f}"
+                    f" | Deg={rival_lap['degradation']:.3f}"
+                    f" | Base={rival_lap['base_pace']:.3f}"
+                    f" | ML={rival_lap['ml_adjustment']:.3f}"
+                )
 
         closest_rival_gap = (
 
@@ -538,6 +675,55 @@ def execute_race(
                 rivals
             )
         )
+        
+        timing_table = calculate_positions(
+            total_race_time,rivals
+        )
+        
+        current_position = (
+            get_player_position(
+                timing_table
+            )
+        )
+        
+        leader_name = (
+            get_race_leader(
+                timing_table
+            )
+        )
+        
+        leader_gap = (
+            gap_to_leader(
+                timing_table
+            )
+        )
+        
+        gap_ahead = (
+            gap_to_car_ahead(
+                timing_table
+            )
+        )
+
+        gap_behind = (
+            gap_to_car_behind(
+                timing_table
+            )
+        )
+        
+        # print(
+        #     f"P{current_position} | "
+        #     f"Leader: {leader_name} | "
+        #     f"Gap Leader: {leader_gap:.3f}"
+        # )
+        
+        if current_lap % 5 == 0:
+
+            print(
+                f"Lap {current_lap} | "
+                f"P{current_position} | "
+                f"Gap Leader {leader_gap:.3f}"
+            )
+        
 
         # Store telemetry
         all_laps.append({
@@ -580,7 +766,17 @@ def execute_race(
             
             "closest_rival_gap":(
                 closest_rival_gap
-            )
+            ),
+            
+            "position": current_position,
+
+            "leader": leader_name,
+
+            "gap_to_leader": leader_gap,
+
+            "gap_ahead": gap_ahead,
+
+            "gap_behind": gap_behind,
         })
 
         # Burn fuel
@@ -686,12 +882,18 @@ if __name__ == "__main__":
     print("\nLAST 5 LAPS\n")
 
     for lap in result["laps"][-5:]:
-
+        
         print(
 
             f"Lap {lap['lap']} | "
 
-            f"Time: {lap['lap_time']:.3f} | "
+            f"P{lap['position']} | "
 
-            f"Gap: {lap['closest_rival_gap']:.3f}"
+            f"Leader: {lap['leader']} | "
+
+            f"Gap Leader: {lap['gap_to_leader']:.3f} | "
+
+            f"Gap Ahead: {lap['gap_ahead']:.3f} | "
+
+            f"Gap Behind: {lap['gap_behind']:.3f}"
         )

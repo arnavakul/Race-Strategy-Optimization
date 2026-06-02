@@ -26,6 +26,8 @@ class RaceState:
         self.stint_history = []
 
         self.strategy_events = []
+        
+        self.weather_lock_remaining = 0
 
         self.tyre_inventory = {
 
@@ -200,3 +202,17 @@ class RaceState:
 
             "laps": laps
         })
+    def activate_weather_lock(
+    self,
+    laps=5
+    ):
+        self.weather_lock_remaining = laps  
+    
+    def decrement_weather_lock(self):
+
+        if self.weather_lock_remaining > 0:
+
+            self.weather_lock_remaining -= 1
+    
+    
+    

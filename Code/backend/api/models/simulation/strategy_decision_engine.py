@@ -158,7 +158,7 @@ def should_pit(
             
             return {
                 "pit":False,
-                "reason": "WEATHER_LOCK"
+                "reason": "WEATHER_PROTECTION"
             }
     
     if weather_state == "WET":
@@ -167,7 +167,7 @@ def should_pit(
             
             return{
                 "pit":False,
-                "reason":"WEATHER_LOCK"
+                "reason":"WEATHER_PROTECTION"
             }
 
     if not correct_tyre:
@@ -181,16 +181,16 @@ def should_pit(
 
     if pit_window == "FORCE_PIT":
 
-        if laps_remaining <= 5:
+        if laps_remaining <= 8:
 
             return {
                 "pit": False,
                 "reason": "FINISH_STINT"
             }
 
-        return{
-            "pit":True,
-            "reason" : "FORCE_PIT"
+        return {
+            "pit": True,
+            "reason": "FORCE_PIT"
         }
 
     elif pit_window == "TOO_EARLY":
@@ -226,18 +226,43 @@ def should_pit(
 
             "reason": "STAY_OUT"
         }
-
     elif pit_window == "EXTEND_WINDOW":
 
-        if laps_remaining <= 5:
+        # Close enough to finish race
+        if compound == "HARD" and laps_remaining <= 15:
 
             return {
                 "pit": False,
-                "reason": "FINISH_STINT"
+                "reason": "RUN_TO_FINISH"
             }
 
+        if compound == "MEDIUM" and laps_remaining <= 12:
+
+            return {
+                "pit": False,
+                "reason": "RUN_TO_FINISH"
+            }
+
+        if compound == "SOFT" and laps_remaining <= 8:
+
+            return {
+                "pit": False,
+                "reason": "RUN_TO_FINISH"
+            }
+
+        # Hard tyres are generally extended
+        if compound == "HARD":
+
+            return {
+                "pit": False,
+                "reason": "FINAL_STINT"
+            }
+
+        # Attempt overcut strategy
         if (
             overcut_opportunity
+            and
+            tyre_age >= cliff_age - 2
             and
             random.random() > extend_chance
         ):
@@ -250,13 +275,6 @@ def should_pit(
             "pit": False,
             "reason": "STAY_OUT"
         }
-
-    return {
-
-        "pit": False,
-
-        "reason": "STAY_OUT"
-    }
     
     
 if __name__ == "__main__":

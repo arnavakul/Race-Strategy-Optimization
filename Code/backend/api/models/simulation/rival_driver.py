@@ -11,6 +11,8 @@ def create_rival_driver(
         
         "team":team,
         
+        "fuel_load": 100.0,
+        
         "pace_offset": pace_offset,
         
         "strategy": strategy,
