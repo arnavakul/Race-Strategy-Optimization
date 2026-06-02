@@ -5,6 +5,11 @@ from api.models.simulation.tyre_set_model import (
     create_tyre_set
 )
 
+from api.models.simulation.traffic_model import (
+    calculate_dirty_air_penalty,
+    in_traffic
+)
+
 class RaceState:
 
     def __init__(self):
@@ -65,7 +70,12 @@ class RaceState:
 
                 for _ in range(6)
             ]
+            
         }
+        
+        self.previous_gap_ahead = 999.0
+        
+        self.in_traffic = False 
 
     # Register tyre compound usage
     def register_compound_usage(

@@ -204,6 +204,15 @@ def should_pit(
 
     elif pit_window == "UNDERCUT_WINDOW":
 
+    # Too late in race to recover pit stop time
+
+        if laps_remaining <= 12:
+
+            return {
+                "pit": False,
+                "reason": "TOO_LATE_FOR_UNDERCUT"
+            }
+
         if (
 
             undercut_opportunity

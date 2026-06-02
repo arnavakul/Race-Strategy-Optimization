@@ -71,6 +71,15 @@ from api.models.simulation.position_tracker import(
     gap_to_leader,
 )
 
+from api.models.simulation.traffic_model import (
+    calculate_dirty_air_penalty,
+    in_traffic
+)
+
+from api.models.simulation.overtake_model import (
+    evaluate_overtake
+)
+
 import random
 
 
@@ -91,7 +100,6 @@ def execute_race(
 
     race_year = 2024
     
-    position = 1
         
     #creating a rival pool 
     rivals = create_rival_pool()
@@ -252,7 +260,7 @@ def execute_race(
                 )
                 
                 
-        closest_rival_gap = 999
+
         # Strategy pit decision
         
         if race_state.weather_lock_remaining > 0:
@@ -412,33 +420,28 @@ def execute_race(
                 )
 
                 # Reduced pitloss under SC
-            if safety_car_active:
+                if safety_car_active:
 
                     pit_loss *= 0.65
 
-                # Reduced pitloss under VSC
-            elif vsc_active:
+                elif vsc_active:
 
                     pit_loss *= 0.82
 
-                # Stochastic pit variation
-            pit_loss += (
+                pit_loss += (
                     StochasticModels
                     .sample_pitstop_noise()
                 )
 
-                # Add pitloss
-            total_race_time += pit_loss
+                total_race_time += pit_loss
 
-                # Store event
-            race_state.log_event(
+                race_state.log_event(
                     f"Lap {current_lap}: "
                     f"{pit_reason} -> "
                     f"{new_compound}"
                 )
 
-        # Increase tyre age
-        race_state.increment_tyre_age()
+
 
         # Update tyre usage
         race_state.current_tyre_set[
@@ -467,6 +470,24 @@ def execute_race(
         current_stint = (
             race_state.pitstop_count + 1
         )
+        
+        dirty_air_penalty = calculate_dirty_air_penalty(
+            race_state.previous_gap_ahead
+        )
+
+        race_state.in_traffic = in_traffic(
+            race_state.previous_gap_ahead
+        )
+        
+        if len(all_laps) > 0:
+
+            current_position = (
+                all_laps[-1]["position"]
+            )
+
+        else:
+
+            current_position = 1
 
         lap_data = compute_lap_time(
             
@@ -499,7 +520,7 @@ def execute_race(
 
             team=team_name,
 
-            position=1,
+            position=current_position,
 
             stint=current_stint,
 
@@ -567,6 +588,18 @@ def execute_race(
             + warmup_penalty
         )
         
+        corrected_lap_time += dirty_air_penalty
+        
+        overtake_bonus = 0
+        
+        if current_lap <= 10:
+
+            print(
+                f"Traffic={race_state.in_traffic}"
+                f" | Gap={race_state.previous_gap_ahead}"
+                f" | Penalty={dirty_air_penalty:.3f}"
+            )
+    
         if current_lap <= 5:
 
             print(
@@ -612,6 +645,8 @@ def execute_race(
             corrected_lap_time *= (
                 get_vsc_multiplier()
             )
+        
+
 
         # Update total race time
         total_race_time += (
@@ -630,41 +665,36 @@ def execute_race(
                 vsc_active=vsc_active
             )
             
-            if current_lap >= 50:
+                
+            if current_lap <= 5:
 
-                print(
-                    rival["name"],
-                    "TIME",
-                    round(rival["total_time"], 3),
-                    "TYRE",
-                    rival["current_compound"],
-                    "AGE",
-                    rival["current_tyre_age"],
-                    "PITS",
-                    rival["pitstops"]
-                )
-            
+                    print(
+                        f"{rival['name']} LAP {current_lap}"
+                        f" | Time={rival_lap['lap_time']:.3f}"
+                        f" | Fuel={rival_lap['fuel_correction']:.3f}"
+                        f" | Deg={rival_lap['degradation']:.3f}"
+                        f" | Base={rival_lap['base_pace']:.3f}"
+                        f" | ML={rival_lap['ml_adjustment']:.3f}"
+                    )
+        
+        if current_lap >= 50:
 
                 for rival in rivals:
 
                     print(
                         rival["name"],
+                        "TIME",
                         round(
                             rival["total_time"],
                             3
-                        )
+                        ),
+                        "TYRE",
+                        rival["current_compound"],
+                        "AGE",
+                        rival["current_tyre_age"],
+                        "PITS",
+                        rival["pitstops"]
                     )
-
-            if current_lap <= 5:
-
-                print(
-                    f"{rival['name']} LAP {current_lap}"
-                    f" | Time={rival_lap['lap_time']:.3f}"
-                    f" | Fuel={rival_lap['fuel_correction']:.3f}"
-                    f" | Deg={rival_lap['degradation']:.3f}"
-                    f" | Base={rival_lap['base_pace']:.3f}"
-                    f" | ML={rival_lap['ml_adjustment']:.3f}"
-                )
 
         closest_rival_gap = (
 
@@ -703,6 +733,86 @@ def execute_race(
                 timing_table
             )
         )
+        overtake_success = False
+        # ==========================
+        # OVERTAKE CHECK
+        # ==========================
+
+        if (current_position > 1 and gap_ahead is not None and gap_ahead < 2.0):
+
+            tyre_advantage = 0
+
+            if race_state.current_tyre_age < 10:
+                tyre_advantage += 1
+
+            if race_state.current_compound == "SOFT":
+                tyre_advantage += 1
+
+            pace_advantage = 0
+
+            if closest_rival_gap < 1.0:
+                pace_advantage += 1
+
+            overtake_result = evaluate_overtake(
+
+                gap_ahead=gap_ahead,
+
+                tyre_advantage=tyre_advantage,
+
+                pace_advantage=pace_advantage
+            )
+
+            if overtake_result["attempted"]:
+
+                print(
+                    f"Lap {current_lap}"
+                    f" | OVERTAKE ATTEMPT"
+                    f" | P={overtake_result['probability']:.2f}"
+                )
+
+            if overtake_result["success"]:
+                
+                from api.models.simulation.overtake_executor import ( execute_overtake)
+
+                overtake_execution = execute_overtake(
+                    player_total_time=total_race_time,
+                    gap_ahead=gap_ahead,
+                    success=True
+                )
+                total_race_time = (
+                    overtake_execution["player_total_time"]
+                )
+                
+                print(
+                    f"Lap {current_lap}"
+                    f" | OVERTAKE SUCCESS"
+                    f" | Gain="
+                    f"{overtake_execution['time_gain']:.3f}"
+                )
+                overtake_success = True
+                overtake_bonus = -0.25
+                race_state.previous_gap_ahead = 3.0
+                
+                
+
+                race_state.log_event(
+                    f"Lap {current_lap}: OVERTAKE SUCCESS"
+                )
+            
+        corrected_lap_time += overtake_bonus
+        
+        
+        if overtake_success:
+
+            race_state.previous_gap_ahead = 3.0
+
+        elif current_position == 1:
+
+            race_state.previous_gap_ahead = 999
+
+        else:
+
+            race_state.previous_gap_ahead = gap_ahead
 
         gap_behind = (
             gap_to_car_behind(
@@ -781,6 +891,9 @@ def execute_race(
 
         # Burn fuel
         fuel.burnFuel()
+        
+        # Increase tyre age
+        race_state.increment_tyre_age()
 
     # Validate FIA legality
     race_state.validate_fia_legality()
@@ -798,7 +911,7 @@ def execute_race(
                 rival["total_time"],
                 3
             )
-    )
+        )
 
     # Final output
     return {
