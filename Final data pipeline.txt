@@ -1,0 +1,98 @@
+The final architecture I would build
+Phase 1 — Simulation Foundation
+
+Current work
+
+Data Pipeline
+Tyre Models
+Fuel Models
+Weather
+SC/VSC
+Race Execution
+Traffic
+Overtakes
+
+Status:
+
+80% complete
+Phase 2 — Strategy Intelligence
+
+Build next
+
+strategy_evaluator.py
+
+recommendation_engine.py
+
+outcome_ranker.py
+
+Outputs:
+
+Pit now?
+Pit later?
+Undercut?
+Overcut?
+Phase 3 — Weekend Intelligence
+
+Build after that
+
+practice_analyzer.py
+
+qualifying_analyzer.py
+
+driver_track_profile.py
+
+weekend_forecaster.py
+
+Outputs:
+
+Expected Pace
+
+Expected Finish
+
+Win Probability
+
+Podium Probability
+Phase 4 — Live Race Engineer
+
+This is your dream feature.
+
+Live Timing Feed
+↓
+Race State Builder
+↓
+Strategy Evaluator
+↓
+Monte Carlo
+↓
+Recommendation Engine
+
+Outputs:
+
+What should Ferrari do right now?
+
+Should Leclerc pit?
+
+Should Ferrari undercut?
+
+What if SC comes now?
+
+What if rain comes now?
+Phase 5 — AI Strategy Engineer
+
+Very late stage.
+
+Bayesian Optimization
+
+RL Agents
+
+Probabilistic Planning
+
+Strategy Search
+
+Outputs:
+
+Best strategy automatically discovered
+
+Alternative strategies
+
+Risk-adjusted strategies
