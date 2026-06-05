@@ -2,6 +2,7 @@ import fastf1
 import pandas as pd
 import os
 import gc
+import time
 
 os.makedirs('./cache', exist_ok=True)
 fastf1.Cache.enable_cache('./cache')
@@ -61,7 +62,10 @@ def optimize_memory(dataset):
     }
 
     for col, dtype in int_cols.items():
-        dataset[col] = dataset[col].astype(dtype)
+
+        if col in dataset.columns:
+
+            dataset[col] = dataset[col].astype(dtype)
 
     float_cols = [
         'LapTimeSeconds',
@@ -89,19 +93,129 @@ def optimize_memory(dataset):
     return dataset
 
 
-def process_race(year: int, track: str, save_path: str):
+def process_session(
+    year: int,
+    track: str,
+    session_type: str,
+    save_path: str
+):
+    
 
-    print(f"\nLoading {track} {year}...")
+    print(
+        f"\nLoading "
+        f"{track} "
+        f"{year} "
+        f"{session_type}..."
+    )
+    
+    session_folder = os.path.join(
+        save_path,
+        session_type
+    )
 
-    session = fastf1.get_session(year, track, 'R')
-    session.load()
+    clean_save_path = os.path.join(
+        session_folder,
+        "clean_laps"
+    )
 
+    clean_file = os.path.join(
+        clean_save_path,
+        f"{track.lower()}_{year}_{session_type}_clean.parquet"
+    )
+
+    if os.path.exists(clean_file):
+
+        print(
+            f"Skipping existing file: "
+            f"{track} "
+            f"{year} "
+            f"{session_type}"
+        )
+
+        return
+    
+
+    session = fastf1.get_session(
+        year,
+        track,
+        session_type
+    )
+
+    max_retries = 5
+
+    for attempt in range(max_retries):
+
+        try:
+
+            session.load()
+            
+            print(
+                f"Successfully loaded "
+                f"{track} "
+                f"{year} "
+                f"{session_type}"
+            )
+
+            break
+
+        except Exception as e:
+
+            print(
+                f"Retry {attempt+1}/{max_retries} "
+                f"for {track} "
+                f"{year} "
+                f"{session_type}"
+            )
+
+            print(str(e))
+
+            if (
+                "500 calls/h" in str(e)
+                or
+                "RateLimitExceededError" in str(e)
+            ):
+
+                print(
+                    "Rate limit reached."
+                )
+
+                print(
+                    "Sleeping for 1 hour..."
+                )
+
+                time.sleep(600)
+
+            else:
+
+                time.sleep(15)
+
+    else:
+
+        print(
+            f"Skipping "
+            f"{track} "
+            f"{year} "
+            f"{session_type}"
+        )
+
+        return
+    
+    if session.laps.empty:
+
+        print(
+            f"No laps found for "
+            f"{track} "
+            f"{year} "
+            f"{session_type}"
+        )
+
+        return
+    
     full_laps = session.laps[
         [
             'Driver',
             'Team',
             'LapNumber',
-            'Position',
 
             'LapTime',
 
@@ -114,23 +228,32 @@ def process_race(year: int, track: str, save_path: str):
             'FreshTyre',
             'Stint',
 
-            'PitInTime',
-            'PitOutTime',
-
             'TrackStatus',
             'IsAccurate'
         ]
     ].copy()
+    
+
 
     clean_laps = full_laps.copy()
 
     for dataset in [full_laps, clean_laps]:
 
         dataset['RaceYear'] = year
+
         dataset['Track'] = track
 
-    full_laps = convert_time_columns(full_laps)
-    clean_laps = convert_time_columns(clean_laps)
+        dataset['SessionType'] = (
+            session_type
+        )
+
+    full_laps = convert_time_columns(
+        full_laps
+    )
+
+    clean_laps = convert_time_columns(
+        clean_laps
+    )
 
     clean_laps = clean_laps.dropna(
         subset=[
@@ -138,6 +261,17 @@ def process_race(year: int, track: str, save_path: str):
             'TyreLife'
         ]
     )
+    
+    if clean_laps.empty:
+
+        print(
+            f"No valid laps after cleaning "
+            f"{track} "
+            f"{year} "
+            f"{session_type}"
+        )
+
+        return
 
     clean_laps = clean_laps[
         clean_laps['IsAccurate'] == True
@@ -158,133 +292,301 @@ def process_race(year: int, track: str, save_path: str):
     clean_laps = clean_laps[
         clean_laps['LapTimeSeconds'] < q99
     ].copy()
+    
+    if clean_laps.empty:
+
+        print(
+            f"No laps remaining after filtering "
+            f"{track} "
+            f"{year} "
+            f"{session_type}"
+        )
+
+        return
+
+    # ==================================
+    # FUEL CORRECTION
+    # ==================================
 
     k = 0.04
 
-    clean_laps['FuelCorrectedLapTime'] = (
-        clean_laps['LapTimeSeconds']
-        - k * clean_laps['LapNumber']
+    clean_laps[
+        'FuelCorrectedLapTime'
+    ] = (
+
+        clean_laps[
+            'LapTimeSeconds'
+        ]
+
+        - k * clean_laps[
+            'LapNumber'
+        ]
     )
+
+    # ==================================
+    # NORMALIZATION
+    # ==================================
 
     fastest = clean_laps[
         'FuelCorrectedLapTime'
     ].min()
 
-    clean_laps['NormalizedLapTime'] = (
-        clean_laps['FuelCorrectedLapTime']
+    clean_laps[
+        'NormalizedLapTime'
+    ] = (
+
+        clean_laps[
+            'FuelCorrectedLapTime'
+        ]
+
         - fastest
     )
 
-    clean_laps['DeltaLapTime'] = clean_laps.groupby(
+    # ==================================
+    # DELTA WITHIN STINT
+    # ==================================
+
+    clean_laps[
+        'DeltaLapTime'
+    ] = clean_laps.groupby(
         ['Driver', 'Stint']
-    )['FuelCorrectedLapTime'].transform(
+    )[
+        'FuelCorrectedLapTime'
+    ].transform(
         lambda x: x - x.iloc[0]
     )
 
-    full_laps = optimize_memory(full_laps)
-    clean_laps = optimize_memory(clean_laps)
+    # SESSION BEST LAP
+    clean_laps[
+        'SessionBestLap'
+    ] = clean_laps.groupby(
+        'Driver'
+    )[
+        'LapTimeSeconds'
+    ].transform(
+        'min'
+    )
+
+    # GAP TO SESSION BEST
+
+    clean_laps[
+        'GapToSessionBest'
+    ] = (
+
+        clean_laps[
+            'LapTimeSeconds'
+        ]
+
+        -
+
+        clean_laps[
+            'SessionBestLap'
+        ]
+    )
+    
+    # print(full_laps.columns)
+
+    full_laps = optimize_memory(
+        full_laps
+    )
+
+    clean_laps = optimize_memory(
+        clean_laps
+    )
+
+    session_folder = os.path.join(
+        save_path,
+        session_type
+    )
 
     clean_save_path = os.path.join(
-        save_path,
+        session_folder,
         "clean_laps"
     )
 
     full_save_path = os.path.join(
-        save_path,
+        session_folder,
         "full_laps"
     )
 
-    os.makedirs(clean_save_path, exist_ok=True)
-    os.makedirs(full_save_path, exist_ok=True)
+    os.makedirs(
+        clean_save_path,
+        exist_ok=True
+    )
+
+    os.makedirs(
+        full_save_path,
+        exist_ok=True
+    )
 
     clean_file = os.path.join(
+
         clean_save_path,
-        f"{track.lower()}_{year}_clean.parquet"
+
+        f"{track.lower()}_"
+        f"{year}_"
+        f"{session_type}_"
+        f"clean.parquet"
     )
 
     full_file = os.path.join(
+
         full_save_path,
-        f"{track.lower()}_{year}_full.parquet"
+
+        f"{track.lower()}_"
+        f"{year}_"
+        f"{session_type}_"
+        f"full.parquet"
     )
 
     clean_laps.to_parquet(
+
         clean_file,
+
         index=False
     )
 
     full_laps.to_parquet(
+
         full_file,
+
         index=False
     )
 
-    print(f"\nSaved Clean Dataset → {clean_file}")
-    print(f"Saved Full Dataset → {full_file}")
+    with open(
+        "download_log.txt",
+        "a",
+        encoding="utf-8"
+    ) as f:
 
-    print("\nClean Dataset Shape:")
-    print(clean_laps.shape)
+        f.write(
+            f"{track},"
+            f"{year},"
+            f"{session_type}\n"
+        )
 
-    print("\nFull Dataset Shape:")
-    print(full_laps.shape)
+    print(
+        f"\nSaved Clean Dataset → "
+        f"{clean_file}"
+    )
+
+    print(
+        f"Saved Full Dataset → "
+        f"{full_file}"
+    )
+
+    print(
+        "\nClean Dataset Shape:"
+    )
+
+    print(
+        clean_laps.shape
+    )
+
+    print(
+        "\nFull Dataset Shape:"
+    )
+
+    print(
+        full_laps.shape
+    )
 
     del full_laps
+
     del clean_laps
 
     gc.collect()
 
 
-def run_pipeline():
+def run_weekend_pipeline():
+    
+    print("\nWEEKEND PIPELINE STARTED\n")
 
-    years = [2022, 2023, 2024, 2025]
-
+    years = [2022, 2023, 2024, 2025, 2026]
+    years = [2026]
+    # # tracks = [
+    # #     "Abu Dhabi",
+    # #     "Austria",
+    # #     "Bahrain",
+    # #     "Barcelona",
+    # #     "Brazil",
+    # #     "COTA",
+    # #     "Hungary",
+    # #     "Jeddah",
+    # #     "Melbourne",
+    # #     "Monaco",
+    # #     "Monza",
+    # #     "Montreal",
+    # #     "Qatar",
+    # #     "Silverstone",
+    # #     "Singapore",
+    # #     "Spa",
+    # #     "Suzuka"
+    # # ]
+    
     tracks = [
-        "Abu Dhabi",
-        "Austria",
-        "Bahrain",
-        "Barcelona",
-        "Brazil",
-        "COTA",
-        "Hungary",
-        "Jeddah",
-        "Melbourne",
-        "Monaco",
-        "Monza",
-        "Montreal",
-        "Qatar",
-        "Silverstone",
-        "Singapore",
-        "Spa",
-        "Suzuka"
+       "Monaco"
+    ]
+
+    sessions = [
+        "FP1",
+        "FP2",
+        "FP3",
+        "Q",
+        "R"
     ]
 
     save_path = (
         r"C:\DevProjects\Race Strategy Optimization"
         r"\Code\backend\data\processed"
     )
-
-    os.makedirs(save_path, exist_ok=True)
+    
+    print(
+        f"\nSaving to: {save_path}"
+    )
 
     for track in tracks:
 
         for year in years:
 
-            try:
+            for session_type in sessions:
 
-                print(f"\n=========================")
-                print(f"Starting {track} {year}")
-                print(f"=========================")
+                try:
 
-                process_race(
-                    year,
-                    track,
-                    save_path
-                )
+                    print(
+                        f"\n========================="
+                    )
 
-            except Exception as e:
+                    print(
+                        f"Starting "
+                        f"{track} "
+                        f"{year} "
+                        f"{session_type}"
+                    )
 
-                print(
-                    f"Error processing {track} {year}: {e}"
-                )
+                    print(
+                        f"========================="
+                    )
 
+                    process_session(
+                        year,
+                        track,
+                        session_type,
+                        save_path
+                    )
+                    
+
+                    time.sleep(2)
+
+                except Exception as e:
+
+                    print(
+                        f"Error processing "
+                        f"{track} "
+                        f"{year} "
+                        f"{session_type}: "
+                        f"{e}"
+                    )
 
 if __name__ == "__main__":
-    run_pipeline()
+    run_weekend_pipeline()
