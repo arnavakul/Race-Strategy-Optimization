@@ -502,38 +502,52 @@ def run_weekend_pipeline():
     
     print("\nWEEKEND PIPELINE STARTED\n")
 
-    years = [2022, 2023, 2024, 2025, 2026]
+    # years = [2022, 2023, 2024, 2025, 2026]
     years = [2026]
     # # tracks = [
-    # #     "Abu Dhabi",
-    # #     "Austria",
-    # #     "Bahrain",
-    # #     "Barcelona",
-    # #     "Brazil",
-    # #     "COTA",
-    # #     "Hungary",
-    # #     "Jeddah",
-    # #     "Melbourne",
-    # #     "Monaco",
-    # #     "Monza",
-    # #     "Montreal",
-    # #     "Qatar",
-    # #     "Silverstone",
-    # #     "Singapore",
-    # #     "Spa",
-    # #     "Suzuka"
-    # # ]
+    #     "Abu Dhabi",
+    #     "Austria",
+    #     "Bahrain",
+    #     "Barcelona",
+    #     "Brazil",
+    #     "COTA",
+    #     "Hungary",
+    #     "Jeddah",
+    #     "Melbourne",
+    #     "Monaco",
+    #     "Monza",
+    #     "Montreal",
+    #     "Qatar",
+    #     "Silverstone",
+    #     "Singapore",
+    #     "Spa",
+    #     "Suzuka",
+            # "Miami",
+            # "Shanghai",
+            # "Mexico City",
+            # "Las Vegas",
+            # "Imola",
+            # "Baku",
+            # "Zandvoort"
+    # ]
     
     tracks = [
-       "Monaco"
+        "Monaco",
+        # "Miami",
+        # "Shanghai",
+        # "Suzuka",
+        # "Mexico City",
+        # "Las Vegas",
+        # "Baku",
+        # "Zandvoort"
     ]
 
     sessions = [
-        "FP1",
-        "FP2",
+        # "FP1",
+        # "FP2",
         "FP3",
-        "Q",
-        "R"
+        # "Q",
+        # "R"
     ]
 
     save_path = (

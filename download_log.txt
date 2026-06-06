@@ -1,0 +1,82 @@
+Monaco,2023,R
+Monaco,2024,R
+Monaco,2025,R
+Monaco,2026,FP2
+Shanghai,2023,FP1
+Shanghai,2023,FP2
+Shanghai,2023,FP3
+Shanghai,2023,Q
+Shanghai,2023,R
+Shanghai,2024,FP1
+Shanghai,2024,Q
+Shanghai,2024,R
+Shanghai,2025,FP1
+Shanghai,2025,Q
+Shanghai,2025,R
+Shanghai,2026,FP1
+Shanghai,2026,Q
+Shanghai,2026,R
+Suzuka,2023,R
+Suzuka,2024,R
+Suzuka,2025,R
+Suzuka,2026,FP1
+Suzuka,2026,FP2
+Suzuka,2026,FP3
+Suzuka,2026,R
+Mexico City,2023,FP1
+Mexico City,2023,FP2
+Mexico City,2023,FP3
+Mexico City,2023,Q
+Mexico City,2023,R
+Mexico City,2024,FP1
+Mexico City,2024,FP2
+Mexico City,2024,FP3
+Mexico City,2024,Q
+Mexico City,2024,R
+Mexico City,2025,FP1
+Mexico City,2025,FP2
+Mexico City,2025,FP3
+Mexico City,2025,Q
+Mexico City,2025,R
+Las Vegas,2023,FP1
+Las Vegas,2023,FP3
+Las Vegas,2023,Q
+Las Vegas,2023,R
+Las Vegas,2024,FP1
+Las Vegas,2024,FP2
+Las Vegas,2024,Q
+Las Vegas,2024,R
+Las Vegas,2025,FP1
+Las Vegas,2025,FP2
+Las Vegas,2025,FP3
+Las Vegas,2025,Q
+Las Vegas,2025,R
+Baku,2023,FP1
+Baku,2023,Q
+Baku,2023,R
+Baku,2024,FP1
+Baku,2024,FP2
+Baku,2024,FP3
+Baku,2024,Q
+Baku,2024,R
+Baku,2025,FP1
+Baku,2025,FP2
+Baku,2025,FP3
+Baku,2025,Q
+Baku,2025,R
+Zandvoort,2023,FP1
+Zandvoort,2023,FP2
+Zandvoort,2023,FP3
+Zandvoort,2023,Q
+Zandvoort,2023,R
+Zandvoort,2024,FP1
+Zandvoort,2024,FP2
+Zandvoort,2024,FP3
+Zandvoort,2024,Q
+Zandvoort,2024,R
+Zandvoort,2025,FP1
+Zandvoort,2025,FP2
+Zandvoort,2025,FP3
+Zandvoort,2025,Q
+Zandvoort,2025,R
+Monaco,2026,FP3

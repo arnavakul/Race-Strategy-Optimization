@@ -1,0 +1,939 @@
+Year,Track,Driver,Team,GridPosition,FinishingPosition,Points,ClassifiedPosition
+2022,Abu Dhabi,VER,Red Bull Racing,1,1,25,1
+2022,Abu Dhabi,LEC,Ferrari,3,2,18,2
+2022,Abu Dhabi,PER,Red Bull Racing,2,3,15,3
+2022,Abu Dhabi,SAI,Ferrari,4,4,12,4
+2022,Abu Dhabi,RUS,Mercedes,6,5,10,5
+2022,Abu Dhabi,NOR,McLaren,7,6,9,6
+2022,Abu Dhabi,OCO,Alpine,8,7,6,7
+2022,Abu Dhabi,STR,Aston Martin,14,8,4,8
+2022,Abu Dhabi,RIC,McLaren,13,9,2,9
+2022,Abu Dhabi,VET,Aston Martin,9,10,1,10
+2022,Abu Dhabi,TSU,AlphaTauri,11,11,0,11
+2022,Abu Dhabi,ZHO,Alfa Romeo,15,12,0,12
+2022,Abu Dhabi,ALB,Williams,19,13,0,13
+2022,Abu Dhabi,GAS,AlphaTauri,17,14,0,14
+2022,Abu Dhabi,BOT,Alfa Romeo,18,15,0,15
+2022,Abu Dhabi,MSC,Haas F1 Team,12,16,0,16
+2022,Abu Dhabi,MAG,Haas F1 Team,16,17,0,17
+2022,Abu Dhabi,HAM,Mercedes,5,18,0,18
+2022,Abu Dhabi,LAT,Williams,20,19,0,19
+2022,Abu Dhabi,ALO,Alpine,10,20,0,R
+2023,Abu Dhabi,VER,Red Bull Racing,1,1,26,1
+2023,Abu Dhabi,LEC,Ferrari,2,2,18,2
+2023,Abu Dhabi,RUS,Mercedes,4,3,15,3
+2023,Abu Dhabi,PER,Red Bull Racing,9,4,12,4
+2023,Abu Dhabi,NOR,McLaren,5,5,10,5
+2023,Abu Dhabi,PIA,McLaren,3,6,8,6
+2023,Abu Dhabi,ALO,Aston Martin,7,7,6,7
+2023,Abu Dhabi,TSU,AlphaTauri,6,8,4,8
+2023,Abu Dhabi,HAM,Mercedes,11,9,2,9
+2023,Abu Dhabi,STR,Aston Martin,13,10,1,10
+2023,Abu Dhabi,RIC,AlphaTauri,15,11,0,11
+2023,Abu Dhabi,OCO,Alpine,12,12,0,12
+2023,Abu Dhabi,GAS,Alpine,10,13,0,13
+2023,Abu Dhabi,ALB,Williams,14,14,0,14
+2023,Abu Dhabi,HUL,Haas F1 Team,8,15,0,15
+2023,Abu Dhabi,SAR,Williams,20,16,0,16
+2023,Abu Dhabi,ZHO,Alfa Romeo,19,17,0,17
+2023,Abu Dhabi,SAI,Ferrari,16,18,0,18
+2023,Abu Dhabi,BOT,Alfa Romeo,18,19,0,19
+2023,Abu Dhabi,MAG,Haas F1 Team,17,20,0,20
+2024,Abu Dhabi,NOR,McLaren,1,1,25,1
+2024,Abu Dhabi,SAI,Ferrari,3,2,18,2
+2024,Abu Dhabi,LEC,Ferrari,19,3,15,3
+2024,Abu Dhabi,HAM,Mercedes,16,4,12,4
+2024,Abu Dhabi,RUS,Mercedes,6,5,10,5
+2024,Abu Dhabi,VER,Red Bull Racing,4,6,8,6
+2024,Abu Dhabi,GAS,Alpine,5,7,6,7
+2024,Abu Dhabi,HUL,Haas F1 Team,7,8,4,8
+2024,Abu Dhabi,ALO,Aston Martin,8,9,2,9
+2024,Abu Dhabi,PIA,McLaren,2,10,1,10
+2024,Abu Dhabi,ALB,Williams,18,11,0,11
+2024,Abu Dhabi,TSU,RB,11,12,0,12
+2024,Abu Dhabi,ZHO,Kick Sauber,15,13,0,13
+2024,Abu Dhabi,STR,Aston Martin,13,14,0,14
+2024,Abu Dhabi,DOO,Alpine,17,15,0,15
+2024,Abu Dhabi,MAG,Haas F1 Team,14,16,0,16
+2024,Abu Dhabi,LAW,RB,12,17,0,17
+2024,Abu Dhabi,BOT,Kick Sauber,9,18,0,R
+2024,Abu Dhabi,COL,Williams,20,19,0,R
+2024,Abu Dhabi,PER,Red Bull Racing,10,20,0,R
+2025,Abu Dhabi,VER,Red Bull Racing,1,1,25,1
+2025,Abu Dhabi,PIA,McLaren,3,2,18,2
+2025,Abu Dhabi,NOR,McLaren,2,3,15,3
+2025,Abu Dhabi,LEC,Ferrari,5,4,12,4
+2025,Abu Dhabi,RUS,Mercedes,4,5,10,5
+2025,Abu Dhabi,ALO,Aston Martin,6,6,8,6
+2025,Abu Dhabi,OCO,Haas F1 Team,8,7,6,7
+2025,Abu Dhabi,HAM,Ferrari,16,8,4,8
+2025,Abu Dhabi,HUL,Kick Sauber,18,9,2,9
+2025,Abu Dhabi,STR,Aston Martin,15,10,1,10
+2025,Abu Dhabi,BOR,Kick Sauber,7,11,0,11
+2025,Abu Dhabi,BEA,Haas F1 Team,11,12,0,12
+2025,Abu Dhabi,SAI,Williams,12,13,0,13
+2025,Abu Dhabi,TSU,Red Bull Racing,10,14,0,14
+2025,Abu Dhabi,ANT,Mercedes,14,15,0,15
+2025,Abu Dhabi,ALB,Williams,17,16,0,16
+2025,Abu Dhabi,HAD,Racing Bulls,9,17,0,17
+2025,Abu Dhabi,LAW,Racing Bulls,13,18,0,18
+2025,Abu Dhabi,GAS,Alpine,19,19,0,19
+2025,Abu Dhabi,COL,Alpine,20,20,0,20
+2022,Austria,LEC,Ferrari,2,1,25,1
+2022,Austria,VER,Red Bull Racing,1,2,19,2
+2022,Austria,HAM,Mercedes,8,3,15,3
+2022,Austria,RUS,Mercedes,4,4,12,4
+2022,Austria,OCO,Alpine,6,5,10,5
+2022,Austria,MSC,Haas F1 Team,9,6,8,6
+2022,Austria,NOR,McLaren,10,7,6,7
+2022,Austria,MAG,Haas F1 Team,7,8,4,8
+2022,Austria,RIC,McLaren,11,9,2,9
+2022,Austria,ALO,Alpine,19,10,1,10
+2022,Austria,BOT,Alfa Romeo,0,11,0,11
+2022,Austria,ALB,Williams,15,12,0,12
+2022,Austria,STR,Aston Martin,12,13,0,13
+2022,Austria,ZHO,Alfa Romeo,13,14,0,14
+2022,Austria,GAS,AlphaTauri,14,15,0,15
+2022,Austria,TSU,AlphaTauri,16,16,0,16
+2022,Austria,VET,Aston Martin,18,17,0,17
+2022,Austria,SAI,Ferrari,3,18,0,R
+2022,Austria,LAT,Williams,17,19,0,R
+2022,Austria,PER,Red Bull Racing,5,20,0,R
+2023,Austria,VER,Red Bull Racing,1,1,26,1
+2023,Austria,LEC,Ferrari,2,2,18,2
+2023,Austria,PER,Red Bull Racing,15,3,15,3
+2023,Austria,NOR,McLaren,4,4,12,4
+2023,Austria,ALO,Aston Martin,7,5,10,5
+2023,Austria,SAI,Ferrari,3,6,8,6
+2023,Austria,RUS,Mercedes,11,7,6,7
+2023,Austria,HAM,Mercedes,5,8,4,8
+2023,Austria,STR,Aston Martin,6,9,2,9
+2023,Austria,GAS,Alpine,9,10,1,10
+2023,Austria,ALB,Williams,10,11,0,11
+2023,Austria,ZHO,Alfa Romeo,17,12,0,12
+2023,Austria,SAR,Williams,18,13,0,13
+2023,Austria,OCO,Alpine,12,14,0,14
+2023,Austria,BOT,Alfa Romeo,14,15,0,15
+2023,Austria,PIA,McLaren,13,16,0,16
+2023,Austria,DEV,AlphaTauri,20,17,0,17
+2023,Austria,MAG,Haas F1 Team,19,18,0,18
+2023,Austria,TSU,AlphaTauri,16,19,0,19
+2023,Austria,HUL,Haas F1 Team,8,20,0,R
+2024,Austria,RUS,Mercedes,3,1,25,1
+2024,Austria,PIA,McLaren,7,2,18,2
+2024,Austria,SAI,Ferrari,4,3,15,3
+2024,Austria,HAM,Mercedes,5,4,12,4
+2024,Austria,VER,Red Bull Racing,1,5,10,5
+2024,Austria,HUL,Haas F1 Team,9,6,8,6
+2024,Austria,PER,Red Bull Racing,8,7,6,7
+2024,Austria,MAG,Haas F1 Team,12,8,4,8
+2024,Austria,RIC,RB,11,9,2,9
+2024,Austria,GAS,Alpine,13,10,1,10
+2024,Austria,LEC,Ferrari,6,11,0,11
+2024,Austria,OCO,Alpine,10,12,0,12
+2024,Austria,STR,Aston Martin,17,13,0,13
+2024,Austria,TSU,RB,14,14,0,14
+2024,Austria,ALB,Williams,16,15,0,15
+2024,Austria,BOT,Kick Sauber,18,16,0,16
+2024,Austria,ZHO,Kick Sauber,20,17,0,17
+2024,Austria,ALO,Aston Martin,15,18,0,18
+2024,Austria,SAR,Williams,19,19,0,19
+2024,Austria,NOR,McLaren,2,20,0,20
+2025,Austria,NOR,McLaren,1,1,25,1
+2025,Austria,PIA,McLaren,3,2,18,2
+2025,Austria,LEC,Ferrari,2,3,15,3
+2025,Austria,HAM,Ferrari,4,4,12,4
+2025,Austria,RUS,Mercedes,5,5,10,5
+2025,Austria,LAW,Racing Bulls,6,6,8,6
+2025,Austria,ALO,Aston Martin,11,7,6,7
+2025,Austria,BOR,Kick Sauber,8,8,4,8
+2025,Austria,HUL,Kick Sauber,20,9,2,9
+2025,Austria,OCO,Haas F1 Team,17,10,1,10
+2025,Austria,BEA,Haas F1 Team,15,11,0,11
+2025,Austria,HAD,Racing Bulls,13,12,0,12
+2025,Austria,GAS,Alpine,10,13,0,13
+2025,Austria,STR,Aston Martin,16,14,0,14
+2025,Austria,COL,Alpine,14,15,0,15
+2025,Austria,TSU,Red Bull Racing,18,16,0,16
+2025,Austria,ALB,Williams,12,17,0,R
+2025,Austria,VER,Red Bull Racing,7,18,0,R
+2025,Austria,ANT,Mercedes,9,19,0,R
+2025,Austria,SAI,Williams,19,20,0,W
+2022,Bahrain,LEC,Ferrari,1,1,26,1
+2022,Bahrain,SAI,Ferrari,3,2,18,2
+2022,Bahrain,HAM,Mercedes,5,3,15,3
+2022,Bahrain,RUS,Mercedes,9,4,12,4
+2022,Bahrain,MAG,Haas F1 Team,7,5,10,5
+2022,Bahrain,BOT,Alfa Romeo,6,6,8,6
+2022,Bahrain,OCO,Alpine,11,7,6,7
+2022,Bahrain,TSU,AlphaTauri,16,8,4,8
+2022,Bahrain,ALO,Alpine,8,9,2,9
+2022,Bahrain,ZHO,Alfa Romeo,15,10,1,10
+2022,Bahrain,MSC,Haas F1 Team,12,11,0,11
+2022,Bahrain,STR,Aston Martin,19,12,0,12
+2022,Bahrain,ALB,Williams,14,13,0,13
+2022,Bahrain,RIC,McLaren,18,14,0,14
+2022,Bahrain,NOR,McLaren,13,15,0,15
+2022,Bahrain,LAT,Williams,20,16,0,16
+2022,Bahrain,HUL,Aston Martin,17,17,0,17
+2022,Bahrain,PER,Red Bull Racing,4,18,0,18
+2022,Bahrain,VER,Red Bull Racing,2,19,0,19
+2022,Bahrain,GAS,AlphaTauri,10,20,0,R
+2023,Bahrain,VER,Red Bull Racing,1,1,25,1
+2023,Bahrain,PER,Red Bull Racing,2,2,18,2
+2023,Bahrain,ALO,Aston Martin,5,3,15,3
+2023,Bahrain,SAI,Ferrari,4,4,12,4
+2023,Bahrain,HAM,Mercedes,7,5,10,5
+2023,Bahrain,STR,Aston Martin,8,6,8,6
+2023,Bahrain,RUS,Mercedes,6,7,6,7
+2023,Bahrain,BOT,Alfa Romeo,12,8,4,8
+2023,Bahrain,GAS,Alpine,20,9,2,9
+2023,Bahrain,ALB,Williams,15,10,1,10
+2023,Bahrain,TSU,AlphaTauri,14,11,0,11
+2023,Bahrain,SAR,Williams,16,12,0,12
+2023,Bahrain,MAG,Haas F1 Team,17,13,0,13
+2023,Bahrain,DEV,AlphaTauri,19,14,0,14
+2023,Bahrain,HUL,Haas F1 Team,10,15,0,15
+2023,Bahrain,ZHO,Alfa Romeo,13,16,0,16
+2023,Bahrain,NOR,McLaren,11,17,0,17
+2023,Bahrain,OCO,Alpine,9,18,0,R
+2023,Bahrain,LEC,Ferrari,3,19,0,R
+2023,Bahrain,PIA,McLaren,18,20,0,R
+2024,Bahrain,VER,Red Bull Racing,1,1,26,1
+2024,Bahrain,PER,Red Bull Racing,5,2,18,2
+2024,Bahrain,SAI,Ferrari,4,3,15,3
+2024,Bahrain,LEC,Ferrari,2,4,12,4
+2024,Bahrain,RUS,Mercedes,3,5,10,5
+2024,Bahrain,NOR,McLaren,7,6,8,6
+2024,Bahrain,HAM,Mercedes,9,7,6,7
+2024,Bahrain,PIA,McLaren,8,8,4,8
+2024,Bahrain,ALO,Aston Martin,6,9,2,9
+2024,Bahrain,STR,Aston Martin,12,10,1,10
+2024,Bahrain,ZHO,Kick Sauber,17,11,0,11
+2024,Bahrain,MAG,Haas F1 Team,15,12,0,12
+2024,Bahrain,RIC,RB,14,13,0,13
+2024,Bahrain,TSU,RB,11,14,0,14
+2024,Bahrain,ALB,Williams,13,15,0,15
+2024,Bahrain,HUL,Haas F1 Team,10,16,0,16
+2024,Bahrain,OCO,Alpine,19,17,0,17
+2024,Bahrain,GAS,Alpine,20,18,0,18
+2024,Bahrain,BOT,Kick Sauber,16,19,0,19
+2024,Bahrain,SAR,Williams,18,20,0,20
+2025,Bahrain,PIA,McLaren,1,1,25,1
+2025,Bahrain,RUS,Mercedes,3,2,18,2
+2025,Bahrain,NOR,McLaren,6,3,15,3
+2025,Bahrain,LEC,Ferrari,2,4,12,4
+2025,Bahrain,HAM,Ferrari,9,5,10,5
+2025,Bahrain,VER,Red Bull Racing,7,6,8,6
+2025,Bahrain,GAS,Alpine,4,7,6,7
+2025,Bahrain,OCO,Haas F1 Team,14,8,4,8
+2025,Bahrain,TSU,Red Bull Racing,10,9,2,9
+2025,Bahrain,BEA,Haas F1 Team,20,10,1,10
+2025,Bahrain,ANT,Mercedes,5,11,0,11
+2025,Bahrain,ALB,Williams,15,12,0,12
+2025,Bahrain,HAD,Racing Bulls,12,13,0,13
+2025,Bahrain,DOO,Alpine,11,14,0,14
+2025,Bahrain,ALO,Aston Martin,13,15,0,15
+2025,Bahrain,LAW,Racing Bulls,17,16,0,16
+2025,Bahrain,STR,Aston Martin,19,17,0,17
+2025,Bahrain,BOR,Kick Sauber,18,18,0,18
+2025,Bahrain,SAI,Williams,8,19,0,R
+2025,Bahrain,HUL,Kick Sauber,16,20,0,D
+2022,Barcelona,VER,Red Bull Racing,2,1,25,1
+2022,Barcelona,PER,Red Bull Racing,5,2,19,2
+2022,Barcelona,RUS,Mercedes,4,3,15,3
+2022,Barcelona,SAI,Ferrari,3,4,12,4
+2022,Barcelona,HAM,Mercedes,6,5,10,5
+2022,Barcelona,BOT,Alfa Romeo,7,6,8,6
+2022,Barcelona,OCO,Alpine,12,7,6,7
+2022,Barcelona,NOR,McLaren,11,8,4,8
+2022,Barcelona,ALO,Alpine,20,9,2,9
+2022,Barcelona,TSU,AlphaTauri,13,10,1,10
+2022,Barcelona,VET,Aston Martin,16,11,0,11
+2022,Barcelona,RIC,McLaren,9,12,0,12
+2022,Barcelona,GAS,AlphaTauri,14,13,0,13
+2022,Barcelona,MSC,Haas F1 Team,10,14,0,14
+2022,Barcelona,STR,Aston Martin,17,15,0,15
+2022,Barcelona,LAT,Williams,19,16,0,16
+2022,Barcelona,MAG,Haas F1 Team,8,17,0,17
+2022,Barcelona,ALB,Williams,18,18,0,18
+2022,Barcelona,ZHO,Alfa Romeo,15,19,0,R
+2022,Barcelona,LEC,Ferrari,1,20,0,R
+2023,Barcelona,VER,Red Bull Racing,1,1,26,1
+2023,Barcelona,HAM,Mercedes,4,2,18,2
+2023,Barcelona,RUS,Mercedes,12,3,15,3
+2023,Barcelona,PER,Red Bull Racing,11,4,12,4
+2023,Barcelona,SAI,Ferrari,2,5,10,5
+2023,Barcelona,STR,Aston Martin,5,6,8,6
+2023,Barcelona,ALO,Aston Martin,8,7,6,7
+2023,Barcelona,OCO,Alpine,6,8,4,8
+2023,Barcelona,ZHO,Alfa Romeo,13,9,2,9
+2023,Barcelona,GAS,Alpine,10,10,1,10
+2023,Barcelona,LEC,Ferrari,19,11,0,11
+2023,Barcelona,TSU,AlphaTauri,15,12,0,12
+2023,Barcelona,PIA,McLaren,9,13,0,13
+2023,Barcelona,DEV,AlphaTauri,14,14,0,14
+2023,Barcelona,HUL,Haas F1 Team,7,15,0,15
+2023,Barcelona,ALB,Williams,18,16,0,16
+2023,Barcelona,NOR,McLaren,3,17,0,17
+2023,Barcelona,MAG,Haas F1 Team,17,18,0,18
+2023,Barcelona,BOT,Alfa Romeo,16,19,0,19
+2023,Barcelona,SAR,Williams,20,20,0,20
+2024,Barcelona,VER,Red Bull Racing,2,1,25,1
+2024,Barcelona,NOR,McLaren,1,2,19,2
+2024,Barcelona,HAM,Mercedes,3,3,15,3
+2024,Barcelona,RUS,Mercedes,4,4,12,4
+2024,Barcelona,LEC,Ferrari,5,5,10,5
+2024,Barcelona,SAI,Ferrari,6,6,8,6
+2024,Barcelona,PIA,McLaren,9,7,6,7
+2024,Barcelona,PER,Red Bull Racing,11,8,4,8
+2024,Barcelona,GAS,Alpine,7,9,2,9
+2024,Barcelona,OCO,Alpine,8,10,1,10
+2024,Barcelona,HUL,Haas F1 Team,13,11,0,11
+2024,Barcelona,ALO,Aston Martin,10,12,0,12
+2024,Barcelona,ZHO,Kick Sauber,15,13,0,13
+2024,Barcelona,STR,Aston Martin,14,14,0,14
+2024,Barcelona,RIC,RB,18,15,0,15
+2024,Barcelona,BOT,Kick Sauber,12,16,0,16
+2024,Barcelona,MAG,Haas F1 Team,16,17,0,17
+2024,Barcelona,ALB,Williams,20,18,0,18
+2024,Barcelona,TSU,RB,17,19,0,19
+2024,Barcelona,SAR,Williams,19,20,0,20
+2025,Barcelona,PIA,McLaren,1,1,25,1
+2025,Barcelona,NOR,McLaren,2,2,18,2
+2025,Barcelona,LEC,Ferrari,7,3,15,3
+2025,Barcelona,RUS,Mercedes,4,4,12,4
+2025,Barcelona,HUL,Kick Sauber,15,5,10,5
+2025,Barcelona,HAM,Ferrari,5,6,8,6
+2025,Barcelona,HAD,Racing Bulls,9,7,6,7
+2025,Barcelona,GAS,Alpine,8,8,4,8
+2025,Barcelona,ALO,Aston Martin,10,9,2,9
+2025,Barcelona,VER,Red Bull Racing,3,10,1,10
+2025,Barcelona,LAW,Racing Bulls,13,11,0,11
+2025,Barcelona,BOR,Kick Sauber,12,12,0,12
+2025,Barcelona,TSU,Red Bull Racing,19,13,0,13
+2025,Barcelona,SAI,Williams,17,14,0,14
+2025,Barcelona,COL,Alpine,18,15,0,15
+2025,Barcelona,OCO,Haas F1 Team,16,16,0,16
+2025,Barcelona,BEA,Haas F1 Team,14,17,0,17
+2025,Barcelona,ANT,Mercedes,6,18,0,R
+2025,Barcelona,ALB,Williams,11,19,0,R
+2022,Brazil,RUS,Mercedes,1,1,26,1
+2022,Brazil,HAM,Mercedes,2,2,18,2
+2022,Brazil,SAI,Ferrari,7,3,15,3
+2022,Brazil,LEC,Ferrari,5,4,12,4
+2022,Brazil,ALO,Alpine,17,5,10,5
+2022,Brazil,VER,Red Bull Racing,3,6,8,6
+2022,Brazil,PER,Red Bull Racing,4,7,6,7
+2022,Brazil,OCO,Alpine,16,8,4,8
+2022,Brazil,BOT,Alfa Romeo,14,9,2,9
+2022,Brazil,STR,Aston Martin,15,10,1,10
+2022,Brazil,VET,Aston Martin,9,11,0,11
+2022,Brazil,ZHO,Alfa Romeo,13,12,0,12
+2022,Brazil,MSC,Haas F1 Team,12,13,0,13
+2022,Brazil,GAS,AlphaTauri,10,14,0,14
+2022,Brazil,ALB,Williams,19,15,0,15
+2022,Brazil,LAT,Williams,18,16,0,16
+2022,Brazil,TSU,AlphaTauri,0,17,0,17
+2022,Brazil,NOR,McLaren,6,18,0,R
+2022,Brazil,MAG,Haas F1 Team,8,19,0,R
+2022,Brazil,RIC,McLaren,11,20,0,R
+2023,Brazil,VER,Red Bull Racing,1,1,25,1
+2023,Brazil,NOR,McLaren,6,2,19,2
+2023,Brazil,ALO,Aston Martin,4,3,15,3
+2023,Brazil,PER,Red Bull Racing,9,4,12,4
+2023,Brazil,STR,Aston Martin,3,5,10,5
+2023,Brazil,SAI,Ferrari,7,6,8,6
+2023,Brazil,GAS,Alpine,15,7,6,7
+2023,Brazil,HAM,Mercedes,5,8,4,8
+2023,Brazil,TSU,AlphaTauri,16,9,2,9
+2023,Brazil,OCO,Alpine,14,10,1,10
+2023,Brazil,SAR,Williams,19,11,0,11
+2023,Brazil,HUL,Haas F1 Team,11,12,0,12
+2023,Brazil,RIC,AlphaTauri,17,13,0,13
+2023,Brazil,PIA,McLaren,10,14,0,14
+2023,Brazil,RUS,Mercedes,8,15,0,R
+2023,Brazil,BOT,Alfa Romeo,18,16,0,R
+2023,Brazil,ZHO,Alfa Romeo,20,17,0,R
+2023,Brazil,MAG,Haas F1 Team,12,18,0,R
+2023,Brazil,ALB,Williams,13,19,0,R
+2023,Brazil,LEC,Ferrari,2,20,0,W
+2024,Brazil,VER,Red Bull Racing,17,1,26,1
+2024,Brazil,OCO,Alpine,4,2,18,2
+2024,Brazil,GAS,Alpine,13,3,15,3
+2024,Brazil,RUS,Mercedes,2,4,12,4
+2024,Brazil,LEC,Ferrari,6,5,10,5
+2024,Brazil,NOR,McLaren,1,6,8,6
+2024,Brazil,TSU,RB,3,7,6,7
+2024,Brazil,PIA,McLaren,8,8,4,8
+2024,Brazil,LAW,RB,5,9,2,9
+2024,Brazil,HAM,Mercedes,14,10,1,10
+2024,Brazil,PER,Red Bull Racing,12,11,0,11
+2024,Brazil,BEA,Haas F1 Team,15,12,0,12
+2024,Brazil,BOT,Kick Sauber,11,13,0,13
+2024,Brazil,ALO,Aston Martin,9,14,0,14
+2024,Brazil,ZHO,Kick Sauber,19,15,0,15
+2024,Brazil,SAI,Ferrari,20,16,0,R
+2024,Brazil,COL,Williams,16,17,0,R
+2024,Brazil,ALB,Williams,7,18,0,W
+2024,Brazil,STR,Aston Martin,10,19,0,W
+2024,Brazil,HUL,Haas F1 Team,18,20,0,D
+2025,Brazil,NOR,McLaren,1,1,25,1
+2025,Brazil,ANT,Mercedes,2,2,18,2
+2025,Brazil,VER,Red Bull Racing,19,3,15,3
+2025,Brazil,RUS,Mercedes,6,4,12,4
+2025,Brazil,PIA,McLaren,4,5,10,5
+2025,Brazil,BEA,Haas F1 Team,8,6,8,6
+2025,Brazil,LAW,Racing Bulls,7,7,6,7
+2025,Brazil,HAD,Racing Bulls,5,8,4,8
+2025,Brazil,HUL,Kick Sauber,10,9,2,9
+2025,Brazil,GAS,Alpine,9,10,1,10
+2025,Brazil,ALB,Williams,12,11,0,11
+2025,Brazil,OCO,Haas F1 Team,20,12,0,12
+2025,Brazil,SAI,Williams,15,13,0,13
+2025,Brazil,ALO,Aston Martin,11,14,0,14
+2025,Brazil,COL,Alpine,16,15,0,15
+2025,Brazil,STR,Aston Martin,14,16,0,16
+2025,Brazil,TSU,Red Bull Racing,17,17,0,17
+2025,Brazil,HAM,Ferrari,13,18,0,R
+2025,Brazil,LEC,Ferrari,3,19,0,R
+2025,Brazil,BOR,Kick Sauber,18,20,0,R
+2022,COTA,VER,Red Bull Racing,1,1,25,1
+2022,COTA,SAI,Ferrari,3,2,19,2
+2022,COTA,HAM,Mercedes,4,3,15,3
+2022,COTA,RUS,Mercedes,8,4,12,4
+2022,COTA,LEC,Ferrari,19,5,10,5
+2022,COTA,OCO,Alpine,7,6,8,6
+2022,COTA,BOT,Alfa Romeo,11,7,6,7
+2022,COTA,ZHO,Alfa Romeo,10,8,4,8
+2022,COTA,ALO,Alpine,2,9,2,9
+2022,COTA,STR,Aston Martin,17,10,1,10
+2022,COTA,RIC,McLaren,9,11,0,11
+2022,COTA,VET,Aston Martin,16,12,0,12
+2022,COTA,ALB,Williams,12,13,0,13
+2022,COTA,GAS,AlphaTauri,15,14,0,14
+2022,COTA,NOR,McLaren,14,15,0,15
+2022,COTA,LAT,Williams,18,16,0,16
+2022,COTA,MAG,Haas F1 Team,5,17,0,17
+2022,COTA,TSU,AlphaTauri,20,18,0,R
+2022,COTA,MSC,Haas F1 Team,6,19,0,R
+2022,COTA,PER,Red Bull Racing,13,20,0,R
+2023,COTA,VER,Red Bull Racing,1,1,25,1
+2023,COTA,ALO,Aston Martin,2,2,18,2
+2023,COTA,HAM,Mercedes,3,3,15,3
+2023,COTA,LEC,Ferrari,10,4,12,4
+2023,COTA,SAI,Ferrari,11,5,10,5
+2023,COTA,PER,Red Bull Racing,12,6,9,6
+2023,COTA,ALB,Williams,9,7,6,7
+2023,COTA,OCO,Alpine,6,8,4,8
+2023,COTA,STR,Aston Martin,16,9,2,9
+2023,COTA,BOT,Alfa Romeo,14,10,1,10
+2023,COTA,PIA,McLaren,8,11,0,11
+2023,COTA,GAS,Alpine,15,12,0,12
+2023,COTA,NOR,McLaren,7,13,0,13
+2023,COTA,TSU,AlphaTauri,19,14,0,14
+2023,COTA,HUL,Haas F1 Team,5,15,0,15
+2023,COTA,ZHO,Alfa Romeo,20,16,0,16
+2023,COTA,MAG,Haas F1 Team,13,17,0,17
+2023,COTA,DEV,AlphaTauri,17,18,0,18
+2023,COTA,RUS,Mercedes,4,19,0,R
+2023,COTA,SAR,Williams,18,20,0,R
+2024,COTA,VER,Red Bull Racing,2,1,25,1
+2024,COTA,NOR,McLaren,3,2,18,2
+2024,COTA,RUS,Mercedes,1,3,15,3
+2024,COTA,HAM,Mercedes,7,4,13,4
+2024,COTA,PIA,McLaren,4,5,10,5
+2024,COTA,ALO,Aston Martin,6,6,8,6
+2024,COTA,STR,Aston Martin,9,7,6,7
+2024,COTA,RIC,RB,5,8,4,8
+2024,COTA,GAS,Alpine,15,9,2,9
+2024,COTA,OCO,Alpine,18,10,1,10
+2024,COTA,HUL,Haas F1 Team,17,11,0,11
+2024,COTA,MAG,Haas F1 Team,14,12,0,12
+2024,COTA,BOT,Kick Sauber,19,13,0,13
+2024,COTA,TSU,RB,8,14,0,14
+2024,COTA,ZHO,Kick Sauber,20,15,0,15
+2024,COTA,SAI,Ferrari,12,16,0,R
+2024,COTA,ALB,Williams,10,17,0,R
+2024,COTA,PER,Red Bull Racing,16,18,0,R
+2024,COTA,LEC,Ferrari,11,19,0,R
+2024,COTA,SAR,Williams,13,20,0,R
+2025,COTA,RUS,Mercedes,1,1,25,1
+2025,COTA,VER,Red Bull Racing,2,2,18,2
+2025,COTA,ANT,Mercedes,4,3,15,3
+2025,COTA,PIA,McLaren,3,4,12,4
+2025,COTA,LEC,Ferrari,8,5,10,5
+2025,COTA,HAM,Ferrari,5,6,8,6
+2025,COTA,ALO,Aston Martin,6,7,6,7
+2025,COTA,HUL,Kick Sauber,11,8,4,8
+2025,COTA,OCO,Haas F1 Team,14,9,2,9
+2025,COTA,SAI,Williams,16,10,1,10
+2025,COTA,BEA,Haas F1 Team,13,11,0,11
+2025,COTA,TSU,Red Bull Racing,18,12,0,12
+2025,COTA,COL,Alpine,10,13,0,13
+2025,COTA,BOR,Kick Sauber,15,14,0,14
+2025,COTA,GAS,Alpine,20,15,0,15
+2025,COTA,HAD,Racing Bulls,12,16,0,16
+2025,COTA,STR,Aston Martin,17,17,0,17
+2025,COTA,NOR,McLaren,7,18,0,18
+2025,COTA,LAW,Racing Bulls,19,19,0,R
+2025,COTA,ALB,Williams,9,20,0,R
+2022,Hungary,VER,Red Bull Racing,10,1,25,1
+2022,Hungary,HAM,Mercedes,7,2,19,2
+2022,Hungary,RUS,Mercedes,1,3,15,3
+2022,Hungary,SAI,Ferrari,2,4,12,4
+2022,Hungary,PER,Red Bull Racing,11,5,10,5
+2022,Hungary,LEC,Ferrari,3,6,8,6
+2022,Hungary,NOR,McLaren,4,7,6,7
+2022,Hungary,ALO,Alpine,6,8,4,8
+2022,Hungary,OCO,Alpine,5,9,2,9
+2022,Hungary,VET,Aston Martin,18,10,1,10
+2022,Hungary,STR,Aston Martin,14,11,0,11
+2022,Hungary,GAS,AlphaTauri,0,12,0,12
+2022,Hungary,ZHO,Alfa Romeo,12,13,0,13
+2022,Hungary,MSC,Haas F1 Team,15,14,0,14
+2022,Hungary,RIC,McLaren,9,15,0,15
+2022,Hungary,MAG,Haas F1 Team,13,16,0,16
+2022,Hungary,ALB,Williams,17,17,0,17
+2022,Hungary,LAT,Williams,19,18,0,18
+2022,Hungary,TSU,AlphaTauri,16,19,0,19
+2022,Hungary,BOT,Alfa Romeo,8,20,0,20
+2023,Hungary,VER,Red Bull Racing,2,1,26,1
+2023,Hungary,NOR,McLaren,3,2,18,2
+2023,Hungary,PER,Red Bull Racing,9,3,15,3
+2023,Hungary,HAM,Mercedes,1,4,12,4
+2023,Hungary,PIA,McLaren,4,5,10,5
+2023,Hungary,RUS,Mercedes,18,6,8,6
+2023,Hungary,LEC,Ferrari,6,7,6,7
+2023,Hungary,SAI,Ferrari,11,8,4,8
+2023,Hungary,ALO,Aston Martin,8,9,2,9
+2023,Hungary,STR,Aston Martin,14,10,1,10
+2023,Hungary,ALB,Williams,16,11,0,11
+2023,Hungary,BOT,Alfa Romeo,7,12,0,12
+2023,Hungary,RIC,AlphaTauri,13,13,0,13
+2023,Hungary,HUL,Haas F1 Team,10,14,0,14
+2023,Hungary,TSU,AlphaTauri,17,15,0,15
+2023,Hungary,ZHO,Alfa Romeo,5,16,0,16
+2023,Hungary,MAG,Haas F1 Team,19,17,0,17
+2023,Hungary,SAR,Williams,20,18,0,18
+2023,Hungary,OCO,Alpine,12,19,0,R
+2023,Hungary,GAS,Alpine,15,20,0,R
+2024,Hungary,PIA,McLaren,2,1,25,1
+2024,Hungary,NOR,McLaren,1,2,18,2
+2024,Hungary,HAM,Mercedes,5,3,15,3
+2024,Hungary,LEC,Ferrari,6,4,12,4
+2024,Hungary,VER,Red Bull Racing,3,5,10,5
+2024,Hungary,SAI,Ferrari,4,6,8,6
+2024,Hungary,PER,Red Bull Racing,16,7,6,7
+2024,Hungary,RUS,Mercedes,17,8,5,8
+2024,Hungary,TSU,RB,10,9,2,9
+2024,Hungary,STR,Aston Martin,8,10,1,10
+2024,Hungary,ALO,Aston Martin,7,11,0,11
+2024,Hungary,RIC,RB,9,12,0,12
+2024,Hungary,HUL,Haas F1 Team,11,13,0,13
+2024,Hungary,ALB,Williams,13,14,0,14
+2024,Hungary,MAG,Haas F1 Team,15,15,0,15
+2024,Hungary,BOT,Kick Sauber,12,16,0,16
+2024,Hungary,SAR,Williams,14,17,0,17
+2024,Hungary,OCO,Alpine,19,18,0,18
+2024,Hungary,ZHO,Kick Sauber,18,19,0,19
+2024,Hungary,GAS,Alpine,20,20,0,R
+2025,Hungary,NOR,McLaren,3,1,25,1
+2025,Hungary,PIA,McLaren,2,2,18,2
+2025,Hungary,RUS,Mercedes,4,3,15,3
+2025,Hungary,LEC,Ferrari,1,4,12,4
+2025,Hungary,ALO,Aston Martin,5,5,10,5
+2025,Hungary,BOR,Kick Sauber,7,6,8,6
+2025,Hungary,STR,Aston Martin,6,7,6,7
+2025,Hungary,LAW,Racing Bulls,9,8,4,8
+2025,Hungary,VER,Red Bull Racing,8,9,2,9
+2025,Hungary,ANT,Mercedes,15,10,1,10
+2025,Hungary,HAD,Racing Bulls,10,11,0,11
+2025,Hungary,HAM,Ferrari,12,12,0,12
+2025,Hungary,HUL,Kick Sauber,18,13,0,13
+2025,Hungary,SAI,Williams,13,14,0,14
+2025,Hungary,ALB,Williams,19,15,0,15
+2025,Hungary,OCO,Haas F1 Team,17,16,0,16
+2025,Hungary,TSU,Red Bull Racing,20,17,0,17
+2025,Hungary,COL,Alpine,14,18,0,18
+2025,Hungary,GAS,Alpine,16,19,0,19
+2025,Hungary,BEA,Haas F1 Team,11,20,0,R
+2022,Jeddah,VER,Red Bull Racing,4,1,25,1
+2022,Jeddah,LEC,Ferrari,2,2,19,2
+2022,Jeddah,SAI,Ferrari,3,3,15,3
+2022,Jeddah,PER,Red Bull Racing,1,4,12,4
+2022,Jeddah,RUS,Mercedes,6,5,10,5
+2022,Jeddah,OCO,Alpine,5,6,8,6
+2022,Jeddah,NOR,McLaren,11,7,6,7
+2022,Jeddah,GAS,AlphaTauri,9,8,4,8
+2022,Jeddah,MAG,Haas F1 Team,10,9,2,9
+2022,Jeddah,HAM,Mercedes,15,10,1,10
+2022,Jeddah,ZHO,Alfa Romeo,12,11,0,11
+2022,Jeddah,HUL,Aston Martin,17,12,0,12
+2022,Jeddah,STR,Aston Martin,13,13,0,13
+2022,Jeddah,ALB,Williams,16,14,0,14
+2022,Jeddah,BOT,Alfa Romeo,8,15,0,R
+2022,Jeddah,ALO,Alpine,7,16,0,R
+2022,Jeddah,RIC,McLaren,14,17,0,R
+2022,Jeddah,LAT,Williams,18,18,0,R
+2022,Jeddah,TSU,AlphaTauri,19,19,0,R
+2022,Jeddah,MSC,Haas F1 Team,,,0,W
+2023,Jeddah,PER,Red Bull Racing,1,1,25,1
+2023,Jeddah,VER,Red Bull Racing,15,2,19,2
+2023,Jeddah,ALO,Aston Martin,2,3,15,3
+2023,Jeddah,RUS,Mercedes,3,4,12,4
+2023,Jeddah,HAM,Mercedes,7,5,10,5
+2023,Jeddah,SAI,Ferrari,4,6,8,6
+2023,Jeddah,LEC,Ferrari,12,7,6,7
+2023,Jeddah,OCO,Alpine,6,8,4,8
+2023,Jeddah,GAS,Alpine,9,9,2,9
+2023,Jeddah,MAG,Haas F1 Team,13,10,1,10
+2023,Jeddah,TSU,AlphaTauri,16,11,0,11
+2023,Jeddah,HUL,Haas F1 Team,10,12,0,12
+2023,Jeddah,ZHO,Alfa Romeo,11,13,0,13
+2023,Jeddah,DEV,AlphaTauri,18,14,0,14
+2023,Jeddah,PIA,McLaren,8,15,0,15
+2023,Jeddah,SAR,Williams,20,16,0,16
+2023,Jeddah,NOR,McLaren,19,17,0,17
+2023,Jeddah,BOT,Alfa Romeo,14,18,0,18
+2023,Jeddah,ALB,Williams,17,19,0,R
+2023,Jeddah,STR,Aston Martin,5,20,0,R
+2025,Jeddah,PIA,McLaren,2,1,25,1
+2025,Jeddah,VER,Red Bull Racing,1,2,18,2
+2025,Jeddah,LEC,Ferrari,4,3,15,3
+2025,Jeddah,NOR,McLaren,10,4,12,4
+2025,Jeddah,RUS,Mercedes,3,5,10,5
+2025,Jeddah,ANT,Mercedes,5,6,8,6
+2025,Jeddah,HAM,Ferrari,7,7,6,7
+2025,Jeddah,SAI,Williams,6,8,4,8
+2025,Jeddah,ALB,Williams,11,9,2,9
+2025,Jeddah,HAD,Racing Bulls,14,10,1,10
+2025,Jeddah,ALO,Aston Martin,13,11,0,11
+2025,Jeddah,LAW,Racing Bulls,12,12,0,12
+2025,Jeddah,BEA,Haas F1 Team,15,13,0,13
+2025,Jeddah,OCO,Haas F1 Team,19,14,0,14
+2025,Jeddah,HUL,Kick Sauber,18,15,0,15
+2025,Jeddah,STR,Aston Martin,16,16,0,16
+2025,Jeddah,DOO,Alpine,17,17,0,17
+2025,Jeddah,BOR,Kick Sauber,20,18,0,18
+2025,Jeddah,TSU,Red Bull Racing,8,19,0,R
+2025,Jeddah,GAS,Alpine,9,20,0,R
+2025,Melbourne,NOR,McLaren,1,1,25,1
+2025,Melbourne,VER,Red Bull Racing,3,2,18,2
+2025,Melbourne,RUS,Mercedes,4,3,15,3
+2025,Melbourne,ANT,Mercedes,16,4,12,4
+2025,Melbourne,ALB,Williams,6,5,10,5
+2025,Melbourne,STR,Aston Martin,13,6,8,6
+2025,Melbourne,HUL,Kick Sauber,17,7,6,7
+2025,Melbourne,LEC,Ferrari,7,8,4,8
+2025,Melbourne,PIA,McLaren,2,9,2,9
+2025,Melbourne,HAM,Ferrari,8,10,1,10
+2025,Melbourne,GAS,Alpine,9,11,0,11
+2025,Melbourne,TSU,Racing Bulls,5,12,0,12
+2025,Melbourne,OCO,Haas F1 Team,19,13,0,13
+2025,Melbourne,BEA,Haas F1 Team,20,14,0,14
+2025,Melbourne,LAW,Red Bull Racing,18,15,0,R
+2025,Melbourne,BOR,Kick Sauber,15,16,0,R
+2025,Melbourne,ALO,Aston Martin,12,17,0,R
+2025,Melbourne,SAI,Williams,10,18,0,R
+2025,Melbourne,DOO,Alpine,14,19,0,R
+2025,Melbourne,HAD,Racing Bulls,11,20,0,R
+2025,Monaco,NOR,McLaren,1,1,25,1
+2025,Monaco,LEC,Ferrari,2,2,18,2
+2025,Monaco,PIA,McLaren,3,3,15,3
+2025,Monaco,VER,Red Bull Racing,4,4,12,4
+2025,Monaco,HAM,Ferrari,7,5,10,5
+2025,Monaco,HAD,Racing Bulls,5,6,8,6
+2025,Monaco,OCO,Haas F1 Team,8,7,6,7
+2025,Monaco,LAW,Racing Bulls,9,8,4,8
+2025,Monaco,ALB,Williams,10,9,2,9
+2025,Monaco,SAI,Williams,11,10,1,10
+2025,Monaco,RUS,Mercedes,14,11,0,11
+2025,Monaco,BEA,Haas F1 Team,20,12,0,12
+2025,Monaco,COL,Alpine,18,13,0,13
+2025,Monaco,BOR,Kick Sauber,16,14,0,14
+2025,Monaco,STR,Aston Martin,19,15,0,15
+2025,Monaco,HUL,Kick Sauber,13,16,0,16
+2025,Monaco,TSU,Red Bull Racing,12,17,0,17
+2025,Monaco,ANT,Mercedes,15,18,0,18
+2025,Monaco,ALO,Aston Martin,6,19,0,R
+2025,Monaco,GAS,Alpine,17,20,0,R
+2025,Monza,VER,Red Bull Racing,1,1,25,1
+2025,Monza,NOR,McLaren,2,2,18,2
+2025,Monza,PIA,McLaren,3,3,15,3
+2025,Monza,LEC,Ferrari,4,4,12,4
+2025,Monza,RUS,Mercedes,5,5,10,5
+2025,Monza,HAM,Ferrari,10,6,8,6
+2025,Monza,ALB,Williams,14,7,6,7
+2025,Monza,BOR,Kick Sauber,7,8,4,8
+2025,Monza,ANT,Mercedes,6,9,2,9
+2025,Monza,HAD,Racing Bulls,19,10,1,10
+2025,Monza,SAI,Williams,13,11,0,11
+2025,Monza,BEA,Haas F1 Team,11,12,0,12
+2025,Monza,TSU,Red Bull Racing,9,13,0,13
+2025,Monza,LAW,Racing Bulls,18,14,0,14
+2025,Monza,OCO,Haas F1 Team,15,15,0,15
+2025,Monza,GAS,Alpine,20,16,0,16
+2025,Monza,COL,Alpine,17,17,0,17
+2025,Monza,STR,Aston Martin,16,18,0,18
+2025,Monza,ALO,Aston Martin,8,19,0,R
+2025,Monza,HUL,Kick Sauber,12,20,0,W
+2022,Montreal,VER,Red Bull Racing,1,1,25,1
+2022,Montreal,SAI,Ferrari,3,2,19,2
+2022,Montreal,HAM,Mercedes,4,3,15,3
+2022,Montreal,RUS,Mercedes,8,4,12,4
+2022,Montreal,LEC,Ferrari,19,5,10,5
+2022,Montreal,OCO,Alpine,7,6,8,6
+2022,Montreal,BOT,Alfa Romeo,11,7,6,7
+2022,Montreal,ZHO,Alfa Romeo,10,8,4,8
+2022,Montreal,ALO,Alpine,2,9,2,9
+2022,Montreal,STR,Aston Martin,17,10,1,10
+2022,Montreal,RIC,McLaren,9,11,0,11
+2022,Montreal,VET,Aston Martin,16,12,0,12
+2022,Montreal,ALB,Williams,12,13,0,13
+2022,Montreal,GAS,AlphaTauri,15,14,0,14
+2022,Montreal,NOR,McLaren,14,15,0,15
+2022,Montreal,LAT,Williams,18,16,0,16
+2022,Montreal,MAG,Haas F1 Team,5,17,0,17
+2022,Montreal,TSU,AlphaTauri,20,18,0,R
+2022,Montreal,MSC,Haas F1 Team,6,19,0,R
+2022,Montreal,PER,Red Bull Racing,13,20,0,R
+2023,Montreal,VER,Red Bull Racing,1,1,25,1
+2023,Montreal,ALO,Aston Martin,2,2,18,2
+2023,Montreal,HAM,Mercedes,3,3,15,3
+2023,Montreal,LEC,Ferrari,10,4,12,4
+2023,Montreal,SAI,Ferrari,11,5,10,5
+2023,Montreal,PER,Red Bull Racing,12,6,9,6
+2023,Montreal,ALB,Williams,9,7,6,7
+2023,Montreal,OCO,Alpine,6,8,4,8
+2023,Montreal,STR,Aston Martin,16,9,2,9
+2023,Montreal,BOT,Alfa Romeo,14,10,1,10
+2023,Montreal,PIA,McLaren,8,11,0,11
+2023,Montreal,GAS,Alpine,15,12,0,12
+2023,Montreal,NOR,McLaren,7,13,0,13
+2023,Montreal,TSU,AlphaTauri,19,14,0,14
+2023,Montreal,HUL,Haas F1 Team,5,15,0,15
+2023,Montreal,ZHO,Alfa Romeo,20,16,0,16
+2023,Montreal,MAG,Haas F1 Team,13,17,0,17
+2023,Montreal,DEV,AlphaTauri,17,18,0,18
+2023,Montreal,RUS,Mercedes,4,19,0,R
+2023,Montreal,SAR,Williams,18,20,0,R
+2024,Montreal,VER,Red Bull Racing,2,1,25,1
+2024,Montreal,NOR,McLaren,3,2,18,2
+2024,Montreal,RUS,Mercedes,1,3,15,3
+2024,Montreal,HAM,Mercedes,7,4,13,4
+2024,Montreal,PIA,McLaren,4,5,10,5
+2024,Montreal,ALO,Aston Martin,6,6,8,6
+2024,Montreal,STR,Aston Martin,9,7,6,7
+2024,Montreal,RIC,RB,5,8,4,8
+2024,Montreal,GAS,Alpine,15,9,2,9
+2024,Montreal,OCO,Alpine,18,10,1,10
+2024,Montreal,HUL,Haas F1 Team,17,11,0,11
+2024,Montreal,MAG,Haas F1 Team,14,12,0,12
+2024,Montreal,BOT,Kick Sauber,19,13,0,13
+2024,Montreal,TSU,RB,8,14,0,14
+2024,Montreal,ZHO,Kick Sauber,20,15,0,15
+2024,Montreal,SAI,Ferrari,12,16,0,R
+2024,Montreal,ALB,Williams,10,17,0,R
+2024,Montreal,PER,Red Bull Racing,16,18,0,R
+2024,Montreal,LEC,Ferrari,11,19,0,R
+2024,Montreal,SAR,Williams,13,20,0,R
+2025,Montreal,RUS,Mercedes,1,1,25,1
+2025,Montreal,VER,Red Bull Racing,2,2,18,2
+2025,Montreal,ANT,Mercedes,4,3,15,3
+2025,Montreal,PIA,McLaren,3,4,12,4
+2025,Montreal,LEC,Ferrari,8,5,10,5
+2025,Montreal,HAM,Ferrari,5,6,8,6
+2025,Montreal,ALO,Aston Martin,6,7,6,7
+2025,Montreal,HUL,Kick Sauber,11,8,4,8
+2025,Montreal,OCO,Haas F1 Team,14,9,2,9
+2025,Montreal,SAI,Williams,16,10,1,10
+2025,Montreal,BEA,Haas F1 Team,13,11,0,11
+2025,Montreal,TSU,Red Bull Racing,18,12,0,12
+2025,Montreal,COL,Alpine,10,13,0,13
+2025,Montreal,BOR,Kick Sauber,15,14,0,14
+2025,Montreal,GAS,Alpine,20,15,0,15
+2025,Montreal,HAD,Racing Bulls,12,16,0,16
+2025,Montreal,STR,Aston Martin,17,17,0,17
+2025,Montreal,NOR,McLaren,7,18,0,18
+2025,Montreal,LAW,Racing Bulls,19,19,0,R
+2025,Montreal,ALB,Williams,9,20,0,R
+2022,Qatar,LEC,Ferrari,2,1,25,1
+2022,Qatar,VER,Red Bull Racing,1,2,19,2
+2022,Qatar,HAM,Mercedes,8,3,15,3
+2022,Qatar,RUS,Mercedes,4,4,12,4
+2022,Qatar,OCO,Alpine,6,5,10,5
+2022,Qatar,MSC,Haas F1 Team,9,6,8,6
+2022,Qatar,NOR,McLaren,10,7,6,7
+2022,Qatar,MAG,Haas F1 Team,7,8,4,8
+2022,Qatar,RIC,McLaren,11,9,2,9
+2022,Qatar,ALO,Alpine,19,10,1,10
+2022,Qatar,BOT,Alfa Romeo,0,11,0,11
+2022,Qatar,ALB,Williams,15,12,0,12
+2022,Qatar,STR,Aston Martin,12,13,0,13
+2022,Qatar,ZHO,Alfa Romeo,13,14,0,14
+2022,Qatar,GAS,AlphaTauri,14,15,0,15
+2022,Qatar,TSU,AlphaTauri,16,16,0,16
+2022,Qatar,VET,Aston Martin,18,17,0,17
+2022,Qatar,SAI,Ferrari,3,18,0,R
+2022,Qatar,LAT,Williams,17,19,0,R
+2022,Qatar,PER,Red Bull Racing,5,20,0,R
+2025,Qatar,VER,Red Bull Racing,3,1,25,1
+2025,Qatar,PIA,McLaren,1,2,18,2
+2025,Qatar,SAI,Williams,7,3,15,3
+2025,Qatar,NOR,McLaren,2,4,12,4
+2025,Qatar,ANT,Mercedes,5,5,10,5
+2025,Qatar,RUS,Mercedes,4,6,8,6
+2025,Qatar,ALO,Aston Martin,8,7,6,7
+2025,Qatar,LEC,Ferrari,10,8,4,8
+2025,Qatar,LAW,Racing Bulls,12,9,2,9
+2025,Qatar,TSU,Red Bull Racing,15,10,1,10
+2025,Qatar,ALB,Williams,14,11,0,11
+2025,Qatar,HAM,Ferrari,17,12,0,12
+2025,Qatar,BOR,Kick Sauber,19,13,0,13
+2025,Qatar,COL,Alpine,20,14,0,14
+2025,Qatar,OCO,Haas F1 Team,16,15,0,15
+2025,Qatar,GAS,Alpine,9,16,0,16
+2025,Qatar,STR,Aston Martin,18,17,0,17
+2025,Qatar,HAD,Racing Bulls,6,18,0,18
+2025,Qatar,BEA,Haas F1 Team,13,19,0,R
+2025,Qatar,HUL,Kick Sauber,11,20,0,R
+2025,Silverstone,NOR,McLaren,3,1,25,1
+2025,Silverstone,PIA,McLaren,2,2,18,2
+2025,Silverstone,HUL,Kick Sauber,19,3,15,3
+2025,Silverstone,HAM,Ferrari,5,4,12,4
+2025,Silverstone,VER,Red Bull Racing,1,5,10,5
+2025,Silverstone,GAS,Alpine,8,6,8,6
+2025,Silverstone,STR,Aston Martin,17,7,6,7
+2025,Silverstone,ALB,Williams,13,8,4,8
+2025,Silverstone,ALO,Aston Martin,7,9,2,9
+2025,Silverstone,RUS,Mercedes,4,10,1,10
+2025,Silverstone,BEA,Haas F1 Team,18,11,0,11
+2025,Silverstone,SAI,Williams,9,12,0,12
+2025,Silverstone,OCO,Haas F1 Team,14,13,0,13
+2025,Silverstone,LEC,Ferrari,6,14,0,14
+2025,Silverstone,TSU,Red Bull Racing,11,15,0,15
+2025,Silverstone,ANT,Mercedes,10,16,0,R
+2025,Silverstone,HAD,Racing Bulls,12,17,0,R
+2025,Silverstone,BOR,Kick Sauber,16,18,0,R
+2025,Silverstone,LAW,Racing Bulls,15,19,0,R
+2025,Silverstone,COL,Alpine,20,20,0,W
+2025,Singapore,RUS,Mercedes,1,1,25,1
+2025,Singapore,VER,Red Bull Racing,2,2,18,2
+2025,Singapore,NOR,McLaren,5,3,15,3
+2025,Singapore,PIA,McLaren,3,4,12,4
+2025,Singapore,ANT,Mercedes,4,5,10,5
+2025,Singapore,LEC,Ferrari,7,6,8,6
+2025,Singapore,ALO,Aston Martin,10,7,6,7
+2025,Singapore,HAM,Ferrari,6,8,4,8
+2025,Singapore,BEA,Haas F1 Team,9,9,2,9
+2025,Singapore,SAI,Williams,18,10,1,10
+2025,Singapore,HAD,Racing Bulls,8,11,0,11
+2025,Singapore,TSU,Red Bull Racing,13,12,0,12
+2025,Singapore,STR,Aston Martin,15,13,0,13
+2025,Singapore,ALB,Williams,20,14,0,14
+2025,Singapore,LAW,Racing Bulls,12,15,0,15
+2025,Singapore,COL,Alpine,16,16,0,16
+2025,Singapore,BOR,Kick Sauber,14,17,0,17
+2025,Singapore,OCO,Haas F1 Team,17,18,0,18
+2025,Singapore,GAS,Alpine,19,19,0,19
+2025,Singapore,HUL,Kick Sauber,11,20,0,20
+2022,Spa,VER,Red Bull Racing,2,1,25,1
+2022,Spa,PER,Red Bull Racing,5,2,19,2
+2022,Spa,RUS,Mercedes,4,3,15,3
+2022,Spa,SAI,Ferrari,3,4,12,4
+2022,Spa,HAM,Mercedes,6,5,10,5
+2022,Spa,BOT,Alfa Romeo,7,6,8,6
+2022,Spa,OCO,Alpine,12,7,6,7
+2022,Spa,NOR,McLaren,11,8,4,8
+2022,Spa,ALO,Alpine,20,9,2,9
+2022,Spa,TSU,AlphaTauri,13,10,1,10
+2022,Spa,VET,Aston Martin,16,11,0,11
+2022,Spa,RIC,McLaren,9,12,0,12
+2022,Spa,GAS,AlphaTauri,14,13,0,13
+2022,Spa,MSC,Haas F1 Team,10,14,0,14
+2022,Spa,STR,Aston Martin,17,15,0,15
+2022,Spa,LAT,Williams,19,16,0,16
+2022,Spa,MAG,Haas F1 Team,8,17,0,17
+2022,Spa,ALB,Williams,18,18,0,18
+2022,Spa,ZHO,Alfa Romeo,15,19,0,R
+2022,Spa,LEC,Ferrari,1,20,0,R
+2023,Spa,VER,Red Bull Racing,1,1,26,1
+2023,Spa,HAM,Mercedes,4,2,18,2
+2023,Spa,RUS,Mercedes,12,3,15,3
+2023,Spa,PER,Red Bull Racing,11,4,12,4
+2023,Spa,SAI,Ferrari,2,5,10,5
+2023,Spa,STR,Aston Martin,5,6,8,6
+2023,Spa,ALO,Aston Martin,8,7,6,7
+2023,Spa,OCO,Alpine,6,8,4,8
+2023,Spa,ZHO,Alfa Romeo,13,9,2,9
+2023,Spa,GAS,Alpine,10,10,1,10
+2023,Spa,LEC,Ferrari,19,11,0,11
+2023,Spa,TSU,AlphaTauri,15,12,0,12
+2023,Spa,PIA,McLaren,9,13,0,13
+2023,Spa,DEV,AlphaTauri,14,14,0,14
+2023,Spa,HUL,Haas F1 Team,7,15,0,15
+2023,Spa,ALB,Williams,18,16,0,16
+2023,Spa,NOR,McLaren,3,17,0,17
+2023,Spa,MAG,Haas F1 Team,17,18,0,18
+2023,Spa,BOT,Alfa Romeo,16,19,0,19
+2023,Spa,SAR,Williams,20,20,0,20
+2024,Spa,VER,Red Bull Racing,2,1,25,1
+2024,Spa,NOR,McLaren,1,2,19,2
+2024,Spa,HAM,Mercedes,3,3,15,3
+2024,Spa,RUS,Mercedes,4,4,12,4
+2024,Spa,LEC,Ferrari,5,5,10,5
+2024,Spa,SAI,Ferrari,6,6,8,6
+2024,Spa,PIA,McLaren,9,7,6,7
+2024,Spa,PER,Red Bull Racing,11,8,4,8
+2024,Spa,GAS,Alpine,7,9,2,9
+2024,Spa,OCO,Alpine,8,10,1,10
+2024,Spa,HUL,Haas F1 Team,13,11,0,11
+2024,Spa,ALO,Aston Martin,10,12,0,12
+2024,Spa,ZHO,Kick Sauber,15,13,0,13
+2024,Spa,STR,Aston Martin,14,14,0,14
+2024,Spa,RIC,RB,18,15,0,15
+2024,Spa,BOT,Kick Sauber,12,16,0,16
+2024,Spa,MAG,Haas F1 Team,16,17,0,17
+2024,Spa,ALB,Williams,20,18,0,18
+2024,Spa,TSU,RB,17,19,0,19
+2024,Spa,SAR,Williams,19,20,0,20
+2025,Spa,PIA,McLaren,1,1,25,1
+2025,Spa,NOR,McLaren,2,2,18,2
+2025,Spa,LEC,Ferrari,7,3,15,3
+2025,Spa,RUS,Mercedes,4,4,12,4
+2025,Spa,HUL,Kick Sauber,15,5,10,5
+2025,Spa,HAM,Ferrari,5,6,8,6
+2025,Spa,HAD,Racing Bulls,9,7,6,7
+2025,Spa,GAS,Alpine,8,8,4,8
+2025,Spa,ALO,Aston Martin,10,9,2,9
+2025,Spa,VER,Red Bull Racing,3,10,1,10
+2025,Spa,LAW,Racing Bulls,13,11,0,11
+2025,Spa,BOR,Kick Sauber,12,12,0,12
+2025,Spa,TSU,Red Bull Racing,19,13,0,13
+2025,Spa,SAI,Williams,17,14,0,14
+2025,Spa,COL,Alpine,18,15,0,15
+2025,Spa,OCO,Haas F1 Team,16,16,0,16
+2025,Spa,BEA,Haas F1 Team,14,17,0,17
+2025,Spa,ANT,Mercedes,6,18,0,R
+2025,Spa,ALB,Williams,11,19,0,R
+2025,Suzuka,VER,Red Bull Racing,1,1,25,1
+2025,Suzuka,NOR,McLaren,2,2,18,2
+2025,Suzuka,PIA,McLaren,3,3,15,3
+2025,Suzuka,LEC,Ferrari,4,4,12,4
+2025,Suzuka,RUS,Mercedes,5,5,10,5
+2025,Suzuka,ANT,Mercedes,6,6,8,6
+2025,Suzuka,HAM,Ferrari,8,7,6,7
+2025,Suzuka,HAD,Racing Bulls,7,8,4,8
+2025,Suzuka,ALB,Williams,9,9,2,9
+2025,Suzuka,BEA,Haas F1 Team,10,10,1,10
+2025,Suzuka,ALO,Aston Martin,12,11,0,11
+2025,Suzuka,TSU,Red Bull Racing,14,12,0,12
+2025,Suzuka,GAS,Alpine,11,13,0,13
+2025,Suzuka,SAI,Williams,15,14,0,14
+2025,Suzuka,DOO,Alpine,19,15,0,15
+2025,Suzuka,HUL,Kick Sauber,16,16,0,16
+2025,Suzuka,LAW,Racing Bulls,13,17,0,17
+2025,Suzuka,OCO,Haas F1 Team,18,18,0,18
+2025,Suzuka,BOR,Kick Sauber,17,19,0,19
+2025,Suzuka,STR,Aston Martin,20,20,0,20

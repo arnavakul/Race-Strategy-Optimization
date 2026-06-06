@@ -1,4 +1,4 @@
-driver,fp1_best_lap,fp2_best_lap,fp3_best_lap,fp1_long_run,fp2_long_run,fp3_long_run,fp1_deg,fp2_deg,fp3_deg,target_quali_time
+driver,fp1_best_lap,fp2_best_lap,fp3_best_lap,fp1_long_run,fp2_long_run,fp3_long_run,fp1_deg,fp2_deg,fp3_deg,target_qualifying_time
 ALB,72.314,71.918,71.668,73.291,73.461,77.56,0.42,-0.089,1.031,70.732
 ALO,73.015,71.89,72.101,74.85,74.103,75.096,-2.916,4.567,0.385,70.924
 ANT,72.765,72.002,72.013,72.968,73.837,72.252,7.743,2.054,-0.678,71.88
