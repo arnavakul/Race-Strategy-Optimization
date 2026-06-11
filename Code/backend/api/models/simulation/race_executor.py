@@ -733,6 +733,8 @@ def execute_race(
                 timing_table
             )
         )
+        
+        
         overtake_success = False
         # ==========================
         # OVERTAKE CHECK
@@ -912,11 +914,24 @@ def execute_race(
                 3
             )
         )
+    final_timing_table = (
+        calculate_positions(
+            total_race_time,
+            rivals
+        )
+    )
 
+    final_position = (
+        get_player_position(
+            final_timing_table
+        )
+    )
     # Final output
     return {
 
         "total_time": total_race_time,
+        
+        "final_position": final_position,
 
         "safety_car_deployments": (
             safety_car_deployments

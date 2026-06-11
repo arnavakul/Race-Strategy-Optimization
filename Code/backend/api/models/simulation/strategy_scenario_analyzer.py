@@ -8,13 +8,7 @@ def generate_scenarios(race_state):
 
         "PIT_PLUS_5",
 
-        "STAY_OUT",
-
-        "SAFETY_CAR_NEXT_5",
-
-        "VSC_NEXT_5",
-
-        "RAIN_IN_10"
+        "STAY_OUT"
     ]
 
     return scenarios

@@ -152,6 +152,8 @@ def run_strategy_monte_carlo(
 
     race_times = []
 
+    finish_positions = []
+    
     for _ in range(simulations):
 
         simulation = simulate_strategy(
@@ -165,12 +167,68 @@ def run_strategy_monte_carlo(
 
             simulation["total_time"]
         )
+        
+        finish_positions.append(
+            simulation["final_position"]
+        )
 
     race_times.sort()
 
     average_time = statistics.mean(
         race_times
     )
+    
+    average_finish = statistics.mean(
+        finish_positions
+    )
+    
+    podiums = len(
+
+        [
+
+            pos
+
+            for pos
+
+            in finish_positions
+
+            if pos <= 3
+
+        ]
+
+    )
+
+    podium_probability = (
+
+            podiums
+
+            / simulations
+
+        ) * 100
+        
+    wins = len(
+
+        [
+
+            pos
+
+            for pos
+
+            in finish_positions
+
+            if pos == 1
+
+        ]
+
+    )
+
+    win_probability = (
+
+        wins
+
+        / simulations
+
+    ) * 100
 
     median_time = statistics.median(
         race_times
@@ -218,7 +276,16 @@ def run_strategy_monte_carlo(
 
         "p95": p95,
 
-        "race_times": race_times
+        "race_times": race_times,
+        
+        "average_finish": average_finish,
+
+        "podium_probability":
+            podium_probability,
+
+        "win_probability":
+            win_probability,
+            
     }
 # TESTING
 

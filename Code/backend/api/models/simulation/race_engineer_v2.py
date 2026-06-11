@@ -6,8 +6,8 @@ def generate_race_engineer_report(
         "recommended_action"
     ]
 
-    expected_finish = recommendation[
-        "expected_finish"
+    expected_position = recommendation[
+        "expected_position"
     ]
 
     confidence = recommendation[
@@ -78,7 +78,10 @@ def generate_race_engineer_report(
             "Currently outside points positions."
         )
     
-    weather = race_state["weather"]
+    weather = race_state.get(
+        "weather",
+        "UNKNOWN"
+    )
     
     if weather == "DRY":
 
@@ -103,8 +106,8 @@ def generate_race_engineer_report(
         "strategy_call":
             action_text,
 
-        "expected_finish":
-            expected_finish,
+        "expected_position":
+            expected_position,
 
         "confidence":
             confidence,
@@ -134,7 +137,7 @@ if __name__ == "__main__":
 
         "recommended_action": "PIT_NOW",
 
-        "expected_finish": 3,
+        "expected_position": 3,
 
         "confidence": 70
     }

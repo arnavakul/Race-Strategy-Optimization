@@ -2,9 +2,7 @@ from api.models.simulation.strategy_scenario_analyzer import (
     generate_scenarios
 )
 
-# from api.models.simulation.scenario_forecaster import (
-#     forecast_scenario
-# )
+
 
 from api.models.simulation.monte_carlo_strategy_evaluator import (
     run_strategy_monte_carlo
@@ -37,14 +35,34 @@ def generate_recommendation(race_state):
             -x["win_probability"]
         )
     )
+    
+    confidence = "LOW"
+
+    if best_scenario["podium_probability"] >= 70:
+
+        confidence = "HIGH"
+
+    elif best_scenario["podium_probability"] >= 40:
+
+        confidence = "MEDIUM"
+        
+    reason = (
+        f"Highest podium probability "
+        f"({best_scenario['podium_probability']}%)"
+    )
         
     return {
 
         "recommended_action":
             best_scenario["scenario"],
 
-        "average_finish":
-            best_scenario["average_finish"],
+        "expected_finish":
+            round(
+                best_scenario[
+                    "average_finish"
+                ],
+                1
+            ),
 
         "podium_probability":
             best_scenario[
@@ -55,6 +73,12 @@ def generate_recommendation(race_state):
             best_scenario[
                 "win_probability"
             ],
+
+        "confidence":
+            confidence,
+
+        "reason":
+            reason,
 
         "all_scenarios":
             scenario_results
@@ -84,6 +108,49 @@ if __name__ == "__main__":
 
     print(
         "\nBEST STRATEGY\n"
+        )
+
+    print("\n========== BEST STRATEGY ==========\n")
+
+    print(
+        f"Recommended Action : "
+        f"{recommendation['recommended_action']}"
     )
 
-    print(recommendation)
+    print(
+        f"Expected Finish    : "
+        f"P{recommendation['expected_finish']}"
+    )
+
+    print(
+        f"Podium Probability : "
+        f"{recommendation['podium_probability']}%"
+    )
+
+    print(
+        f"Win Probability    : "
+        f"{recommendation['win_probability']}%"
+    )
+
+    print(
+        f"Confidence         : "
+        f"{recommendation['confidence']}"
+    )
+
+    print(
+        f"Reason             : "
+        f"{recommendation['reason']}"
+    )
+    
+    print("\n========== SCENARIO COMPARISON ==========\n")
+
+    for scenario in recommendation[
+        "all_scenarios"
+    ]:
+
+        print(
+            f"{scenario['scenario']:12} | "
+            f"Finish: P{scenario['average_finish']:.2f} | "
+            f"Podium: {scenario['podium_probability']:>5.1f}% | "
+            f"Win: {scenario['win_probability']:>5.1f}%"
+        )
