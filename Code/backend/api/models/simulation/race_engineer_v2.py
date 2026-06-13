@@ -6,12 +6,24 @@ def generate_race_engineer_report(
         "recommended_action"
     ]
 
-    expected_position = recommendation[
-        "expected_position"
+    expected_finish = recommendation[
+        "expected_finish"
     ]
 
     confidence = recommendation[
         "confidence"
+    ]
+    
+    strategy_reason = recommendation[
+        "reason"
+    ]
+    
+    podium_probability = recommendation[
+        "podium_probability"
+    ]
+    
+    win_probability = recommendation[
+        "win_probability"
     ]
     
     if action == "PIT_NOW":
@@ -95,22 +107,37 @@ def generate_race_engineer_report(
             "Rain threat present."
         )
 
-    else:
+    elif weather == "WET":
 
         weather_comment = (
             "Wet conditions expected."
         )
-    
+
+    else:
+
+        weather_comment = (
+            "Weather forecast unavailable."
+        )
+
     return {
 
         "strategy_call":
             action_text,
 
-        "expected_position":
-            expected_position,
+        "expected_finish":
+            expected_finish,
+
+        "podium_probability":
+            podium_probability,
+
+        "win_probability":
+            win_probability,
 
         "confidence":
             confidence,
+
+        "strategy_reason":
+            strategy_reason,
 
         "tyre_analysis":
             tyre_comment,
@@ -151,6 +178,59 @@ if __name__ == "__main__":
 
     print("\nRACE ENGINEER REPORT\n")
 
-    for key, value in report.items():
+    print(
+        "\n================================="
+    )
 
-        print(f"{key}: {value}")
+    print(
+        "RACE ENGINEER STRATEGY REPORT"
+    )
+
+    print(
+        "=================================\n"
+    )
+
+    print(
+        f"STRATEGY CALL : "
+        f"{report['strategy_call']}"
+    )
+
+    print(
+        f"EXPECTED FINISH : "
+        f"P{report['expected_finish']}"
+    )
+
+    print(
+        f"PODIUM CHANCE : "
+        f"{report['podium_probability']}%"
+    )
+
+    print(
+        f"WIN CHANCE : "
+        f"{report['win_probability']}%"
+    )
+
+    print(
+        f"CONFIDENCE : "
+        f"{report['confidence']}"
+    )
+
+    print(
+        f"\nREASON : "
+        f"{report['strategy_reason']}"
+    )
+
+    print(
+        f"\nTYRES : "
+        f"{report['tyre_analysis']}"
+    )
+
+    print(
+        f"\nPOSITION : "
+        f"{report['position_analysis']}"
+    )
+
+    print(
+        f"\nWEATHER : "
+        f"{report['weather_analysis']}"
+    )
